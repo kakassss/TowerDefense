@@ -2,29 +2,29 @@
 
 public class BaseHealth : IDamageable
 {
-    private float _currentHealth;
-    
+    public float GetCurrentHealth { get; private set; }
+
     public BaseHealth(float currentHealth)
     {
-        _currentHealth = currentHealth;
+        GetCurrentHealth = currentHealth;
     }
     
     public void IncreaseHealth(float value)
     {
-        _currentHealth += value;
+        GetCurrentHealth += value;
     }
 
     public void Damage(float value)
     {
-        _currentHealth -= value;
-
-        if (_currentHealth > 0) return;
+        GetCurrentHealth -= value;
+        
+        if (GetCurrentHealth > 0) return;
         
         Die();
-        _currentHealth = 0;
+        GetCurrentHealth = 0;
     }
-
-    public void Die()
+    
+    private void Die()
     {
         Debug.Log("Dead");
     }

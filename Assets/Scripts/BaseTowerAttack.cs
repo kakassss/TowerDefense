@@ -20,7 +20,7 @@ public class BaseTowerAttack
     
     public bool InRange(Transform enemyPosition)
     {
-        return enemyPosition.position.magnitude >= Range;
+        return enemyPosition.position.magnitude <= Range;
     }
 
     public void AttackRate(UnityAction<float> attackAction, float damage)

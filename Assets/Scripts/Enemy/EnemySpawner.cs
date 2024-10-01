@@ -2,17 +2,25 @@
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private EnemySO _enemySo;
+    [SerializeField] private EnemyDefenceSO _enemyDefenceSo;
+    [SerializeField] private EnemyAttackSO _enemyAttackSo;
     [SerializeField] private Transform position;
     
     private IEnemy _enemy;
 
     private void Start()
     {
-        _enemy = new GoblinEnemy(_enemySo);
-        _enemySo.Prefab = _enemySo.Prefab;
-        
-        Debug.Log("goblin has created " + _enemy);
-        Debug.Log("goblin has fire resistance " + _enemy.Defence._so.FireDefence);
+        _enemy = new GoblinEnemy(_enemyDefenceSo,_enemyAttackSo);
+        Debug.Log("gobling health" + _enemy.Health.GetCurrentHealth);
+    }
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _enemy.Health.Damage(5);
+            Debug.Log("goblingxd " + _enemy.Health.GetCurrentHealth);
+        }
     }
 }

@@ -717,7 +717,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e48c493a4968412e8dc672a16e55a6a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySo: {fileID: 11400000, guid: 5c4ee16ea285990419d8a100c2aa2fcf, type: 2}
+  _enemyDefenceSo: {fileID: 11400000, guid: 5c4ee16ea285990419d8a100c2aa2fcf, type: 2}
+  _enemyAttackSo: {fileID: 11400000, guid: fb7ee7d51a6096a4b9a0bf6fed13c449, type: 2}
   position: {fileID: 1003508427}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
