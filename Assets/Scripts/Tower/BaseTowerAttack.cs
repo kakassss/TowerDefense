@@ -1,74 +1,61 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class BaseTowerAttack
 {
-    public readonly ElementType ElementAttackType;
-    public int Damage;
-    public int Range;
+    private BaseTowerAttackSO TowerAttackSo;
     
-    private float _fireRate;
     private float _fireRateTemp;
     
-    public BaseTowerAttack(int damage, int range, int fireRate, ElementType elementAttackType)
+    public BaseTowerAttack(BaseTowerAttackSO towerAttackSo)
     {
-        Damage = damage;
-        Range = range;
-        _fireRate = fireRate;
-        ElementAttackType = elementAttackType;
+        TowerAttackSo = towerAttackSo;
     }
     
     public bool InRange(Transform enemyPosition)
     {
-        return enemyPosition.position.magnitude <= Range;
+        return enemyPosition.position.magnitude <= TowerAttackSo.Range;
     }
 
-    public void AttackRate(UnityAction<float> attackAction, float damage)
+    public IEnemy FindClosestEnemy(Transform towerPosition,List<IEnemy> enemies)
+    {
+        if (enemies.Count <= 1)
+            return enemies[0];
+
+        var closestEnemyDistance = float.MaxValue;
+        IEnemy closestEnemy = null;
+        
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            var distance = (towerPosition.position - enemies[i].Transform.position).magnitude;
+            if (distance < closestEnemyDistance)
+            {
+                closestEnemy = enemies[i];
+                closestEnemyDistance = distance;
+            }
+        }
+
+        if (closestEnemy == null) closestEnemy = enemies[0];
+        return closestEnemy;
+    }
+    
+    public void AttackRate(UnityAction<float> attackAction, IEnemy enemy)
     {
         _fireRateTemp += Time.deltaTime;
 
-        if (_fireRateTemp > _fireRate)
+        if (_fireRateTemp > TowerAttackSo.FireRate)
         {
-            _fireRate += Time.deltaTime;
-            attackAction?.Invoke(damage);
-        }
+            attackAction?.Invoke(TowerAttackSo.Damage);
+            _fireRateTemp = 0;
+        } 
     }
 }
 
-public class Tower
+public class Tower : MonoBehaviour, ITower
 {
-    public int AttackValue;
-    
-    private IEnemyDefence _currentTarget;
-    
-    public void Attack()
-    {
-        _currentTarget.DefenceAction(AttackValue,ElementType.Dark);
-    }
-}
-
-public class Enemyxd
-{
-    public void Defence(IEnemyDefence defence)
-    {
-        defence.DefenceAction(15,ElementType.Fire);
-    }
-}
-
-public class BaseEnemyAttackStats
-{
-    public int FireDamage;
-    public int IceDamage;
-    public int LightDamage;
-    public int DarkDamage;
-
-    public BaseEnemyAttackStats(
-        int fireDamage, int iceDamage,
-        int lightDamage, int darkDamage)
-    {
-        FireDamage = fireDamage;
-        IceDamage = iceDamage;
-        LightDamage = lightDamage;
-        DarkDamage = darkDamage;
-    }
+    [SerializeField] protected SphereCollider triggerCollider;
+    public BaseTowerAttack Attack { get; protected set; }
 }

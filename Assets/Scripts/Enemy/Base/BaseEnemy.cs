@@ -7,7 +7,8 @@ public class BaseEnemy : IEnemy
     public BaseHealth Health { get; }
     public BaseEnemyDefence Defence { get; }
     public BaseEnemyAttack Attack { get; }
-    
+    public Transform Transform { get; }
+
     public BaseEnemy(EnemyDefenceSO enemyDefenceSo, EnemyAttackSO enemyAttackSo)
     {
         Defence = new BaseEnemyDefence

@@ -12,7 +12,6 @@ public class TowerRangeTrigger : MonoBehaviour
 
     private void Start()
     {
-        _towerAttack = new BaseTowerAttack(5, 7, 1, ElementType.Dark);
         
         FindEnemies();
     }
@@ -31,9 +30,9 @@ public class TowerRangeTrigger : MonoBehaviour
         
         Debug.Log("Tower has targeted " + _inRangeEnemies.Count + " enemies");
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position,7);
-    }
+    //
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.DrawWireSphere(transform.position,7);
+    // }
 }

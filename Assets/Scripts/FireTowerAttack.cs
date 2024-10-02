@@ -13,21 +13,21 @@ public class FireTowerAttack: ITowerAttack, ITowerUpgrade
     
     public FireTowerAttack()
     {
-        _baseTowerAttack = new BaseTowerAttack(15,5,1,ElementType.Fire);
     }
     
-    public void Attack(int damage)
+    public void AttackAction()
     {
         if (_baseTowerAttack.InRange(_enemyPosition) == false) return;
-        if(_enemy.Defence.DefenceAction(_baseTowerAttack.Damage,_baseTowerAttack.ElementAttackType) == false) return; 
+        //if(_enemy.Defence.DefenceAction(_baseTowerAttack.Damage,_baseTowerAttack.ElementAttackType) == false) return; 
         
-        _baseTowerAttack.AttackRate(_enemy.Health.Damage,_baseTowerAttack.Damage);
+        
+        _baseTowerAttack.AttackRate(_enemy.Health.Damage,_enemy);
     }
 
     public void Upgrade(BaseTowerAttack towerAttack)
     {
-        towerAttack.Damage += 10;
-        towerAttack.Range += 5;
+        // towerAttack.Damage += 10;
+        // towerAttack.Range += 5;
         //Save?
     }
 }

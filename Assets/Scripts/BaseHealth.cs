@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public class BaseHealth : IDamageable
 {
     public float GetCurrentHealth { get; private set; }

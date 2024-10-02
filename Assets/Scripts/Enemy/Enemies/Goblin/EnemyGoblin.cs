@@ -1,7 +1,12 @@
 ﻿using UnityEngine;
 
-public class EnemyGoblin : Enemy
+public class EnemyGoblin : MonoBehaviour, IEnemy
 {
+    public BaseHealth Health { get; protected set;}
+    public BaseEnemyDefence Defence { get; protected set; }
+    public BaseEnemyAttack Attack { get; protected set;}
+    public Transform Transform => transform;
+
     [SerializeField] private EnemyDefenceSO _enemyDefenceSo;
     [SerializeField] private EnemyAttackSO _enemyAttackSo;
     
@@ -15,17 +20,5 @@ public class EnemyGoblin : Enemy
         Health = new BaseHealth(100);
         
         //_enemy = new BaseEnemy(Health,Defence,Attack,_enemyDefenceSo,_enemyAttackSo);
-        Debug.Log("gobling health" + Health.GetCurrentHealth);
     }
-
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            
-        }
-    }
-
-    
 }

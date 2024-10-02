@@ -103,7 +103,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -125,4 +125,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyDefenceSo: {fileID: 11400000, guid: 5c4ee16ea285990419d8a100c2aa2fcf, type: 2}
   _enemyAttackSo: {fileID: 11400000, guid: fb7ee7d51a6096a4b9a0bf6fed13c449, type: 2}
-  position: {fileID: 0}

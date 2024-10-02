@@ -16,7 +16,7 @@ public class EnemyFireDefence : IEnemyDefence, IEnemy
     public BaseHealth Health { get; }
     public BaseEnemyDefence Defence { get; set; }
     public BaseEnemyAttack Attack { get; }
-    public Transform Position { get; }
+    public Transform Transform { get; }
 
     public bool DefenceAction(int value, ElementType elementType)
     {
