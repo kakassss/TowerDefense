@@ -22,4 +22,6 @@ public class EnemyFireDefence : IEnemyDefence, IEnemy
     {
         throw new System.NotImplementedException();
     }
+
+    public BaseEnemy BaseEnemy { get; }
 }

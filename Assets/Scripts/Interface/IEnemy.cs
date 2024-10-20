@@ -9,8 +9,19 @@ public interface IEnemy
     public Transform Transform { get; }
 }
 
+
+public interface IEnemyBase
+{
+    BaseEnemy BaseEnemy { get; }
+
+}
 public interface ITower
 {
     BaseTowerAttack Attack { get; }
-    
+    BaseHealth Health { get; }
+}
+
+public interface ITowerAttacker : ITower
+{
+    void AttackAction();
 }

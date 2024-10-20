@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TowerSaveLoadData : MonoBehaviour
 {
-    [SerializeField] private List<Tower> _allTowers;
+    [SerializeField] private List<BaseTower> _allTowers;
 
     private JsonDataService _jsonDataService;
 

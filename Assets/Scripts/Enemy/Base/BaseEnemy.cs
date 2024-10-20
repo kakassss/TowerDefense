@@ -9,13 +9,19 @@ public class BaseEnemy : IEnemy
     public BaseEnemyAttack Attack { get; }
     public Transform Transform { get; }
 
-    public BaseEnemy(EnemyDefenceSO enemyDefenceSo, EnemyAttackSO enemyAttackSo)
+    public BaseEnemy(EnemyDefenceSO enemyDefenceSo, EnemyAttackSO enemyAttackSo,float health)
     {
         Defence = new BaseEnemyDefence
         {
             DefenceSo = enemyDefenceSo
         };
         Attack = new BaseEnemyAttack(enemyAttackSo);
-        Health = new BaseHealth(100);
+        Health = new BaseHealth(health);
     }
+}
+
+public class BaseTower : MonoBehaviour, ITower
+{
+    public BaseTowerAttack Attack { get; }
+    public BaseHealth Health { get; }
 }

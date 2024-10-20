@@ -18,7 +18,5 @@ public class EnemyGoblin : MonoBehaviour, IEnemy
         };
         Attack = new BaseEnemyAttack(_enemyAttackSo);
         Health = new BaseHealth(100);
-        
-        //_enemy = new BaseEnemy(Health,Defence,Attack,_enemyDefenceSo,_enemyAttackSo);
     }
 }

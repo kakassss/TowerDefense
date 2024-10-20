@@ -2,17 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireTower : Tower, ITowerAttack
+public class FireTower : MonoBehaviour, ITowerAttacker
 {
+    public BaseTowerAttack Attack { get; private set; }
+    public BaseHealth Health { get; private set; }
+
+
+    [SerializeField] protected SphereCollider triggerCollider;
     [SerializeField] private BaseTowerAttackSO _towerAttackSo;
     
     private List<IEnemy> _enemies;
     private IEnemy _targetEnemy;
+    
+    
     private void Start()
     {
         _enemies = new List<IEnemy>();
         triggerCollider.radius = _towerAttackSo.Range;
+        
         Attack = new BaseTowerAttack(_towerAttackSo);
+        Health = new BaseHealth(100);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,12 +39,7 @@ public class FireTower : Tower, ITowerAttack
         _enemies.Remove(enemy);
         Debug.Log("Enemy removed");
     }
-
-    private void Update()
-    {
-        AttackAction();
-    }
-
+    
     public void AttackAction()
     {
         if(_enemies.Count <= 0) return;

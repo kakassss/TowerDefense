@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -38,8 +36,7 @@ public class BaseTowerAttack
             }
         }
 
-        if (closestEnemy == null) closestEnemy = enemies[0];
-        return closestEnemy;
+        return closestEnemy ?? (enemies[0]);
     }
     
     public void AttackRate(UnityAction<float> attackAction, IEnemy enemy)
@@ -50,12 +47,6 @@ public class BaseTowerAttack
         {
             attackAction?.Invoke(TowerAttackSo.Damage);
             _fireRateTemp = 0;
-        } 
+        }
     }
-}
-
-public class Tower : MonoBehaviour, ITower
-{
-    [SerializeField] protected SphereCollider triggerCollider;
-    public BaseTowerAttack Attack { get; protected set; }
 }
