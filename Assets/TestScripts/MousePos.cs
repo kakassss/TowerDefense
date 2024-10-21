@@ -36,6 +36,7 @@ public class MousePos : MonoBehaviour
 
             foreach (var t in _towerManager.TotalTowers)
             {
+                
                 Debug.Log("menacaaaaa menacağğğ " + t.Health.GetCurrentHealth);
             }
         }
