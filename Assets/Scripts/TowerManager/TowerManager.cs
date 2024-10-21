@@ -34,6 +34,8 @@ public class TowerManager
     }
 
 
+    
+    
     private void SetTotalTowers(ITower tower)
     {
         _totalTowers.Add(tower);
