@@ -1,24 +1,25 @@
 using System;
+using System.Collections.Generic;
 
 public class TowerEvents
 {
-    private Action OnTowerSpawned;
+    private Action<ITower> OnTowerSpawned;
     private Action OnTowerDestroyed;
 
 
     #region Spawn
 
-    public void TowerSpawnedTriggerAction()
+    public void TowerSpawnedTriggerAction(ITower towers)
     {
-        OnTowerSpawned?.Invoke();
+        OnTowerSpawned?.Invoke(towers);
     }
 
-    public void TowerSpawnedAddAction(Action action)
+    public void TowerSpawnedAddAction(Action<ITower> action)
     {
         OnTowerSpawned += action;
     }
 
-    public void TowerSpawnedRemoveAction(Action action)
+    public void TowerSpawnedRemoveAction(Action<ITower> action)
     {
         OnTowerSpawned -= action;
     }

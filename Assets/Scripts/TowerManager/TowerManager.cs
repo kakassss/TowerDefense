@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class TowerManager : MonoBehaviour
+public class TowerManager
 {
     private List<ITower> _totalTowers;
     private List<ITower> _activeTowers;
@@ -11,29 +11,33 @@ public class TowerManager : MonoBehaviour
     private List<ITowerAttack> _attackerTowers;
     
     private TowerEvents _towerEvents;
+
+
+    public List<ITower> TotalTowers => _totalTowers;
+    public List<ITower> ActiveTowers => _activeTowers;
+    public List<ITower> DestroyedTowers => _destroyedTowers;
+    public List<ITowerAttack> AttackerTowers => _attackerTowers;
     
     
     [Inject]
     private void Construct(TowerEvents towerEvents)
     {
         _towerEvents = towerEvents;
-    }
 
+        _totalTowers = new List<ITower>();
+        _activeTowers = new List<ITower>();
+        _destroyedTowers = new List<ITower>();
 
-    private void SetTotalTowers()
-    {
+        _attackerTowers = new List<ITowerAttack>();
         
-        
+        _towerEvents.TowerSpawnedAddAction(SetTotalTowers); 
     }
 
 
-    #region GetList
-
-    public List<ITowerAttack> GetAttackerTowers()
+    private void SetTotalTowers(ITower tower)
     {
-        return _attackerTowers;
+        _totalTowers.Add(tower);
+        _activeTowers.Add(tower);
     }
-
-    #endregion
     
 }

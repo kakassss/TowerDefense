@@ -13,9 +13,9 @@ public class TowerAttackManager : MonoBehaviour
     
     private void Update()
     {
-        foreach (var tower in _towerManager.GetAttackerTowers())
-        {
-            tower.AttackAction();
-        }
+        // foreach (var tower in _towerManager.GetAttackerTowers())
+        // {
+        //     tower.AttackAction();
+        // }
     }
 }

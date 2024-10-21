@@ -10,6 +10,8 @@ public class TowerInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.Bind<TowerEvents>().AsSingle().NonLazy();
+        Container.Bind<TowerManager>().AsSingle().NonLazy();
+        
         Container.Bind<TowerSpawn>().AsSingle().WithArguments(_towarSpawnLayerMask).NonLazy();
         Container.Bind<TowerPrefabSO>().FromScriptableObject(_towerPrefabSo).AsSingle().NonLazy();
     }
