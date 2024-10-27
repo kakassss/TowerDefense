@@ -32,8 +32,6 @@ public class TowerManager
         
         _towerEvents.TowerSpawnedAddAction(SetTotalTowers); 
     }
-
-
     
     private void SetTotalTowers(ITower tower)
     {
