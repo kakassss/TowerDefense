@@ -7,14 +7,13 @@ public class Grid<T>
     public Vector3 OriginPosition;
 }
 
-public class Cell
+public class Cell<T>
 {
-    public Vector3 Position;
     public bool IsFull;
+    public T Entity;
     
-    public Cell(Vector3 position, bool isfull)
+    public Cell(bool isfull)
     {
-        Position = position;
         IsFull = isfull;
     }
 }

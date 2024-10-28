@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class TowerManager
+public class TowerManager : IDisposable
 {
     private List<ITower> _totalTowers;
     private List<ITower> _activeTowers;
@@ -30,13 +31,29 @@ public class TowerManager
 
         _attackerTowers = new List<ITowerAttack>();
         
-        _towerEvents.TowerSpawnedAddAction(SetTotalTowers); 
+        _towerEvents.TowerSpawnedAddAction(AddTower); 
+        _towerEvents.TowerDestroyedAddAction(RemoveTower);
     }
     
-    private void SetTotalTowers(ITower tower)
+    private void AddTower(ITower tower)
     {
         _totalTowers.Add(tower);
         _activeTowers.Add(tower);
+        
+        
+        Debug.Log(_totalTowers.Count);
+        Debug.Log(_activeTowers.Count);
     }
-    
+
+    private void RemoveTower(ITower tower)
+    {
+        _activeTowers.Remove(tower);
+        _destroyedTowers.Add(tower);
+    }
+
+    public void Dispose()
+    {
+        _towerEvents.TowerSpawnedRemoveAction(AddTower);
+        _towerEvents.TowerDestroyedRemoveAction(RemoveTower);
+    }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CellManager
 {
-    private Grid<Cell>[,] _grid;
+    private Grid<Cell<GameObject>>[,] _grid;
     private int _width;
     private int _height;
     private float _cellSize;
@@ -13,7 +13,7 @@ public class CellManager
     private Utils _utils;
     
     
-    public Grid<Cell>[,] Grid => _grid;
+    public Grid<Cell<GameObject>>[,] Grid => _grid;
     public int Width => _width;
     public int Height => _height;
     public float CellSize => _cellSize;
@@ -22,7 +22,7 @@ public class CellManager
     
     public CellManager(int width, int height,float cellSize, Vector3 originPosition,Utils utils)
     {
-        _grid = new Grid<Cell>[width, height];
+        _grid = new Grid<Cell<GameObject>>[width, height];
         _width = width;
         _height = height;
         _cellSize = cellSize;
@@ -35,59 +35,19 @@ public class CellManager
         {
             for (int j = 0; j < _grid.GetLength(1); j++)
             {
-                _grid[i, j] = new Grid<Cell>
+                _grid[i, j] = new Grid<Cell<GameObject>>
                 {
-                    Slot = new Cell(new Vector3(i,0,j) ,false)
+                    Slot = new Cell<GameObject>(false)
                 };
                 
-                Debug.Log(_grid[i,j].Slot.Position);
+                //Debug.Log(_grid[i,j].Slot.Position);
             }
         }
     }
-
-
-    public Vector3 GetPositionMidpointAtGridIndex(Vector3 position)
-    {
-        var truncatePosition = GetPositionTruncatePosition(position);
-
-        var midPointX = truncatePosition.x / 2;
-        var midPointZ = truncatePosition.z / 2;
-
-        return new Vector3(midPointX, 0, midPointZ);
-    }
     
-    
-    public Vector3 GetPositionTruncatePosition(Vector3 position)
-    {
-        var intPosX = (int)Math.Truncate(position.x);
-        var intPosZ = (int)Math.Truncate(position.z);
-        var floorVector = new Vector3(intPosX, 0, intPosZ);
-        
-        Debug.Log("midPoint spawn pos " + floorVector);
-        
-        for (int i = 0; i < _width; i++)
-        {
-            for (int j = 0; j < _height; j++)
-            {
-                if (_grid[i, j].Slot.Position == floorVector)
-                {
-                    return _grid[i, j].Slot.Position;
-                }
-            }
-        }
-        
-        throw new InvalidOperationException("Position not found in the grid.");
-    }
-    
-
     public Vector3 GetWorldPosition(int x, int z)
     {
         return new Vector3(x, 0, z) * CellSize + _originPosition;
-    }
-    
-    public Vector3 GetPositionWithXZ(int width,int height)
-    {
-        return _grid[width, height].Slot.Position;
     }
     
     public void GetXZ(Vector3 worldPos, out int x, out int z)
@@ -96,6 +56,7 @@ public class CellManager
         z = Mathf.FloorToInt((worldPos- _originPosition).z/ _cellSize);
     }
 
+    
     public Vector3 GetCellMidPointPosition(Vector3 worldPos)
     {
         GetXZ(worldPos,out var x, out var z);
@@ -103,7 +64,7 @@ public class CellManager
         return cellPos + new Vector3(CellSize / 2, 0, CellSize / 2);
     }
     
-    public Grid<Cell> GetCellAtIndex(Vector3 worldPos)
+    public Grid<Cell<GameObject>> GetCellAtIndex(Vector3 worldPos)
     {
         GetXZ(worldPos,out var x, out var z);
         
@@ -111,24 +72,54 @@ public class CellManager
         {
             return _grid[x, z];
         }
-        
-        throw new InvalidOperationException("Position not found in the grid.");
+
+        return null;
     }
 
-    public void SetCellState(Vector3 worldPos,bool state)
+    public void SetCellAtIndex(Vector3 worldPos,GameObject gameObject)
     {
         var cell = GetCellAtIndex(worldPos);
-        cell.Slot.IsFull = state;
+        if(cell == null) return;
+        
+        SetCellFull(cell,gameObject);
     }
     
     public bool CheckCellState(Vector3 worldPos)
     {
-        return GetCellAtIndex(worldPos).Slot.IsFull;
+        var cell = GetCellAtIndex(worldPos);
+        if (cell == null) return true;
+        
+        return cell.Slot.IsFull;
     }
-
+    
     private Vector3 GetCellPosition(Vector3 worldPos)
     {
         GetXZ(worldPos,out var x, out var z);
         return GetWorldPosition(x, z);
     }
+
+    #region SetCellActions
+
+    public void SetCellFull(Grid<Cell<GameObject>> cell, GameObject gameObject)
+    {
+        cell.Slot.IsFull = true;
+        cell.Slot.Entity = gameObject;
+    }
+
+    public void SetCellEmptyWithDestroy(Grid<Cell<GameObject>> cell,GameObject gameObject)
+    {
+        cell.Slot.IsFull = false;
+        cell.Slot.Entity = null;
+    }
+
+    public void SetCellEmptyWithInput(Vector3 worldPos, GameObject gameObject)
+    {
+        var cell = GetCellAtIndex(worldPos);
+        cell.Slot.IsFull = false;
+        cell.Slot.Entity = null;
+    }
+
+    #endregion
+    
+    
 }

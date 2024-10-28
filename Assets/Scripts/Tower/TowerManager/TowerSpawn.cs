@@ -41,19 +41,16 @@ public class TowerSpawn : IDisposable
         if(_spawnPos == Vector3.zero) return;
         if(_cellManager.CheckCellState(_spawnPos) == true) return;
         
-        _cellManager.SetCellState(_spawnPos,true);
         _spawnPos = _cellManager.GetCellMidPointPosition(_spawnPos);
 
-        Debug.Log("midPoint spawn pos " + _spawnPos);
-        //return;
+        //Debug.Log("midPoint spawn pos " + _spawnPos);
         var newTower = Object.Instantiate(_towerPrefabSo.AllTowers[0].gameObject, _spawnPos,Quaternion.identity);
+        _cellManager.SetCellAtIndex(_spawnPos,newTower);
 
         if (!newTower.TryGetComponent<ITower>(out ITower tower)) return; // belki scriptableobjeye direkt olarak interfaceli olarak ala
         _towerEvents.TowerSpawnedTriggerAction(tower); 
-        
-        //Debug.Log("tower list " + _itowerList.Count);
     }
-
+    
     public void Dispose()
     {
         _inputActions.SpawnInputRemoveAction(Spawn);

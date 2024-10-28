@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class TowerEvents
 {
     private Action<ITower> OnTowerSpawned;
-    private Action OnTowerDestroyed;
+    private Action<ITower> OnTowerDestroyed;
 
 
     #region Spawn
@@ -28,17 +28,17 @@ public class TowerEvents
 
     #region Destroy
 
-    public void TowerDestroyedTriggerAction()
+    public void TowerDestroyedTriggerAction(ITower towers)
     {
-        OnTowerDestroyed?.Invoke();
+        OnTowerDestroyed?.Invoke(towers);
     }
 
-    public void TowerDestroyedAddAction(Action action)
+    public void TowerDestroyedAddAction(Action<ITower> action)
     {
         OnTowerDestroyed += action;
     }
 
-    public void TowerDestroyedRemoveAction(Action action)
+    public void TowerDestroyedRemoveAction(Action<ITower> action)
     {
         OnTowerDestroyed -= action;
     }
