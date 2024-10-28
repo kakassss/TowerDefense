@@ -14,4 +14,13 @@ public class Utils
         return Physics.Raycast(ray, out RaycastHit hit,float.MaxValue) ? hit.point : Vector3.zero;
     }
     
+    //-3.14 -> -3
+    //-3.64 -> -4
+    //3.14 -> 3
+    //3.65 -> 4
+    public int CustomRound(float value)
+    {
+        return (int)(value >= 0 ? value + 0.5f : value - 0.5f);
+    }
+    
 }

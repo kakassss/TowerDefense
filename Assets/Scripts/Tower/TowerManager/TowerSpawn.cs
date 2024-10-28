@@ -13,15 +13,18 @@ public class TowerSpawn : IDisposable
     private InputActions _inputActions;
     private TowerEvents _towerEvents;
     private TowerPrefabSO _towerPrefabSo;
+    private CellManager _cellManager;
     private Utils _utils;
     
     [Inject]
     private void Construct(
         TowerEvents towerEvents, TowerPrefabSO towerPrefabSo, Utils utils,
-        LayerMask layerMask, InputActions inputActions, Camera camera)
+        LayerMask layerMask, InputActions inputActions, Camera camera,
+        CellManager cellManager)
     {
         _towerPrefabSo = towerPrefabSo;
         _towerEvents = towerEvents;
+        _cellManager = cellManager;
         _utils = utils;
         
         _layerMask = layerMask;
@@ -30,12 +33,19 @@ public class TowerSpawn : IDisposable
         
         _inputActions.SpawnInputAddAction(Spawn);
     }
+     
     
     private void Spawn()
     {
         _spawnPos = _utils.GetValidPositionWithLayerMask(_camera,_layerMask);
         if(_spawnPos == Vector3.zero) return;
+        if(_cellManager.CheckCellState(_spawnPos) == true) return;
         
+        _cellManager.SetCellState(_spawnPos,true);
+        _spawnPos = _cellManager.GetCellMidPointPosition(_spawnPos);
+
+        Debug.Log("midPoint spawn pos " + _spawnPos);
+        //return;
         var newTower = Object.Instantiate(_towerPrefabSo.AllTowers[0].gameObject, _spawnPos,Quaternion.identity);
 
         if (!newTower.TryGetComponent<ITower>(out ITower tower)) return; // belki scriptableobjeye direkt olarak interfaceli olarak ala
