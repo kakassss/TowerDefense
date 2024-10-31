@@ -14,18 +14,20 @@ public class TowerSpawn : IDisposable
     private TowerEvents _towerEvents;
     private TowerPrefabSO _towerPrefabSo;
     private CellManager _cellManager;
+    private GridEntitySO _gridEntitySo;
     private Utils _utils;
     
     [Inject]
     private void Construct(
         TowerEvents towerEvents, TowerPrefabSO towerPrefabSo, Utils utils,
         LayerMask layerMask, InputActions inputActions, Camera camera,
-        CellManager cellManager)
+        CellManager cellManager, GridEntitySO gridEntitySo)
     {
         _towerPrefabSo = towerPrefabSo;
         _towerEvents = towerEvents;
         _cellManager = cellManager;
         _utils = utils;
+        _gridEntitySo = gridEntitySo;
         
         _layerMask = layerMask;
         _camera = camera;
@@ -41,6 +43,8 @@ public class TowerSpawn : IDisposable
         if(_spawnPos == Vector3.zero) return;
         if(_cellManager.CheckCellState(_spawnPos) == true) return;
         
+        _cellManager.BuildGridEntity(_spawnPos,_gridEntitySo,_towerPrefabSo.AllTowers[0].gameObject);
+        return;
         _spawnPos = _cellManager.GetCellMidPointPosition(_spawnPos);
 
         //Debug.Log("midPoint spawn pos " + _spawnPos);
