@@ -36,7 +36,7 @@ public class CellManager
             {
                 _grid[i, j] = new Grid<Cell<GameObject>>
                 {
-                    Slot = new Cell<GameObject>(false, CellPowerEnum.Normal)
+                    Slot = new Cell<GameObject>(i,j,false, CellPowerEnum.Normal)
                 };
             }
         }
@@ -59,74 +59,6 @@ public class CellManager
         if (cell == null) return true;
         
         return cell.Slot.IsFull;
-    }
-
-    public void BuildGridEntity(Vector3 worldPos, GridEntitySO currentGridEntity, GameObject gameObject)
-    {
-        var mousePosCell = GetCellAtIndex(worldPos);
-        
-        if(mousePosCell == null) return;
-
-        List<BuildCell> buildCells = new List<BuildCell>();
-
-        GetXZ(worldPos,out var x, out var z);
-        
-        Debug.Log("X Z " + x + z);
-        
-        for (int i = 0; i < currentGridEntity.X; i++)
-        {
-            for (int j = 0; j < currentGridEntity.Z; j++)
-            {
-                if ( x + i >= 0 && z + j >= 0 && x < _width && z < _height)
-                {
-                    var buildCell = _grid[x + i, z + j];
-                    if(buildCell.Slot.IsFull == true) return;
-                
-                    Debug.Log("buildCell " + (x+i) + " " + (z + j));
-                
-                    BuildCell buildableCell = new BuildCell(x + i, z + j, _cellSize, _originPosition,buildCell);
-                    buildCell.Slot.Entity = gameObject;
-                    buildCells.Add(buildableCell);
-                }
-            }
-        }
-        
-        if(buildCells.Count <= 0) return;
-        
-        BuildAction(buildCells);    
-    }
-
-    private void BuildAction(List<BuildCell> buildCells)
-    {
-        foreach (var cell in buildCells)
-        {
-            cell.Cell.Slot.IsFull = true;
-            Object.Instantiate(cell.Cell.Slot.Entity,cell.SpawnPosition,Quaternion.identity);
-        }
-        
-    }
-
-    public struct BuildCell
-    {
-        public int X;
-        public int Z;
-        public float CellSize;
-        public Vector3 OriginPosition;
-        
-        public Vector3 SpawnPosition;
-        public Grid<Cell<GameObject>> Cell;
-        
-        public BuildCell(int x, int z, float cellSize, Vector3 originPosition, Grid<Cell<GameObject>> cell)
-        {
-            X = x;
-            Z = z;
-            CellSize = cellSize;
-            OriginPosition = originPosition;
-            Cell = cell;
-            
-            SpawnPosition = new Vector3(X,0, Z) * CellSize + OriginPosition + new Vector3(CellSize / 2, 0, CellSize / 2);
-        }
-
     }
     
     #region GetCellActions

@@ -17,8 +17,10 @@ public class Cell<T>
     public CellPowerEnum CellPowerEnum;
     
     
-    public Cell(bool isfull,CellPowerEnum cellPowerEnum = CellPowerEnum.Normal)
+    public Cell(int gridX, int gridZ, bool isfull,CellPowerEnum cellPowerEnum = CellPowerEnum.Normal)
     {
+        GridX = gridX;
+        GridZ = gridZ;
         IsFull = isfull;
         CellPowerEnum = cellPowerEnum;
     }
@@ -34,17 +36,5 @@ public enum CellPowerEnum
     Dark,
 }
 
-public struct GridEntity
-{
-    public int X;
-    public int Z;
-    public Vector3 Size;
 
 
-    public GridEntity(int x, int z)
-    {
-        X = x;
-        Z = z;
-        Size = new Vector3(X, 0, Z);
-    }
-}

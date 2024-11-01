@@ -15,3 +15,7 @@ MonoBehaviour:
   X: 2
   Z: 2
   Size: {x: 0, y: 0, z: 0}
+  BuildObject: {fileID: 4207462685524899319, guid: b108bf316076861478249a836fcaf535, type: 3}
+  GhostObject:
+    GhostGO: {fileID: 4436486686195104848, guid: 4fc3ee0667611cc4cb9427d0d429ef3b, type: 3}
+    GhostSpawnPos: {fileID: 0}

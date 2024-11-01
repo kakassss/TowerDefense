@@ -35,6 +35,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Space"",
+                    ""type"": ""Button"",
+                    ""id"": ""95f77615-3906-49e6-b453-26c1f4ab1070"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -46,6 +55,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""TowerSpawn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""417c2543-40f7-478d-a910-754d6a229ae4"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Space"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -118,6 +138,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         // TowerDefence
         m_TowerDefence = asset.FindActionMap("TowerDefence", throwIfNotFound: true);
         m_TowerDefence_TowerSpawn = m_TowerDefence.FindAction("TowerSpawn", throwIfNotFound: true);
+        m_TowerDefence_Space = m_TowerDefence.FindAction("Space", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -185,11 +206,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_TowerDefence;
     private List<ITowerDefenceActions> m_TowerDefenceActionsCallbackInterfaces = new List<ITowerDefenceActions>();
     private readonly InputAction m_TowerDefence_TowerSpawn;
+    private readonly InputAction m_TowerDefence_Space;
     public struct TowerDefenceActions
     {
         private @InputSystem_Actions m_Wrapper;
         public TowerDefenceActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
         public InputAction @TowerSpawn => m_Wrapper.m_TowerDefence_TowerSpawn;
+        public InputAction @Space => m_Wrapper.m_TowerDefence_Space;
         public InputActionMap Get() { return m_Wrapper.m_TowerDefence; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -202,6 +225,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @TowerSpawn.started += instance.OnTowerSpawn;
             @TowerSpawn.performed += instance.OnTowerSpawn;
             @TowerSpawn.canceled += instance.OnTowerSpawn;
+            @Space.started += instance.OnSpace;
+            @Space.performed += instance.OnSpace;
+            @Space.canceled += instance.OnSpace;
         }
 
         private void UnregisterCallbacks(ITowerDefenceActions instance)
@@ -209,6 +235,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @TowerSpawn.started -= instance.OnTowerSpawn;
             @TowerSpawn.performed -= instance.OnTowerSpawn;
             @TowerSpawn.canceled -= instance.OnTowerSpawn;
+            @Space.started -= instance.OnSpace;
+            @Space.performed -= instance.OnSpace;
+            @Space.canceled -= instance.OnSpace;
         }
 
         public void RemoveCallbacks(ITowerDefenceActions instance)
@@ -274,5 +303,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     public interface ITowerDefenceActions
     {
         void OnTowerSpawn(InputAction.CallbackContext context);
+        void OnSpace(InputAction.CallbackContext context);
     }
 }

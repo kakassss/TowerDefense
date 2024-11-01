@@ -34,4 +34,12 @@ public class InputReader : MonoBehaviour, InputSystem_Actions.ITowerDefenceActio
         }
         
     }
+
+    public void OnSpace(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _inputActions.GhostSpawnInputAction();
+        }
+    }
 }
