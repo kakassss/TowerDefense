@@ -8,25 +8,28 @@ public class GhostBuildManager
 {
     private CellManager _cellManager;
     private GridEntitySO _gridEntitySo;
+    private GhostObjectReceiver _ghostObjectReceiver;
+    private Utils _utils;
+
     
     [Inject]
-    private void Construct(CellManager cellManager,GridEntitySO gridEntitySo)
+    private void Construct(
+        CellManager cellManager,GridEntitySO gridEntitySo, Utils utils,
+        GhostObjectReceiver ghostObjectReceiver)
     {
         _cellManager = cellManager;
         _gridEntitySo = gridEntitySo;
+        _ghostObjectReceiver = ghostObjectReceiver;
+        _utils = utils;
     }
     
     public void BuildAction(Vector3 worldPos)
     {
-        var mousePosCell = _cellManager.GetCellAtIndex(worldPos);
+        _ghostObjectReceiver.GameObject = Object.Instantiate(_gridEntitySo.GhostObject.GhostGO,
+            _utils.GetValidPositionWithLayerMask(),Quaternion.identity);
         
-        if(mousePosCell == null) return;
-
-        List<BuildSingleCell> buildCells = new List<BuildSingleCell>();
-
+        
         _cellManager.GetXZ(worldPos,out var x, out var z);
-        
-        Debug.Log("X Z " + x + z);
         
         for (int i = 0; i < _gridEntitySo.X; i++)
         {
@@ -35,51 +38,18 @@ public class GhostBuildManager
                 if ( x + i >= 0 && z + j >= 0 && x + i < _cellManager.Width && z + j < _cellManager.Height)
                 {
                     var buildCell = _cellManager.Grid[x + i, z + j].Slot;
-                    if(buildCell.IsFull == true)
-                    {
-                        Debug.Log("Invalid position");
-                        return;
-                    }
-                
-                    Debug.Log("buildCell " + (x+i) + " " + (z + j));
-                    BuildSingleCell buildableSingleCell = new BuildSingleCell(buildCell, _cellManager.CellSize, _cellManager.OriginPosition);
-                    buildCells.Add(buildableSingleCell);
+
+                    if (buildCell.IsFull != true) continue;
+                    
+                    //Burada rengini değiştireceksin
+                    Debug.Log("Invalid position");
                 }
             }
         }
         
-        if(buildCells.Count <= 0) return;
-        
-        InstantiateAction(buildCells[0],_gridEntitySo.GhostObject.GhostGO);
-    }
-
-    private void InstantiateAction(BuildSingleCell buildCells,GameObject gameObject)
-    {
-        
-        
-        
-        Object.Instantiate(gameObject,buildCells.SpawnPosition,Quaternion.identity);
     }
 }
 
-public struct BuildSingleCell : IBuildable
-{
-    public float CellSize;
-    public Vector3 OriginPosition;
-    
-    public Vector3 SpawnPosition;
-    public Cell<GameObject> Cell;
-        
-    public BuildSingleCell(Cell<GameObject> cell, float cellSize, Vector3 originPosition)
-    {
-        CellSize = cellSize;
-        OriginPosition = originPosition;
-        Cell = cell;
-            
-        SpawnPosition = new Vector3(cell.GridX,0, cell.GridZ) * CellSize + OriginPosition;
-    }
-    
-}
 
 public class BuildManager
 {
@@ -92,6 +62,7 @@ public class BuildManager
         _cellManager = cellManager;
         _gridEntitySo = gridEntitySo;
     }
+    
     
     public void BuildAction(Vector3 worldPos)
     {

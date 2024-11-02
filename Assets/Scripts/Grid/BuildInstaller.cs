@@ -7,5 +7,6 @@ public class BuildInstaller : MonoInstaller
     {
         Container.Bind<BuildManager>().AsSingle().NonLazy();
         Container.Bind<GhostBuildManager>().AsSingle().NonLazy();
+        Container.Bind<GhostObjectReceiver>().AsSingle().NonLazy();
     }
 }

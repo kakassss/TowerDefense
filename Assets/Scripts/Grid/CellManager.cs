@@ -36,7 +36,7 @@ public class CellManager
             {
                 _grid[i, j] = new Grid<Cell<GameObject>>
                 {
-                    Slot = new Cell<GameObject>(i,j,false, CellPowerEnum.Normal)
+                    Slot = new Cell<GameObject>(i,j,false, CellPower.Normal)
                 };
             }
         }

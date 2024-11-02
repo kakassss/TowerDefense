@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Grid<T>
@@ -14,19 +15,22 @@ public class Cell<T>
     public int GridZ;
     public bool IsFull;
     public T Entity;
-    public CellPowerEnum CellPowerEnum;
+    public CellPower DefaultCellPower;
+    public List<CellPower> CellPowerEnumList;
     
-    
-    public Cell(int gridX, int gridZ, bool isfull,CellPowerEnum cellPowerEnum = CellPowerEnum.Normal)
+    public Cell(int gridX, int gridZ, bool isfull, CellPower defaultCellPower)
     {
         GridX = gridX;
         GridZ = gridZ;
         IsFull = isfull;
-        CellPowerEnum = cellPowerEnum;
+        DefaultCellPower = defaultCellPower;
+        
+        //Default Power 
+        CellPowerEnumList = new List<CellPower> { DefaultCellPower };
     }
 }
 
-public enum CellPowerEnum
+public enum CellPower
 {
     Normal,
     Heavy,
@@ -35,6 +39,3 @@ public enum CellPowerEnum
     Light,
     Dark,
 }
-
-
-

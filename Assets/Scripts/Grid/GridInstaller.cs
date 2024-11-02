@@ -14,6 +14,4 @@ public class GridInstaller : MonoInstaller
     {
         Container.Bind<CellManager>().AsSingle().WithArguments(width,height,cellSize,originPos).NonLazy();
     }
-
-    
 }

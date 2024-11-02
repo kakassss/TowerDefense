@@ -1490,7 +1490,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1445c2bf01b577c4bbd2bd26b19276b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _towerPrefabSo: {fileID: 11400000, guid: 7853010e3c847c34286ad1d7d8b9d02f, type: 2}
   _gridEntitySo: {fileID: 11400000, guid: ef31dbc3d0614af4a95e6414f2976065, type: 2}
   _towarSpawnLayerMask:
     serializedVersion: 2
@@ -1571,6 +1570,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a1b0c6f182e3ca4ba6f428337d966ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 330585545}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &1451143643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1841,10 +1844,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6be65b78067f114786e6df0d4590cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 330585545}
-  _layerMask:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

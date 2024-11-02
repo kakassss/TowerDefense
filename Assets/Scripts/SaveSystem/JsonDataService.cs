@@ -26,7 +26,7 @@ public class JsonDataService : IDataService
         }
         catch (Exception e)
         {
-            Debug.LogError("Unable to save data");
+            Debug.LogError("Unable to save data" + e);
         }
     }
 
