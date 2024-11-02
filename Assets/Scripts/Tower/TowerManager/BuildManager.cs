@@ -130,6 +130,6 @@ public struct BuildMultipleCells
         Cell = cell;
         BuildObject = gameObject;
             
-        SpawnPosition = new Vector3(cell.Slot.GridX,0, cell.Slot.GridZ) * CellSize + OriginPosition + new Vector3(CellSize / 2, 0, CellSize / 2);
+        SpawnPosition = new Vector3(cell.Slot.GridIndexX,0, cell.Slot.GridIndexZ) * CellSize + OriginPosition + new Vector3(CellSize / 2, 0, CellSize / 2);
     }
 }

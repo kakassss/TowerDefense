@@ -11,17 +11,17 @@ public class Grid<T>
 
 public class Cell<T>
 {
-    public int GridX;
-    public int GridZ;
+    public int GridIndexX;
+    public int GridIndexZ;
     public bool IsFull;
-    public T Entity;
+    public T Entity; // Gameobject tutmak için yapmıstın şimdilik boş duruyor
     public CellPower DefaultCellPower;
     public List<CellPower> CellPowerEnumList;
     
-    public Cell(int gridX, int gridZ, bool isfull, CellPower defaultCellPower)
+    public Cell(int gridIndexX, int gridIndexZ, bool isfull, CellPower defaultCellPower)
     {
-        GridX = gridX;
-        GridZ = gridZ;
+        GridIndexX = gridIndexX;
+        GridIndexZ = gridIndexZ;
         IsFull = isfull;
         DefaultCellPower = defaultCellPower;
         
