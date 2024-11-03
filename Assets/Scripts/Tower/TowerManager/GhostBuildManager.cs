@@ -20,31 +20,20 @@ public class GhostBuildManager
         _utils = utils;
     }
     
-    public void BuildAction(Vector3 worldPos)
+    public void BuildAction()
+    {
+        SetGhostObject();
+    }
+
+    private void SetGhostObject()
     {
         _ghostObjectReceiver.GameObject = Object.Instantiate(_gridEntitySo.GhostObject.GhostGO,
             _utils.GetValidPositionWithLayerMask(),Quaternion.identity);
+        
         _ghostObjectReceiver.GridIndexX = _gridEntitySo.X;
         _ghostObjectReceiver.GridIndexZ = _gridEntitySo.Z;
-        
-        
-        _cellManager.GetXZ(worldPos,out var x, out var z);
-        
-        for (int i = 0; i < _gridEntitySo.X; i++)
-        {
-            for (int j = 0; j < _gridEntitySo.Z; j++)
-            {
-                if ( x + i >= 0 && z + j >= 0 && x + i < _cellManager.Width && z + j < _cellManager.Height)
-                {
-                    var buildCell = _cellManager.Grid[x + i, z + j].Slot;
-
-                    if (buildCell.IsFull != true) continue;
-                    
-                    //Burada rengini değiştireceksin
-                    Debug.Log("Invalid position");
-                }
-            }
-        }
-        
+        _ghostObjectReceiver.GreenMaterials = _gridEntitySo.GhostObject.GreenMaterials;
+        _ghostObjectReceiver.RedMaterials = _gridEntitySo.GhostObject.RedMaterials;
+        _ghostObjectReceiver.MeshRenderers = _gridEntitySo.GhostObject.GetMeshRenderers();
     }
 }

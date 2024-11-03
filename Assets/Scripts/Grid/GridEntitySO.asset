@@ -14,8 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   X: 2
   Z: 2
-  Size: {x: 0, y: 0, z: 0}
+  Size: {x: 2, y: 0, z: 2}
   BuildObject: {fileID: 4207462685524899319, guid: b108bf316076861478249a836fcaf535, type: 3}
   GhostObject:
     GhostGO: {fileID: 4436486686195104848, guid: 4fc3ee0667611cc4cb9427d0d429ef3b, type: 3}
-    GhostSpawnPos: {fileID: 0}
+    GreenMaterials:
+    - {fileID: 2100000, guid: c35cc1dcdfa7e4f4da1f85e45ab78f5c, type: 2}
+    - {fileID: 2100000, guid: 5a28ae96d341c724cbc61ce198576e13, type: 2}
+    RedMaterials:
+    - {fileID: 2100000, guid: 0e0071d8b474d4f41b6de2f339d19f5f, type: 2}
+    - {fileID: 2100000, guid: fa69a0309468c314295e48ab64bf6f11, type: 2}

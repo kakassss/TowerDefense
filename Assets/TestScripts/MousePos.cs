@@ -3,18 +3,14 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-public class GhostObjectReceiver
-{
-    public GameObject GameObject;
-    public int GridIndexX;
-    public int GridIndexZ;
-}
-
 public class MousePos : MonoBehaviour
 {
     private Utils _utils;
     private GhostObjectReceiver _ghostObjectReceiver;
     private CellManager _cellManager;
+
+    private Grid<Cell<GameObject>> mouseCell;
+    private Vector3 _mousePos;
     
     [Inject]
     private void Construct(Utils utils,GhostObjectReceiver ghostObjectReceiver,CellManager cellManager)
@@ -26,22 +22,22 @@ public class MousePos : MonoBehaviour
     
     private void Update()
     {
-        transform.position = _utils.GetValidPositionWithLayerMask();
+        transform.position = _utils.GetValidPositionWithLayerMask(); // mavi küp için sonradan kaldırabilir
         if(_ghostObjectReceiver.GameObject == null) return;
-        var mouseCell = _cellManager.GetCellAtIndex(_ghostObjectReceiver.GameObject.transform.position);
+        mouseCell = _cellManager.GetCellAtIndex(_utils.GetValidPositionWithLayerMask());
 
-        if (mouseCell == null)
+        if (mouseCell != null)
         {
-            _ghostObjectReceiver.GameObject.transform.position = transform.position;
+            CalculateGridPos();
             return;
         }
+        
+        _ghostObjectReceiver.GameObject.transform.position = transform.position;
         //_cellManager.GetXZ(_utils.GetValidPositionWithLayerMask(),out var X, out var Z);
         //_cellManager.GetWorldPosition(X, Z);
-        _ghostObjectReceiver.GameObject.transform.position = CalculateGridPos();
-
     }
 
-    private Vector3 CalculateGridPos()
+    private void CalculateGridPos()
     {
         _cellManager.GetXZ(_utils.GetValidPositionWithLayerMask(),out var x, out var z);
 
@@ -54,11 +50,19 @@ public class MousePos : MonoBehaviour
                 if ( x + i >= 0 && z + j >= 0 && x + i < _cellManager.Width && z + j < _cellManager.Height)
                 {
                     var buildCell = _cellManager.Grid[x + i, z + j].Slot;
+                    if (buildCell.IsFull)
+                    {
+                        _ghostObjectReceiver.OnGhostMaterialRedFire();
+                    }
+                    else
+                    {
+                        _ghostObjectReceiver.OnGhostMaterialGreenFire();
+                    }
                     buildableCells.Add(buildCell);
                 }
             }
         }
-
+        
         List<Vector3> cellsPosition = buildableCells.Select(cell => _cellManager.GetCellMidPointPositionXZ(cell.GridIndexX, cell.GridIndexZ)).ToList();
 
         Vector3 averageX = Vector3.zero;
@@ -71,6 +75,6 @@ public class MousePos : MonoBehaviour
         }
         Vector3 midPos = new Vector3(averageX.x / cellsPosition.Count, 0, averageZ.z / cellsPosition.Count);
         
-        return midPos;
+        _ghostObjectReceiver.GameObject.transform.position  = midPos;
     }
 }

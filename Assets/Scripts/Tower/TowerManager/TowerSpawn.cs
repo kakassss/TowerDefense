@@ -36,9 +36,7 @@ public class TowerSpawn : IDisposable
     {
         _spawnPos = _utils.GetValidPositionWithLayerMask();
         if(_spawnPos == Vector3.zero) return;
-        if(_cellManager.CheckCellState(_spawnPos) == true) return;
-        
-        _ghostBuildManager.BuildAction(_spawnPos);
+        _ghostBuildManager.BuildAction();
     }
     
     private void Spawn()

@@ -603,7 +603,7 @@ GameObject:
   - component: {fileID: 497817659}
   - component: {fileID: 497817660}
   m_Layer: 0
-  m_Name: GridController
+  m_Name: GridGizmos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1491,10 +1491,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridEntitySo: {fileID: 11400000, guid: ef31dbc3d0614af4a95e6414f2976065, type: 2}
-  _towarSpawnLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  _camera: {fileID: 330585545}
 --- !u!114 &1451143639
 MonoBehaviour:
   m_ObjectHideFlags: 0
