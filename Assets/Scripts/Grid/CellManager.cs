@@ -79,6 +79,11 @@ public class CellManager
         GetXZ(worldPos,out var x, out var z);
         return GetWorldPosition(x, z);
     }
+
+    public Vector3 GetCellMidPointPositionXZ(int x, int z)
+    {
+        return new Vector3(x,0, z) * CellSize + OriginPosition + new Vector3(CellSize / 2, 0, CellSize / 2);
+    }
     
     public Vector3 GetCellMidPointPosition(Vector3 worldPos)
     {
