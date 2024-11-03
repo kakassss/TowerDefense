@@ -8,7 +8,6 @@ public class Grid<T>
     public Vector3 OriginPosition;
 }
 
-
 public class Cell<T>
 {
     public int GridIndexX;

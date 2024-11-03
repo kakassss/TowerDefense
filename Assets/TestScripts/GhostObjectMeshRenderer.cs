@@ -1,35 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 public class GhostObjectMeshRenderer : MonoBehaviour
 {
-    [SerializeField] private List<MeshRenderer> _meshRenderers;
-
-    private GhostObjectReceiver _ghostObjectReceiver;
-
-    [Inject]
-    private void Construct(GhostObjectReceiver ghostObjectReceiver)
-    {
-        _ghostObjectReceiver = ghostObjectReceiver;
-    }
-
-    private void Update()
-    {
-        SetRedMaterial();
-    }
-    // private void OnEnable()
-    // {
-    //     _ghostObjectReceiver.AddOnGhostMaterialGreen(SetGreenMaterial);
-    //     _ghostObjectReceiver.AddOnGhostMaterialRed(SetRedMaterial);
-    // }
+    [Inject] private GhostObjectReceiver _ghostObjectReceiver;
     //
-    // private void OnDestroy()
+    // [Inject]
+    // private void Construct(GhostObjectReceiver ghostObjectReceiver)
     // {
-    //     _ghostObjectReceiver.RemoveOnGhostMaterialGreen(SetGreenMaterial);
-    //     _ghostObjectReceiver.RemoveOnGhostMaterialRed(SetRedMaterial);
+    //     _ghostObjectReceiver = ghostObjectReceiver;
     // }
+    
+    private void OnEnable()
+    {
+        Debug.Log(_ghostObjectReceiver);
+        // _ghostObjectReceiver.AddOnGhostMaterialGreen(SetGreenMaterial);
+        // _ghostObjectReceiver.AddOnGhostMaterialRed(SetRedMaterial);
+    }
+    
+    private void OnDestroy()
+    {
+        _ghostObjectReceiver.RemoveOnGhostMaterialGreen(SetGreenMaterial);
+        _ghostObjectReceiver.RemoveOnGhostMaterialRed(SetRedMaterial);
+    }
 
     private void SetGreenMaterial()
     {
@@ -41,7 +34,7 @@ public class GhostObjectMeshRenderer : MonoBehaviour
 
     private void SetRedMaterial()
     {
-        for (int i = 0; i < _meshRenderers.Count; i++)
+        for (int i = 0; i < _ghostObjectReceiver.MeshRenderers.Count; i++)
         {
             _ghostObjectReceiver.MeshRenderers[i].material = _ghostObjectReceiver.RedMaterials[i];
         }

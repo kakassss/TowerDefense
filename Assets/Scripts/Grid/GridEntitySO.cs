@@ -9,8 +9,6 @@ public class GridEntitySO : ScriptableObject
     public int Z;
 
     public Vector3 Size;
-
-    
     
     public GameObject BuildObject;
     public GhostObject GhostObject;
@@ -38,51 +36,4 @@ public class GhostObject
 
         return MeshRenderers;
     }
-}
-
-public class GhostObjectReceiver
-{
-    private Action OnGhostMaterialGreen;
-    private Action OnGhostMaterialRed;
-    
-    public GameObject GameObject;
-    public int GridIndexX;
-    public int GridIndexZ;
-
-
-    public List<MeshRenderer> MeshRenderers;
-    public List<Material> GreenMaterials;
-    public List<Material> RedMaterials;
-    
-    public void OnGhostMaterialGreenFire()
-    {
-        OnGhostMaterialGreen?.Invoke();
-    }
-
-    public void AddOnGhostMaterialGreen(Action action)
-    {
-        OnGhostMaterialGreen += action;
-    }
-
-    public void RemoveOnGhostMaterialGreen(Action action)
-    {
-        OnGhostMaterialGreen -= action;
-    }
-    
-    public void OnGhostMaterialRedFire()
-    {
-        OnGhostMaterialRed?.Invoke();
-    }
-
-    public void AddOnGhostMaterialRed(Action action)
-    {
-        OnGhostMaterialRed += action;
-    }
-
-    public void RemoveOnGhostMaterialRed(Action action)
-    {
-        OnGhostMaterialRed -= action;
-    }
-    
-    
 }

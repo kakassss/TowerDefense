@@ -28,7 +28,7 @@ public class BuildManager
 
         _cellManager.GetXZ(worldPos,out var x, out var z);
         
-        Debug.Log("X Z " + x + z);
+        //Debug.Log("X Z " + x + z);
         
         for (int i = 0; i < _gridEntitySo.X; i++)
         {
@@ -39,7 +39,7 @@ public class BuildManager
                     var buildCell = _cellManager.Grid[x + i, z + j];
                     if(buildCell.Slot.IsFull == true) return;
                 
-                    Debug.Log("buildCell " + (x+i) + " " + (z + j));
+                    //Debug.Log("buildCell " + (x+i) + " " + (z + j));
                     BuildMultipleCells buildableMultipleCells = new BuildMultipleCells(buildCell,_gridEntitySo.BuildObject, _cellManager.CellSize, _cellManager.OriginPosition);
                     buildCells.Add(buildableMultipleCells);
                 }
