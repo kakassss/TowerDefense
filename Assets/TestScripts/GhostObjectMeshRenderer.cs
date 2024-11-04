@@ -2,20 +2,20 @@
 using Zenject;
 
 public class GhostObjectMeshRenderer : MonoBehaviour
-{
-    [Inject] private GhostObjectReceiver _ghostObjectReceiver;
-    //
-    // [Inject]
-    // private void Construct(GhostObjectReceiver ghostObjectReceiver)
-    // {
-    //     _ghostObjectReceiver = ghostObjectReceiver;
-    // }
+{ 
+    private GhostObjectReceiver _ghostObjectReceiver;
+    
+    [Inject]
+    private void Construct(GhostObjectReceiver ghostObjectReceiver)
+    {
+        _ghostObjectReceiver = ghostObjectReceiver;
+    }
     
     private void OnEnable()
     {
         Debug.Log(_ghostObjectReceiver);
-        // _ghostObjectReceiver.AddOnGhostMaterialGreen(SetGreenMaterial);
-        // _ghostObjectReceiver.AddOnGhostMaterialRed(SetRedMaterial);
+        _ghostObjectReceiver.AddOnGhostMaterialGreen(SetGreenMaterial);
+        _ghostObjectReceiver.AddOnGhostMaterialRed(SetRedMaterial);
     }
     
     private void OnDestroy()
@@ -28,7 +28,7 @@ public class GhostObjectMeshRenderer : MonoBehaviour
     {
         for (int i = 0; i < _ghostObjectReceiver.MeshRenderers.Count; i++)
         {
-            _ghostObjectReceiver.MeshRenderers[i].material = _ghostObjectReceiver.GreenMaterials[i];
+            _ghostObjectReceiver.MeshRenderers[i].sharedMaterial.color = _ghostObjectReceiver.GreenMaterials[i].color;
         }
     }
 
@@ -36,7 +36,7 @@ public class GhostObjectMeshRenderer : MonoBehaviour
     {
         for (int i = 0; i < _ghostObjectReceiver.MeshRenderers.Count; i++)
         {
-            _ghostObjectReceiver.MeshRenderers[i].material = _ghostObjectReceiver.RedMaterials[i];
+            _ghostObjectReceiver.MeshRenderers[i].sharedMaterial.color = _ghostObjectReceiver.RedMaterials[i].color;
         }
     }
 }

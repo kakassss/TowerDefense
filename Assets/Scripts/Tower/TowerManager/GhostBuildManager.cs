@@ -6,15 +6,18 @@ public class GhostBuildManager
     private GridEntitySO _gridEntitySo;
     private GhostObjectReceiver _ghostObjectReceiver;
     private Utils _utils;
+    private IInstantiator _instantiator;
 
     
     [Inject]
     private void Construct(
-         GridEntitySO gridEntitySo, Utils utils, GhostObjectReceiver ghostObjectReceiver)
+         GridEntitySO gridEntitySo, Utils utils, GhostObjectReceiver ghostObjectReceiver,
+         IInstantiator instantiator)
     {
         _gridEntitySo = gridEntitySo;
         _ghostObjectReceiver = ghostObjectReceiver;
         _utils = utils;
+        _instantiator = instantiator;
     }
     
     public void BuildAction()
@@ -29,8 +32,8 @@ public class GhostBuildManager
         _ghostObjectReceiver.GreenMaterials = _gridEntitySo.GhostObject.GreenMaterials;
         _ghostObjectReceiver.RedMaterials = _gridEntitySo.GhostObject.RedMaterials;
         _ghostObjectReceiver.MeshRenderers = _gridEntitySo.GhostObject.GetMeshRenderers();
-        
-        _ghostObjectReceiver.GameObject = Object.Instantiate(_gridEntitySo.GhostObject.GhostGO,
-            _utils.GetValidPositionWithLayerMask(),Quaternion.identity);
+
+        _ghostObjectReceiver.GameObject = _instantiator.InstantiatePrefab(_gridEntitySo.GhostObject.GhostGO);
+        _ghostObjectReceiver.GameObject.transform.position = _utils.GetValidPositionWithLayerMask();
     }
 }
