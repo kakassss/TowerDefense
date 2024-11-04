@@ -54,24 +54,27 @@ public class MousePos : MonoBehaviour
                     if (buildCell.IsFull)
                     {
                         _ghostObjectReceiver.OnGhostMaterialRedFire();
-                        _ghostObjectReceiver.GameObject.transform.position =
-                            _cellManager.GetWorldPosition(buildCell.GridIndexX, buildCell.GridIndexZ);
-                        
-                        Debug.Log("onur1");
+                        SetMidPosSingleGrid();
                         return;
                     }
                     
                     _ghostObjectReceiver.OnGhostMaterialGreenFire();
-                    Debug.Log("onur2");
-                    
                 }
             }
         }
 
-        SetMidPos();
+        SetMidPosMultipleGrid();
+
+        void SetMidPosSingleGrid()
+        {
+            var onMouseGridPos = _cellManager.GetCellMidPointPosition(_utils.GetValidPositionWithLayerMask());
+            var crossMouseGrid = _cellManager.GetCellMidPointPositionXZ(x + 1, z + 1);
+            _ghostObjectReceiver.GameObject.transform.position = new Vector3(
+                (onMouseGridPos.x + crossMouseGrid.x) / 2, 0,
+                (onMouseGridPos.z + crossMouseGrid.z) / 2);
+        }
         
-        
-        void SetMidPos()
+        void SetMidPosMultipleGrid()
         {
             List<Vector3> cellsPosition = buildableCells.Select(cell => _cellManager.GetCellMidPointPositionXZ(cell.GridIndexX, cell.GridIndexZ)).ToList();
 

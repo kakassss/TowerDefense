@@ -6,8 +6,8 @@ public class GhostObjectMeshRenderer : MonoBehaviour
 {
     [SerializeField] private List<MeshRenderer> _meshRenderers;
     
-    private Color _colorRed = Color.red;
-    private Color _colorGreen = Color.green;
+    private readonly Color _colorRed = Color.red;
+    private readonly Color _colorGreen = Color.green;
     
     private GhostObjectReceiver _ghostObjectReceiver;
     
@@ -17,10 +17,8 @@ public class GhostObjectMeshRenderer : MonoBehaviour
         _ghostObjectReceiver = ghostObjectReceiver;
     }
     
-    
     private void OnEnable()
     {
-        Debug.Log(_ghostObjectReceiver);
         _ghostObjectReceiver.AddOnGhostMaterialGreen(SetGreenMaterial);
         _ghostObjectReceiver.AddOnGhostMaterialRed(SetRedMaterial);
     }
@@ -30,7 +28,6 @@ public class GhostObjectMeshRenderer : MonoBehaviour
         _ghostObjectReceiver.RemoveOnGhostMaterialGreen(SetGreenMaterial);
         _ghostObjectReceiver.RemoveOnGhostMaterialRed(SetRedMaterial);
     }
-
     
     private void SetGreenMaterial()
     {
