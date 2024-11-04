@@ -50,31 +50,40 @@ public class MousePos : MonoBehaviour
                 if ( x + i >= 0 && z + j >= 0 && x + i < _cellManager.Width && z + j < _cellManager.Height)
                 {
                     var buildCell = _cellManager.Grid[x + i, z + j].Slot;
+                    buildableCells.Add(buildCell);
                     if (buildCell.IsFull)
                     {
                         _ghostObjectReceiver.OnGhostMaterialRedFire();
+                        _ghostObjectReceiver.GameObject.transform.position =
+                            _cellManager.GetWorldPosition(buildCell.GridIndexX, buildCell.GridIndexZ);
+                        
+                        Debug.Log("onur1");
+                        return;
                     }
-                    else
-                    {
-                        _ghostObjectReceiver.OnGhostMaterialGreenFire();
-                    }
-                    buildableCells.Add(buildCell);
+                    
+                    _ghostObjectReceiver.OnGhostMaterialGreenFire();
+                    Debug.Log("onur2");
+                    
                 }
             }
         }
+
+        SetMidPos();
         
-        List<Vector3> cellsPosition = buildableCells.Select(cell => _cellManager.GetCellMidPointPositionXZ(cell.GridIndexX, cell.GridIndexZ)).ToList();
-
-        Vector3 averageX = Vector3.zero;
-        Vector3 averageZ = Vector3.zero;
-
-        foreach (var pos in cellsPosition)
+        
+        void SetMidPos()
         {
-            averageX += new Vector3(pos.x,0,0);
-            averageZ += new Vector3(0, 0, pos.z);
+            List<Vector3> cellsPosition = buildableCells.Select(cell => _cellManager.GetCellMidPointPositionXZ(cell.GridIndexX, cell.GridIndexZ)).ToList();
+
+            Vector3 averageX = Vector3.zero;
+            Vector3 averageZ = Vector3.zero;
+
+            foreach (var pos in cellsPosition)
+            {
+                averageX += new Vector3(pos.x,0,0);
+                averageZ += new Vector3(0, 0, pos.z);
+            }
+            _ghostObjectReceiver.GameObject.transform.position = new Vector3(averageX.x / cellsPosition.Count, 0, averageZ.z / cellsPosition.Count);
         }
-        Vector3 midPos = new Vector3(averageX.x / cellsPosition.Count, 0, averageZ.z / cellsPosition.Count);
-        
-        _ghostObjectReceiver.GameObject.transform.position  = midPos;
     }
 }

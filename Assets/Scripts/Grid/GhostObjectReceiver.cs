@@ -10,11 +10,6 @@ public class GhostObjectReceiver
     public GameObject GameObject;
     public int GridIndexX;
     public int GridIndexZ;
-    
-    public List<MeshRenderer> MeshRenderers;
-    public List<Material> GreenMaterials;
-    public List<Material> RedMaterials;
-    
     public void OnGhostMaterialGreenFire()
     {
         OnGhostMaterialGreen?.Invoke();

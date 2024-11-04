@@ -29,9 +29,6 @@ public class GhostBuildManager
     {
         _ghostObjectReceiver.GridIndexX = _gridEntitySo.X;
         _ghostObjectReceiver.GridIndexZ = _gridEntitySo.Z;
-        _ghostObjectReceiver.GreenMaterials = _gridEntitySo.GhostObject.GreenMaterials;
-        _ghostObjectReceiver.RedMaterials = _gridEntitySo.GhostObject.RedMaterials;
-        _ghostObjectReceiver.MeshRenderers = _gridEntitySo.GhostObject.GetMeshRenderers();
 
         _ghostObjectReceiver.GameObject = _instantiator.InstantiatePrefab(_gridEntitySo.GhostObject.GhostGO);
         _ghostObjectReceiver.GameObject.transform.position = _utils.GetValidPositionWithLayerMask();

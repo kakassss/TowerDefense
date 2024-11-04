@@ -1,8 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Zenject;
 
 public class GhostObjectMeshRenderer : MonoBehaviour
-{ 
+{
+    [SerializeField] private List<MeshRenderer> _meshRenderers;
+    
+    private Color _colorRed = Color.red;
+    private Color _colorGreen = Color.green;
+    
     private GhostObjectReceiver _ghostObjectReceiver;
     
     [Inject]
@@ -10,6 +16,7 @@ public class GhostObjectMeshRenderer : MonoBehaviour
     {
         _ghostObjectReceiver = ghostObjectReceiver;
     }
+    
     
     private void OnEnable()
     {
@@ -24,19 +31,20 @@ public class GhostObjectMeshRenderer : MonoBehaviour
         _ghostObjectReceiver.RemoveOnGhostMaterialRed(SetRedMaterial);
     }
 
+    
     private void SetGreenMaterial()
     {
-        for (int i = 0; i < _ghostObjectReceiver.MeshRenderers.Count; i++)
+        for (int i = 0; i < _meshRenderers.Count; i++)
         {
-            _ghostObjectReceiver.MeshRenderers[i].sharedMaterial.color = _ghostObjectReceiver.GreenMaterials[i].color;
+            _meshRenderers[i].material.color = _colorGreen;
         }
     }
 
     private void SetRedMaterial()
     {
-        for (int i = 0; i < _ghostObjectReceiver.MeshRenderers.Count; i++)
+        for (int i = 0; i < _meshRenderers.Count; i++)
         {
-            _ghostObjectReceiver.MeshRenderers[i].sharedMaterial.color = _ghostObjectReceiver.RedMaterials[i].color;
+            _meshRenderers[i].material.color = _colorRed;
         }
     }
 }
