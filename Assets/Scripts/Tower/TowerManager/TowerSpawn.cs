@@ -47,6 +47,8 @@ public class TowerSpawn : IDisposable
         
         
         _buildManager.BuildAction(_spawnPos);
+        
+        
         //_cellManager.BuildGridEntity(_spawnPos,_gridEntitySo,_towerPrefabSo.AllTowers[0].gameObject);
         //_spawnPos = _cellManager.GetCellMidPointPosition(_spawnPos);
 

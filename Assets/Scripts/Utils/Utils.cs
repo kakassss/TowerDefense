@@ -10,8 +10,6 @@ public class Utils
         _camera = camera;
         _layerMask = layerMask;
     }
-
-    
     
     public Vector3 GetValidPositionWithLayerMask()
     {

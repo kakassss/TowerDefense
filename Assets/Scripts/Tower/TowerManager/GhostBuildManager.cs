@@ -7,7 +7,6 @@ public class GhostBuildManager
     private GhostObjectReceiver _ghostObjectReceiver;
     private Utils _utils;
     private IInstantiator _instantiator;
-
     
     [Inject]
     private void Construct(

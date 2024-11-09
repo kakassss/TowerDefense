@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
-using Object = UnityEngine.Object;
-
 
 public class BuildManager
 {
     private CellManager _cellManager;
     private GridEntitySO _gridEntitySo;
+    private IInstantiator _instantiator;
     
     [Inject]
-    private void Construct(CellManager cellManager,GridEntitySO gridEntitySo)
+    private void Construct(CellManager cellManager,GridEntitySO gridEntitySo, IInstantiator instantiator)
     {
         _cellManager = cellManager;
         _gridEntitySo = gridEntitySo;
+        _instantiator = instantiator;
     }
-    
     
     public void BuildAction(Vector3 worldPos)
     {
@@ -28,7 +26,6 @@ public class BuildManager
 
         _cellManager.GetXZ(worldPos,out var x, out var z);
         
-        //Debug.Log("X Z " + x + z);
         
         for (int i = 0; i < _gridEntitySo.X; i++)
         {
@@ -39,8 +36,7 @@ public class BuildManager
                     var buildCell = _cellManager.Grid[x + i, z + j];
                     if(buildCell.Slot.IsFull == true) return;
                 
-                    //Debug.Log("buildCell " + (x+i) + " " + (z + j));
-                    BuildMultipleCells buildableMultipleCells = new BuildMultipleCells(buildCell,_gridEntitySo.BuildObject, _cellManager.CellSize, _cellManager.OriginPosition);
+                    BuildMultipleCells buildableMultipleCells = new BuildMultipleCells(buildCell,_gridEntitySo.BuildObject);
                     buildCells.Add(buildableMultipleCells);
                 }
             }
@@ -56,34 +52,24 @@ public class BuildManager
         foreach (var cell in buildCells)
         {
             cell.Cell.Slot.IsFull = true;
-            Object.Instantiate(cell.BuildObject,cell.SpawnPosition,Quaternion.identity);
+            var tower = _instantiator.InstantiatePrefab(cell.BuildObject);
+            tower.transform.position = cell.SpawnPosition * _cellManager.CellSize + _cellManager.OriginPosition + new Vector3(_cellManager.CellSize / 2, 0, _cellManager.CellSize / 2);
         }
     }
 }
 
-public interface IBuildable
-{
-    
-}
-
-
-
 public struct BuildMultipleCells
 {
-    public float CellSize;
-    public Vector3 OriginPosition;
     public GameObject BuildObject;
         
     public Vector3 SpawnPosition;
     public Grid<Cell<GameObject>> Cell;
         
-    public BuildMultipleCells(Grid<Cell<GameObject>> cell,GameObject gameObject, float cellSize, Vector3 originPosition)
+    public BuildMultipleCells(Grid<Cell<GameObject>> cell,GameObject gameObject)
     {
-        CellSize = cellSize;
-        OriginPosition = originPosition;
         Cell = cell;
         BuildObject = gameObject;
             
-        SpawnPosition = new Vector3(cell.Slot.GridIndexX,0, cell.Slot.GridIndexZ) * CellSize + OriginPosition + new Vector3(CellSize / 2, 0, CellSize / 2);
+        SpawnPosition = new Vector3(cell.Slot.GridIndexX,0, cell.Slot.GridIndexZ);
     }
 }
