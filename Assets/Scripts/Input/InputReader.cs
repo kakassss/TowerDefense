@@ -28,6 +28,8 @@ public class InputReader : MonoBehaviour, InputSystem_Actions.ITowerDefenceActio
 
     public void OnTowerSpawn(InputAction.CallbackContext context)
     {
+        if(context.ReadValueAsButton() == true) return;
+        
         if (context.performed)
         {
             _inputActions.SpawnInputAction();
