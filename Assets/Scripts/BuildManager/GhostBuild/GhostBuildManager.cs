@@ -26,6 +26,12 @@ public class GhostBuildManager
 
     private void SetGhostObject()
     {
+        if (_ghostObjectReceiver.GameObject != null)
+        {
+            //TODO: Buraya basit bir poolObject yap
+            Object.Destroy(_ghostObjectReceiver.GameObject);
+        }
+        
         if (_buildSelectManager.CurrentGridEntitySO == null)
         {
             Debug.LogError("Selected Entity is null");

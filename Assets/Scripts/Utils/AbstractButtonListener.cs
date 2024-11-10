@@ -12,6 +12,5 @@ public abstract class AbstractButtonListener : MonoBehaviour
 
     protected virtual void OnclickListener()
     {
-        Debug.Log("onurxd");
     }
 }
