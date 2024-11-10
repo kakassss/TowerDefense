@@ -39,7 +39,7 @@ public class InputReader : MonoBehaviour, InputSystem_Actions.ITowerDefenceActio
     {
         if (context.performed)
         {
-            _inputActions.GhostSpawnInputAction();
+            //_inputActions.GhostSpawnInputAction();
         }
     }
 }

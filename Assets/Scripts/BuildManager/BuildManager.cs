@@ -23,9 +23,8 @@ public class BuildManager
         if(mousePosCell == null) return;
 
         List<BuildMultipleCells> buildCells = new List<BuildMultipleCells>();
-
-        _cellManager.GetXZ(worldPos,out var x, out var z);
         
+        _cellManager.GetXZ(worldPos,out var x, out var z);
         
         for (int i = 0; i < _gridEntitySo.X; i++)
         {

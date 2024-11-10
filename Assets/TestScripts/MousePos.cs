@@ -11,7 +11,7 @@ public class MousePos : MonoBehaviour
 
     private Grid<Cell<GameObject>> mouseCell;
     private Vector3 _mousePos;
-    
+
     [Inject]
     private void Construct(Utils utils,GhostObjectReceiver ghostObjectReceiver,CellManager cellManager)
     {
@@ -20,7 +20,7 @@ public class MousePos : MonoBehaviour
         _cellManager = cellManager;
     }
     
-    private void Update()
+    private void Update() // UPdatede yapacagımıza current grid tutup, o variableın değeri değiştikce bunu sorgulatabiliriz?
     {
         transform.position = _utils.GetValidPositionWithLayerMask(); // mavi küp için sonradan kaldırabilir
         if(_ghostObjectReceiver.GameObject == null) return;

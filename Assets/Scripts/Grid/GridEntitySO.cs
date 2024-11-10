@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GridEntitySO", fileName = "GridEntitySO")]
 public class GridEntitySO : ScriptableObject
 {
+    public string Name;
+    
     public int X;
     public int Z;
 

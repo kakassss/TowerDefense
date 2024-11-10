@@ -1,7 +1,5 @@
 using System;
 using UnityEngine;
-using Zenject;
-using Object = UnityEngine.Object;
 
 public class TowerSpawn : IDisposable
 {
@@ -32,7 +30,7 @@ public class TowerSpawn : IDisposable
         _inputActions.GhostSpawnInputAddAction(GhostSpawn);
     }
 
-    private void GhostSpawn()
+    private void GhostSpawn(GridEntitySO gridEntitySo)
     {
         _spawnPos = _utils.GetValidPositionWithLayerMask();
         if(_spawnPos == Vector3.zero) return;

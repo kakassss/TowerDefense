@@ -3,7 +3,7 @@ using System;
 public class InputActions
 {
     private Action OnSpawnInput;
-    private Action OnGhostSpawnInput;
+    private Action<GridEntitySO> OnGhostSpawnInput;
 
     public void SpawnInputAction()
     {
@@ -20,17 +20,17 @@ public class InputActions
         OnSpawnInput -= action;
     }
     
-    public void GhostSpawnInputAction()
+    public void GhostSpawnInputAction(GridEntitySO gridEntitySo)
     {
-        OnGhostSpawnInput?.Invoke();
+        OnGhostSpawnInput?.Invoke(gridEntitySo);
     }
 
-    public void GhostSpawnInputAddAction(Action action)
+    public void GhostSpawnInputAddAction(Action<GridEntitySO> action)
     {
         OnGhostSpawnInput += action;
     }
 
-    public void GhostSpawnInputRemoveAction(Action action)
+    public void GhostSpawnInputRemoveAction(Action<GridEntitySO> action)
     {
         OnGhostSpawnInput -= action;
     }
