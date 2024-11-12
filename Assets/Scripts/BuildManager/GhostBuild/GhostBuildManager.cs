@@ -35,6 +35,7 @@ public class GhostBuildManager
         if (_buildSelectManager.CurrentGridEntitySO == null)
         {
             Debug.LogError("Selected Entity is null");
+            _ghostObjectReceiver.GhostObjectValid = false;
             return;
         }
 
@@ -45,5 +46,6 @@ public class GhostBuildManager
 
         _ghostObjectReceiver.GameObject = _instantiator.InstantiatePrefab(currentEntity.GhostObject.GhostGO);
         _ghostObjectReceiver.GameObject.transform.position = _utils.GetValidPositionWithLayerMask();
+        _ghostObjectReceiver.GhostObjectValid = true;
     }
 }

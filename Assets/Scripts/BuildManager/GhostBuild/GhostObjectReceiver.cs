@@ -10,6 +10,9 @@ public class GhostObjectReceiver
     public GameObject GameObject;
     public int GridIndexX;
     public int GridIndexZ;
+    
+    public bool GhostObjectValid;
+    
     public void OnGhostMaterialGreenFire()
     {
         OnGhostMaterialGreen?.Invoke();

@@ -1,49 +1,29 @@
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class TowerSpawn : IDisposable
+public class TowerSpawn : BaseSpawner, IDisposable
 {
-    private Vector3 _spawnPos;
-
-    private InputActions _inputActions;
     private TowerEvents _towerEvents;
     private CellManager _cellManager;
     private BuildManager _buildManager;
-    private GhostBuildManager _ghostBuildManager;
-    
-    private GridEntitySO _gridEntitySo;
-    private Utils _utils;
     
     private TowerSpawn(
         TowerEvents towerEvents, Utils utils, InputActions inputActions,
-        CellManager cellManager, BuildManager buildManager, GhostBuildManager ghostBuildManager)
+        CellManager cellManager, BuildManager buildManager) : base(utils,inputActions)
     {
         _towerEvents = towerEvents;
         _cellManager = cellManager;
         _buildManager = buildManager;
-        _ghostBuildManager = ghostBuildManager;
-        _utils = utils;
-        
-        _inputActions = inputActions;
         
         _inputActions.SpawnInputAddAction(Spawn);
-        _inputActions.GhostSpawnInputAddAction(GhostSpawn);
     }
 
-    private void GhostSpawn(GridEntitySO gridEntitySo)
-    {
-        _spawnPos = _utils.GetValidPositionWithLayerMask();
-        if(_spawnPos == Vector3.zero) return;
-        _ghostBuildManager.BuildAction();
-    }
     
     private void Spawn()
     {
         _spawnPos = _utils.GetValidPositionWithLayerMask();
         if(_spawnPos == Vector3.zero) return;
         if(_cellManager.CheckCellState(_spawnPos) == true) return;
-        
         
         _buildManager.BuildAction(_spawnPos);
         
@@ -62,6 +42,5 @@ public class TowerSpawn : IDisposable
     public void Dispose()
     {
         _inputActions.SpawnInputRemoveAction(Spawn);
-        _inputActions.GhostSpawnInputRemoveAction(GhostSpawn);
     }
 }

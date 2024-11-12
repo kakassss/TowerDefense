@@ -52,7 +52,8 @@ public class BuildManager
         {
             cell.Cell.Slot.IsFull = true;
             var tower = _instantiator.InstantiatePrefab(cell.BuildObject);
-            tower.transform.position = cell.SpawnPosition * _cellManager.CellSize + _cellManager.OriginPosition + new Vector3(_cellManager.CellSize / 2, 0, _cellManager.CellSize / 2);
+            tower.transform.position = cell.SpawnPosition * _cellManager.CellSize + _cellManager.OriginPosition + 
+                                       new Vector3(_cellManager.CellSize / 2, 0, _cellManager.CellSize / 2);
         }
     }
 }
