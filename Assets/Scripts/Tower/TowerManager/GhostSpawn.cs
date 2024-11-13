@@ -14,7 +14,7 @@ public class GhostSpawn : BaseSpawner, IDisposable
         _inputActions.GhostSpawnInputAddAction(Spawn);
     }
     
-    private void Spawn(GridEntitySO gridEntitySo)
+    private void Spawn(BaseObject gridEntitySo)
     {
         _spawnPos = _utils.GetValidPositionWithLayerMask();
         if(_spawnPos == Vector3.zero) return;

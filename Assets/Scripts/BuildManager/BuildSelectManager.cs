@@ -2,9 +2,9 @@
 
 public class BuildSelectManager
 {
-    private GridEntitySO _currentGridEntitySO;
+    private BaseObject _currentGridEntitySO;
 
-    public GridEntitySO CurrentGridEntitySO => _currentGridEntitySO;
+    public BaseObject CurrentGridEntitySO => _currentGridEntitySO;
 
     private InputActions _inputActions;
 
@@ -16,7 +16,7 @@ public class BuildSelectManager
         _inputActions.GhostSpawnInputAddAction(SetGhostObjectSelect);
     }
     
-    private void SetGhostObjectSelect(GridEntitySO gridEntitySo)
+    private void SetGhostObjectSelect(BaseObject gridEntitySo)
     {
         _currentGridEntitySO = gridEntitySo;
     }

@@ -1,8 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GridEntitySO", fileName = "GridEntitySO")]
 public class GridEntitySO : ScriptableObject
+{
+    public List<BaseObject> BaseObjects;
+}
+
+[Serializable]
+public class BaseObject
 {
     public string Name;
     

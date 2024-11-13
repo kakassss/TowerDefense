@@ -5,7 +5,6 @@ public class TowerInstaller : MonoInstaller
 {
     [Header("References")] 
     [SerializeField] private GridEntitySO _gridEntitySo;
-    
     public override void InstallBindings()
     {
         Container.Bind<TowerEvents>().AsSingle().NonLazy();
