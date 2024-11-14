@@ -1,7 +1,5 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 public class BuildSelectUI : AbstractButtonListener
@@ -12,24 +10,34 @@ public class BuildSelectUI : AbstractButtonListener
     private GridEntitySO _gridEntitySo;
     private InputActions _inputActions;
 
+    private BuildUI _buildUI;
+    
     [Inject]
     private void Construct(InputActions inputActions, GridEntitySO gridEntitySo)
     {
         _inputActions = inputActions;
         _gridEntitySo = gridEntitySo;
-        
+    }
+
+    private void Start()
+    {
         SetButtonActions();
     }
 
+    public void SetBuildButton(BuildUI buildUI)
+    {
+        _buildUI = buildUI;
+    }
+    
     private void SetButtonActions()
     {
-        _buttonNameText.text = _gridEntitySo.BaseObjects[_towerIndex].Name;
+        _buttonNameText.text = _gridEntitySo.BaseObjects[_buildUI.TowerIndex].Name;
     }
 
     protected override void OnclickListener()
     {
         base.OnclickListener();
         
-        _inputActions.GhostSpawnInputAction(_gridEntitySo.BaseObjects[_towerIndex]);
+        _inputActions.GhostSpawnInputAction(_gridEntitySo.BaseObjects[_buildUI.TowerIndex]);
     }
 }

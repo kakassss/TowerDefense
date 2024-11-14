@@ -8,7 +8,7 @@ public class BuildButtonManager : MonoBehaviour
     [SerializeField] private Transform _spawnPos;
     
     private IInstantiator _instantiator;
-
+    
     [Inject]
     private void Construct(IInstantiator instantiator)
     {
@@ -19,8 +19,20 @@ public class BuildButtonManager : MonoBehaviour
     {
         for (int i = 0; i < _buildButtons.Count; i++)
         {
-            _instantiator.InstantiatePrefab(_buildButtons[i].gameObject, _spawnPos);
+            BuildUI buildUI = new BuildUI(i);
+            BuildSelectUI button  = _instantiator.InstantiatePrefabForComponent<BuildSelectUI>(_buildButtons[i], _spawnPos);
+            button.SetBuildButton(buildUI);
         }
+    }
+}
+
+public struct BuildUI
+{
+    public int TowerIndex;
+    
+    public BuildUI(int towerIndex)
+    {
+        TowerIndex = towerIndex;
     }
 }
 
