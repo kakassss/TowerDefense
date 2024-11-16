@@ -41,12 +41,18 @@ public class BuildManager
             }
         }
         
-        if(buildCells.Count <= 0) return;
+        if(buildCells.Count != _buildSelectManager.CurrentGridEntitySO.X + _buildSelectManager.CurrentGridEntitySO.Z)
+            return;
         
-        InstantiateAction(buildCells);    
+        InstantiateMultipleCells(buildCells);    
     }
 
-    private void InstantiateAction(List<BuildMultipleCells> buildCells)
+    private void InstantiateSingleCell(List<BuildMultipleCells> buildCells)
+    {
+        
+    }
+    
+    private void InstantiateMultipleCells(List<BuildMultipleCells> buildCells)
     {
         foreach (var cell in buildCells)
         {
@@ -60,7 +66,6 @@ public class BuildManager
 
 public struct BuildMultipleCells
 {
-        
     public Vector3 SpawnPosition;
     public Grid<Cell<GameObject>> Cell;
         
