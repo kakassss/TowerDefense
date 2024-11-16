@@ -63,7 +63,7 @@ public class MousePos : MonoBehaviour
                 }
                 else
                 {
-                    _ghostObjectReceiver.OnGhostMaterialRedFire();
+                    _ghostObjectReceiver.OnGhostMaterialRedFire(); // if there is a cell on out of border position
                 }
             }
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -7,6 +8,8 @@ public class BuildManager
     private CellManager _cellManager;
     private BuildSelectManager _buildSelectManager;
     private IInstantiator _instantiator;
+    
+    private List<BuildMultipleCells> buildCells;
     
     [Inject]
     private void Construct(CellManager cellManager, IInstantiator instantiator, BuildSelectManager buildSelectManager)
@@ -22,7 +25,7 @@ public class BuildManager
         
         if(mousePosCell == null) return;
 
-        List<BuildMultipleCells> buildCells = new List<BuildMultipleCells>();
+        buildCells = new List<BuildMultipleCells>();
         
         _cellManager.GetXZ(worldPos,out var x, out var z);
         
@@ -43,14 +46,20 @@ public class BuildManager
         
         if(buildCells.Count != _buildSelectManager.CurrentGridEntitySO.X + _buildSelectManager.CurrentGridEntitySO.Z)
             return;
-        
-        
-        InstantiateMultipleCells(buildCells);    
+
+
+        InstantiateSingleCell(buildCells);
+        //InstantiateMultipleCells(buildCells);    
     }
 
     private void InstantiateSingleCell(List<BuildMultipleCells> buildCells)
     {
-        
+        foreach (var cell in buildCells)
+        {
+            cell.Cell.Slot.IsFull = true;
+        }
+        var tower = _instantiator.InstantiatePrefab(_buildSelectManager.CurrentGridEntitySO.BuildObject);
+        tower.transform.position = SetMidPosMultipleCells();
     }
     
     private void InstantiateMultipleCells(List<BuildMultipleCells> buildCells)
@@ -62,6 +71,23 @@ public class BuildManager
             tower.transform.position = cell.SpawnPosition * _cellManager.CellSize + _cellManager.OriginPosition + 
                                        new Vector3(_cellManager.CellSize / 2, 0, _cellManager.CellSize / 2);
         }
+    }
+    
+    public Vector3 SetMidPosMultipleCells()
+    {
+        List<Vector3> cellsPosition = buildCells.Select(cell => 
+            _cellManager.GetCellMidPointPositionXZ(cell.Cell.Slot.GridIndexX, cell.Cell.Slot.GridIndexZ)).ToList();
+
+        Vector3 averageX = Vector3.zero;
+        Vector3 averageZ = Vector3.zero;
+
+        foreach (var pos in cellsPosition)
+        {
+            averageX += new Vector3(pos.x,0,0);
+            averageZ += new Vector3(0, 0, pos.z);
+        }
+
+        return new Vector3(averageX.x / cellsPosition.Count, 0, averageZ.z / cellsPosition.Count);
     }
 }
 
