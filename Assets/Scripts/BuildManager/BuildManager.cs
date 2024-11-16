@@ -44,6 +44,7 @@ public class BuildManager
         if(buildCells.Count != _buildSelectManager.CurrentGridEntitySO.X + _buildSelectManager.CurrentGridEntitySO.Z)
             return;
         
+        
         InstantiateMultipleCells(buildCells);    
     }
 
