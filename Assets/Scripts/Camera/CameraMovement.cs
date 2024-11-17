@@ -8,6 +8,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float movementSpeed;
     
     [SerializeField] private GameObject movementRelativeGO;
+
     //50x 45y rotation
     private void Update()
     {
