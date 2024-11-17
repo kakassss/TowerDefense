@@ -1,27 +1,29 @@
-﻿using UnityEngine;
+using UnityEngine;
+using Zenject;
 
-// Şimdilik test class'ı olarak kalabilir veya ileri de tekrar bu modele dönülebilir
-// IEnemy interfaceınden daha iyi yaralanabilmek için monobehavior olan bir class'a eklendi
-public class BaseEnemy : IEnemy
+public abstract class BaseEnemy : MonoBehaviour,IEnemy
 {
-    public BaseHealth Health { get; }
-    public BaseEnemyDefence Defence { get; }
-    public BaseEnemyAttack Attack { get; }
-    public Transform Transform { get; }
+    public BaseHealth Health { get; protected set;}
+    public BaseEnemyDefence Defence { get; protected set; }
+    public BaseEnemyAttack Attack { get; protected set;}
+    public Transform Transform => transform;
+    
+    [SerializeField] protected EnemyDefenceSO _enemyDefenceSo;
+    [SerializeField] protected EnemyAttackSO _enemyAttackSo;
+    
+    [Inject]
+    protected void Construct()
+    {
+        SetEnemyStats();
+    }
 
-    public BaseEnemy(EnemyDefenceSO enemyDefenceSo, EnemyAttackSO enemyAttackSo,float health)
+    private void SetEnemyStats()
     {
         Defence = new BaseEnemyDefence
         {
-            DefenceSo = enemyDefenceSo
+            DefenceSo = _enemyDefenceSo
         };
-        Attack = new BaseEnemyAttack(enemyAttackSo);
-        Health = new BaseHealth(health);
+        Attack = new BaseEnemyAttack(_enemyAttackSo);
+        Health = new BaseHealth(Defence.DefenceSo.Health);
     }
-}
-
-public class BaseTower : MonoBehaviour, ITower
-{
-    public BaseTowerAttack Attack { get; }
-    public BaseHealth Health { get; }
 }
