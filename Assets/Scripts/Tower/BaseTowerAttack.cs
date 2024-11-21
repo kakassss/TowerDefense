@@ -5,12 +5,14 @@ using UnityEngine.Events;
 public class BaseTowerAttack
 {
     private BaseTowerAttackSO TowerAttackSo;
+    private ProjectilePool _projectilePool;
     
     private float _fireRateTemp;
     
-    public BaseTowerAttack(BaseTowerAttackSO towerAttackSo)
+    public BaseTowerAttack(BaseTowerAttackSO towerAttackSo, ProjectilePool projectilePool)
     {
         TowerAttackSo = towerAttackSo;
+        _projectilePool = projectilePool;
     }
     
     public bool InRange(Transform enemyPosition)
@@ -42,9 +44,11 @@ public class BaseTowerAttack
     public void AttackRate(UnityAction<float> attackAction, IEnemy enemy)
     {
         _fireRateTemp += Time.deltaTime;
-
+        Debug.Log("00");
         if (_fireRateTemp > TowerAttackSo.FireRate)
         {
+            Debug.Log("11");
+            var pooledObj = _projectilePool._pool.GetAvailableObjects();
             attackAction?.Invoke(TowerAttackSo.Damage);
             _fireRateTemp = 0;
         }

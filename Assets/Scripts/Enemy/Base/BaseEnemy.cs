@@ -3,9 +3,9 @@ using Zenject;
 
 public abstract class BaseEnemy : MonoBehaviour,IEnemy
 {
-    public BaseHealth Health { get; protected set;}
-    public BaseEnemyDefence Defence { get; protected set; }
-    public BaseEnemyAttack Attack { get; protected set;}
+    public BaseHealth Health { get; private set;}
+    public BaseEnemyDefence Defence { get; private set; }
+    public BaseEnemyAttack Attack { get; private set;}
     public Transform Transform => transform;
     
     [SerializeField] protected EnemyDefenceSO _enemyDefenceSo;

@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class BasePool<T>
+public class BasePool<T> where T : Component
 {
-    protected ObjectPool<T> _pool;
+    public ObjectPool<T> _pool;
     
     protected GameObject _prefab;
     protected Transform _spawnParent;

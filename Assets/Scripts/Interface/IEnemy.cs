@@ -21,7 +21,7 @@ public interface ITower
     BaseHealth Health { get; }
 }
 
-public interface ITowerAttacker : ITower
+public interface ITowerAttacker
 {
     void AttackAction();
 }
