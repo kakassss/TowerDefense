@@ -44,6 +44,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CameraMovement"",
+                    ""type"": ""Value"",
+                    ""id"": ""15575619-d3cc-464e-a252-4cc75e4cdeea"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -68,6 +77,61 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""Space"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""e75a3c3b-adc4-4fb6-bb63-90557f77edf9"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""443688cc-4a71-42a2-b87d-2a526994ec78"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""533b54d2-e6b8-44d5-a5b3-cee46aebb612"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""8651a90c-62f2-471e-bde4-47b5c351dc3c"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""a138a3e2-bc84-4ffb-a7f4-2ceb09cdd8e1"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -139,6 +203,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_TowerDefence = asset.FindActionMap("TowerDefence", throwIfNotFound: true);
         m_TowerDefence_TowerSpawn = m_TowerDefence.FindAction("TowerSpawn", throwIfNotFound: true);
         m_TowerDefence_Space = m_TowerDefence.FindAction("Space", throwIfNotFound: true);
+        m_TowerDefence_CameraMovement = m_TowerDefence.FindAction("CameraMovement", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -207,12 +272,14 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private List<ITowerDefenceActions> m_TowerDefenceActionsCallbackInterfaces = new List<ITowerDefenceActions>();
     private readonly InputAction m_TowerDefence_TowerSpawn;
     private readonly InputAction m_TowerDefence_Space;
+    private readonly InputAction m_TowerDefence_CameraMovement;
     public struct TowerDefenceActions
     {
         private @InputSystem_Actions m_Wrapper;
         public TowerDefenceActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
         public InputAction @TowerSpawn => m_Wrapper.m_TowerDefence_TowerSpawn;
         public InputAction @Space => m_Wrapper.m_TowerDefence_Space;
+        public InputAction @CameraMovement => m_Wrapper.m_TowerDefence_CameraMovement;
         public InputActionMap Get() { return m_Wrapper.m_TowerDefence; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -228,6 +295,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Space.started += instance.OnSpace;
             @Space.performed += instance.OnSpace;
             @Space.canceled += instance.OnSpace;
+            @CameraMovement.started += instance.OnCameraMovement;
+            @CameraMovement.performed += instance.OnCameraMovement;
+            @CameraMovement.canceled += instance.OnCameraMovement;
         }
 
         private void UnregisterCallbacks(ITowerDefenceActions instance)
@@ -238,6 +308,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Space.started -= instance.OnSpace;
             @Space.performed -= instance.OnSpace;
             @Space.canceled -= instance.OnSpace;
+            @CameraMovement.started -= instance.OnCameraMovement;
+            @CameraMovement.performed -= instance.OnCameraMovement;
+            @CameraMovement.canceled -= instance.OnCameraMovement;
         }
 
         public void RemoveCallbacks(ITowerDefenceActions instance)
@@ -304,5 +377,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     {
         void OnTowerSpawn(InputAction.CallbackContext context);
         void OnSpace(InputAction.CallbackContext context);
+        void OnCameraMovement(InputAction.CallbackContext context);
     }
 }

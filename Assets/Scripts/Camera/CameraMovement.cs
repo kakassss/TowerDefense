@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -8,6 +9,14 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float movementSpeed;
     
     [SerializeField] private GameObject movementRelativeGO;
+
+    private InputReader _inputReader;
+
+    [Inject]
+    private void Construct(InputReader inputReader)
+    {
+        _inputReader = inputReader;
+    }
 
     //50x 45y rotation
     private void Update()
@@ -27,8 +36,8 @@ public class CameraMovement : MonoBehaviour
         right.Normalize();
 
 
-        Vector3 movementForward = forward * Input.GetAxis("Vertical");
-        Vector3 movementRight = right * Input.GetAxis("Horizontal");
+        Vector3 movementForward = forward * _inputReader.movement.y;
+        Vector3 movementRight = right * _inputReader.movement.x;
 
         Vector3 relativeMovement = (movementForward + movementRight) * movementSpeed;
 
