@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 public interface IEnemy
 {
@@ -9,11 +8,9 @@ public interface IEnemy
     public Transform Transform { get; }
 }
 
-
 public interface IEnemyBase
 {
     BaseEnemy BaseEnemy { get; }
-
 }
 public interface ITower
 {

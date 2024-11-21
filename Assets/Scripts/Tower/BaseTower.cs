@@ -2,7 +2,6 @@
 using UnityEngine;
 using Zenject;
 
-//used for uncompleted save system prototype
 public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
 {
     public BaseTowerAttack Attack { get; private set;}
