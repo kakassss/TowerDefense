@@ -48,7 +48,7 @@ public class BaseTowerAttack
         if (_fireRateTemp > TowerAttackSo.FireRate)
         {
             Debug.Log("11");
-            var pooledObj = _projectilePool._pool.GetAvailableObjects();
+            var pooledObj = _projectilePool.GetAvailableObjects();
             attackAction?.Invoke(TowerAttackSo.Damage);
             _fireRateTemp = 0;
         }
