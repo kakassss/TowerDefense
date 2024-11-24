@@ -1026,9 +1026,12 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1194170809453810681, guid: d5f5e321fb5218047a095c1b7ce96e95, type: 3}
   projectileParent: {fileID: 902750787}
   projectilePoolSize: 1500
-  enemyPrefab: {fileID: 549952171374671195, guid: fe1a87ce302013c41b49846eaea0275b, type: 3}
+  enemiesPrefab:
+  - {fileID: 5190562145789055396, guid: 60b870c0c08278c4ea2791ffc6261251, type: 3}
+  - {fileID: 5117301249810087393, guid: 254462a7d2dd019468b54bb6b439f84a, type: 3}
   enemyParent: {fileID: 5771084480757109930}
-  enemyPoolSize: 500
+  poolsSizes: 9600000032000000
+  poolSizeIndexes: 0000000001000000
 --- !u!1 &1656769791
 GameObject:
   m_ObjectHideFlags: 0

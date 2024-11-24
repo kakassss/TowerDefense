@@ -1,20 +1,22 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class EnemyPool : BasePool<BaseEnemy>, IDisposable
+public class EnemyPool : MultipleBaseObjectPool<BaseEnemy>, IDisposable
 {
     private EnemyPoolEvent _enemyPoolEvent;
-    public EnemyPool(IInstantiator instantiator, GameObject prefab, Transform spawnParent, int poolSize, EnemyPoolEvent enemyPoolEvent)
-        : base(instantiator, prefab, spawnParent, poolSize)
+    
+    protected EnemyPool(IInstantiator instantiator, List<BaseEnemy> prefabs, Transform parent, List<int> poolSize, List<int> indexes, EnemyPoolEvent enemyPoolEvent) 
+        : base(instantiator, prefabs, parent, poolSize, indexes)
     {
         _enemyPoolEvent = enemyPoolEvent;
         
-        _enemyPoolEvent.AddDeactivatedListener(_pool.ReturnObjectsToPool);
+        _enemyPoolEvent.AddDeactivatedListener(ReturnObjectsToPool);
     }
 
     public void Dispose()
     {
-        _enemyPoolEvent.RemoveDeactivatedListener(_pool.ReturnObjectsToPool);
+        _enemyPoolEvent.RemoveDeactivatedListener(ReturnObjectsToPool);
     }
 }

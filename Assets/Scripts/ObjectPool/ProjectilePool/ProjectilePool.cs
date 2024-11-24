@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-public class ProjectilePool : BasePool<BaseProjectile>, IDisposable
+public class ProjectilePool : SingleBaseObjectPool<BaseProjectile>, IDisposable
 {
     private ProjectilePoolEvent _projectilePoolEvent;
     public ProjectilePool(IInstantiator instantiator, GameObject prefab, Transform spawnParent, int poolSize, ProjectilePoolEvent projectilePoolEvent)
@@ -10,11 +10,11 @@ public class ProjectilePool : BasePool<BaseProjectile>, IDisposable
     {
         _projectilePoolEvent = projectilePoolEvent;
         
-        _projectilePoolEvent.AddDeactivatedListener(_pool.ReturnObjectsToPool);
+        _projectilePoolEvent.AddDeactivatedListener(ReturnObjectsToPool);
     }
 
     public void Dispose()
     {
-        _projectilePoolEvent.RemoveDeactivatedListener(_pool.ReturnObjectsToPool);
+        _projectilePoolEvent.RemoveDeactivatedListener(ReturnObjectsToPool);
     }
 }
