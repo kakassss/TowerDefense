@@ -10,10 +10,13 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
     
     [SerializeField] protected EnemyDefenceSO _enemyDefenceSo;
     [SerializeField] protected EnemyAttackSO _enemyAttackSo;
+
+    private EnemyPoolEvent _enemyPoolEvent;
     
     [Inject]
-    protected void Construct()
+    protected void Construct(EnemyPoolEvent enemyPoolEvent)
     {
+        _enemyPoolEvent = enemyPoolEvent;
         SetEnemyStats();
     }
 
@@ -25,5 +28,10 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
         };
         Attack = new BaseEnemyAttack(_enemyAttackSo);
         Health = new BaseHealth(Defence.DefenceSo.Health);
+    }
+
+    private void OnDisable()
+    {
+        _enemyPoolEvent.FireDeactivated(this);
     }
 }
