@@ -8,8 +8,8 @@ public class SingleBaseObjectPool<T> : BaseObjectPool<T> where T : Component
     private Transform _spawnParent;
     private int _poolSize;
     private IInstantiator _instantiator;
-    
-    public SingleBaseObjectPool(IInstantiator instantiator, GameObject prefab, Transform spawnParent, int poolSize) : base(instantiator)
+
+    protected SingleBaseObjectPool(IInstantiator instantiator, GameObject prefab, Transform spawnParent, int poolSize) : base(instantiator)
     {
         _instantiator = instantiator;
         _prefab = prefab;
@@ -19,7 +19,7 @@ public class SingleBaseObjectPool<T> : BaseObjectPool<T> where T : Component
         SinglePrefabObjectPool(_prefab,_spawnParent,_poolSize);
     }
 
-    public void SinglePrefabObjectPool(GameObject prefab,Transform parent, int poolSize)
+    private void SinglePrefabObjectPool(GameObject prefab,Transform parent, int poolSize)
     {
         _poolObjects = new List<T>();
         
@@ -38,7 +38,7 @@ public class SingleBaseObjectPool<T> : BaseObjectPool<T> where T : Component
         return _poolObjects[0];
     }
 
-    public void ReturnObjectsToPool(T pooledObject)
+    protected void ReturnObjectsToPool(T pooledObject)
     {
         pooledObject.gameObject.SetActive(false);
         _poolObjects.Add(pooledObject);
