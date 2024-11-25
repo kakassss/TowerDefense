@@ -4,12 +4,12 @@ using Zenject;
 
 public class SingleBaseObjectPool<T> : BaseObjectPool<T> where T : Component
 {
-    private GameObject _prefab;
-    private Transform _spawnParent;
-    private int _poolSize;
-    private IInstantiator _instantiator;
+    private readonly GameObject _prefab;
+    private readonly Transform _spawnParent;
+    private readonly int _poolSize;
 
-    protected SingleBaseObjectPool(IInstantiator instantiator, GameObject prefab, Transform spawnParent, int poolSize) : base(instantiator)
+    protected SingleBaseObjectPool(IInstantiator instantiator, GameObject prefab, Transform spawnParent, int poolSize)
+        : base(instantiator)
     {
         _instantiator = instantiator;
         _prefab = prefab;
@@ -21,26 +21,26 @@ public class SingleBaseObjectPool<T> : BaseObjectPool<T> where T : Component
 
     private void SinglePrefabObjectPool(GameObject prefab,Transform parent, int poolSize)
     {
-        _poolObjects = new List<T>();
+        _singlePoolObjects = new List<T>();
         
         for (int i = 0; i < poolSize; i++)
         { 
-            _poolObjects.Add(_instantiator.InstantiatePrefabForComponent<T>(prefab, parent));
+            _singlePoolObjects.Add(_instantiator.InstantiatePrefabForComponent<T>(prefab, parent));
         }
         
-        SetActiveStateObjects();
+        SetSinglePoolActiveStateObjects();
     }
 
-    public T GetAvailableObjects()
+    public T GetAvailableObject()
     {
-        _poolObjects.RemoveAt(0);
-        _poolObjects[0].gameObject.SetActive(true);
-        return _poolObjects[0];
+        _singlePoolObjects.RemoveAt(0);
+        _singlePoolObjects[0].gameObject.SetActive(true);
+        return _singlePoolObjects[0];
     }
 
     protected void ReturnObjectsToPool(T pooledObject)
     {
         pooledObject.gameObject.SetActive(false);
-        _poolObjects.Add(pooledObject);
+        _singlePoolObjects.Add(pooledObject);
     }
 }

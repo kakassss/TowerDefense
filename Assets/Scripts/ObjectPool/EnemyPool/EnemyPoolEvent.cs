@@ -2,19 +2,19 @@ using System;
 
 public class EnemyPoolEvent
 {
-    private Action<BaseEnemy> OnEnemyDeactivated;
+    private Action<BaseEnemy,EnemyID> OnEnemyDeactivated;
     
-    public void FireDeactivated(BaseEnemy gameObject)
+    public void FireDeactivated(BaseEnemy gameObject,EnemyID index)
     {
-        OnEnemyDeactivated?.Invoke(gameObject);
+        OnEnemyDeactivated?.Invoke(gameObject,index);
     }
 
-    public void AddDeactivatedListener(Action<BaseEnemy> action)
+    public void AddDeactivatedListener(Action<BaseEnemy,EnemyID> action)
     {
         OnEnemyDeactivated += action;
     }
 
-    public void RemoveDeactivatedListener(Action<BaseEnemy> action)
+    public void RemoveDeactivatedListener(Action<BaseEnemy,EnemyID> action)
     {
         OnEnemyDeactivated -= action;
     }

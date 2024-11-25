@@ -655,6 +655,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2305855048287133806, guid: c74606acd33aba24baf1885cb2ea4867, type: 3}
   m_PrefabInstance: {fileID: 5771084480757109929}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1044589488
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1044589490}
+  - component: {fileID: 1044589489}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1044589489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044589488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5230f0dd94ff04c4d854bb11e23b2eaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1044589490
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044589488}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1146956244
 GameObject:
   m_ObjectHideFlags: 0
@@ -1025,13 +1069,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 1194170809453810681, guid: d5f5e321fb5218047a095c1b7ce96e95, type: 3}
   projectileParent: {fileID: 902750787}
-  projectilePoolSize: 1500
+  projectilePoolSize: 5
   enemiesPrefab:
   - {fileID: 5190562145789055396, guid: 60b870c0c08278c4ea2791ffc6261251, type: 3}
   - {fileID: 5117301249810087393, guid: 254462a7d2dd019468b54bb6b439f84a, type: 3}
   enemyParent: {fileID: 5771084480757109930}
-  poolsSizes: 9600000032000000
-  poolSizeIndexes: 0000000001000000
+  poolsSizes: 0500000005000000
 --- !u!1 &1656769791
 GameObject:
   m_ObjectHideFlags: 0
@@ -1388,3 +1431,4 @@ SceneRoots:
   - {fileID: 1432913697}
   - {fileID: 497817659}
   - {fileID: 1656769794}
+  - {fileID: 1044589490}

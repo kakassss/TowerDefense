@@ -1,11 +1,21 @@
 using UnityEngine;
 using Zenject;
 
+//Enemy IDs
+//1 Goblin
+//2 Troll
+public struct EnemyID
+{
+    public int ID;
+    public EnemyID(int id) => ID = id;
+}
+
 public abstract class BaseEnemy : MonoBehaviour,IEnemy
 {
     public BaseHealth Health { get; private set;}
     public BaseEnemyDefence Defence { get; private set; }
     public BaseEnemyAttack Attack { get; private set;}
+    public EnemyID EnemyID { get; protected set; }
     public Transform Transform => transform;
     
     [SerializeField] protected EnemyDefenceSO _enemyDefenceSo;
@@ -14,7 +24,7 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
     private EnemyPoolEvent _enemyPoolEvent;
     
     [Inject]
-    protected void Construct(EnemyPoolEvent enemyPoolEvent)
+    protected virtual void Construct(EnemyPoolEvent enemyPoolEvent)
     {
         _enemyPoolEvent = enemyPoolEvent;
         SetEnemyStats();
@@ -29,9 +39,10 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
         Attack = new BaseEnemyAttack(_enemyAttackSo);
         Health = new BaseHealth(Defence.DefenceSo.Health);
     }
-
+    
     private void OnDisable()
     {
-        _enemyPoolEvent.FireDeactivated(this);
+        _enemyPoolEvent.FireDeactivated(this,EnemyID);
     }
 }
+

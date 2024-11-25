@@ -4,7 +4,8 @@ public interface IEnemy
 {
     BaseHealth Health { get; }
     BaseEnemyDefence Defence { get;}
-    BaseEnemyAttack Attack { get; }    
+    BaseEnemyAttack Attack { get; }
+    public EnemyID EnemyID { get; }
     public Transform Transform { get; }
 }
 
