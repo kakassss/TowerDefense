@@ -19,7 +19,7 @@ public class EnemyWave : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            var aa = _enemyPool.GetPoolData(1);
+            var aa = _enemyPool.GetObjectFromPool(1);
         }
     }
 }

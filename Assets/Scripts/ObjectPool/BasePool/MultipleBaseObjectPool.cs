@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -40,8 +39,8 @@ public class MultipleBaseObjectPool<T> : BaseObjectPool<T> where T : Component
         
         SetMultiplePoolObjects();
     }
-
-    public T GetPoolData(int poolID)
+    
+    public T GetObjectFromPool(int poolID)
     {
         var poolList = _multiplePoolDataList.Where(data => data.ID == poolID);
         foreach (var data in poolList)
@@ -54,7 +53,7 @@ public class MultipleBaseObjectPool<T> : BaseObjectPool<T> where T : Component
         return null;
     }
 
-    protected void ReturnPoolData(T poolData, EnemyID poolID)
+    protected void ReturnObjectToPool(T poolData, EnemyID poolID)
     {
         poolData.gameObject.SetActive(false);
         BaseObjectPoolData<T> oldData = new BaseObjectPoolData<T>(poolData, poolID.ID);

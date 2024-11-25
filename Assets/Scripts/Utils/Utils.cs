@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Utils
 {
@@ -9,6 +10,19 @@ public class Utils
     {
         _camera = camera;
         _layerMask = layerMask;
+    }
+
+    public void PrintListMemberNames<T>(List<T> list)
+    {
+        foreach (var data in list)
+        {
+            var nameProperty = typeof(T).GetProperty("Name");
+            if (nameProperty != null)
+            {
+                var nameValue = nameProperty.GetValue(data)?.ToString();
+                Debug.Log(nameValue);
+            }
+        }
     }
     
     public Vector3 GetValidPositionWithLayerMask()

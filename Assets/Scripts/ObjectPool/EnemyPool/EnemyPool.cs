@@ -12,11 +12,11 @@ public class EnemyPool : MultipleBaseObjectPool<BaseEnemy>, IDisposable
     {
         _enemyPoolEvent = enemyPoolEvent;
         
-        _enemyPoolEvent.AddDeactivatedListener(ReturnPoolData);
+        _enemyPoolEvent.AddDeactivatedListener(ReturnObjectToPool);
     }
 
     public void Dispose()
     {
-        _enemyPoolEvent.RemoveDeactivatedListener(ReturnPoolData);
+        _enemyPoolEvent.RemoveDeactivatedListener(ReturnObjectToPool);
     }
 }

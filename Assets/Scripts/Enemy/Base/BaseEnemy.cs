@@ -42,6 +42,7 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
     
     private void OnDisable()
     {
+        Debug.Log("onDisable");
         _enemyPoolEvent.FireDeactivated(this,EnemyID);
     }
 }
