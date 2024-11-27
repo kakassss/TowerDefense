@@ -15,6 +15,8 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
     public BaseHealth Health { get; private set;}
     public BaseEnemyDefence Defence { get; private set; }
     public BaseEnemyAttack Attack { get; private set;}
+    
+    public BaseEnemyMovement Movement { get; private set; }
     public EnemyID EnemyID { get; protected set; }
     public Transform Transform => transform;
     
@@ -38,6 +40,8 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
         };
         Attack = new BaseEnemyAttack(_enemyAttackSo);
         Health = new BaseHealth(Defence.DefenceSo.Health);
+        Movement = new BaseEnemyMovement();
+        Movement.speed = 4f;
     }
     
     private void OnDisable()

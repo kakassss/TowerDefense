@@ -1,25 +1,47 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
+[System.Serializable]
+public class WaveData
+{
+    public int EnemyID;
+    public int count;
+    public float Rate;
+}
+
 public class EnemyWave : MonoBehaviour
 {
+    [SerializeField] private List<Transform> _spawnPoints;
+    [SerializeField] private List<WaveData> _waveData;
+    
     private EnemyPool _enemyPool;
-    private EnemyID _enemyID;
 
     [Inject]
     private void Construct(EnemyPool enemyPool)
     {
         _enemyPool = enemyPool;
-
-        _enemyID = new EnemyID(1);
     }
 
-
-    private void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        StartCoroutine(SpawnWave());
+    }
+
+    private IEnumerator SpawnWave()
+    {
+        WaitForSeconds waitfor = new WaitForSeconds(_waveData[0].Rate);
+        
+        for (int i = 0; i < _waveData.Count; i++)
         {
-            var aa = _enemyPool.GetObjectFromPool(1);
+            for (int j = 0; j < _waveData[i].count; j++)
+            {
+                _enemyPool.GetObjectFromPool(_waveData[i].EnemyID, _spawnPoints[i].position);
+                yield return waitfor;
+            }
+            waitfor = new WaitForSeconds(_waveData[i].Rate);
         }
     }
 }

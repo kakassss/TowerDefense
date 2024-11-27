@@ -40,6 +40,20 @@ public class MultipleBaseObjectPool<T> : BaseObjectPool<T> where T : Component
         SetMultiplePoolObjects();
     }
     
+    public T GetObjectFromPool(int poolID, Vector3 position)
+    {
+        var poolList = _multiplePoolDataList.Where(data => data.ID == poolID);
+        foreach (var data in poolList)
+        {
+            _multiplePoolDataList.Remove(data);
+            data.prefab.gameObject.SetActive(true);
+            data.prefab.transform.position = position;
+            return data.prefab;
+        }
+        Debug.LogError("Insufficient pool data for this pool");
+        return null;
+    }
+    
     public T GetObjectFromPool(int poolID)
     {
         var poolList = _multiplePoolDataList.Where(data => data.ID == poolID);
@@ -56,6 +70,8 @@ public class MultipleBaseObjectPool<T> : BaseObjectPool<T> where T : Component
     protected void ReturnObjectToPool(T poolData, EnemyID poolID)
     {
         poolData.gameObject.SetActive(false);
+        poolData.transform.position = Vector3.zero;
+        
         BaseObjectPoolData<T> oldData = new BaseObjectPoolData<T>(poolData, poolID.ID);
         _multiplePoolDataList.Add(oldData);
     }
