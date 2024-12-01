@@ -20,6 +20,16 @@ public class BaseObject
     
     public GameObject BuildObject;
     public GhostObject GhostObject;
+
+    public bool CanBuild(int buildSlotCount)
+    {
+        if (X == 1 && Z == 1 && buildSlotCount == 1)
+        {
+            return false;
+        }
+        
+        return buildSlotCount != X + Z;
+    }
 }
 
 [Serializable]

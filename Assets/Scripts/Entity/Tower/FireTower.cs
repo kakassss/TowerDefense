@@ -7,7 +7,7 @@ public class FireTower : BaseTower
     protected override void SetTowerStats()
     {
         base.SetTowerStats();
-        triggerCollider.radius = _towerAttackSo.Range;
+        //triggerCollider.radius = _towerAttackSo.Range;
     }
 
     private void Update()

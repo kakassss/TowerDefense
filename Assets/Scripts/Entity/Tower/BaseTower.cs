@@ -64,7 +64,6 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
             return;
         }
         
-        Debug.Log("attacking to target " + _targetEnemy.Transform.name);
         Attack.AttackRate(_targetEnemy.Health.Damage,_targetEnemy);
     }
     

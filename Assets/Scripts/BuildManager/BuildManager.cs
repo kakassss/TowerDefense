@@ -28,7 +28,6 @@ public class BuildManager
         buildCells = new List<BuildMultipleCells>();
         
         _cellManager.GetXZ(worldPos,out var x, out var z);
-        
         for (int i = 0; i < _buildSelectManager.CurrentGridEntitySO.X; i++)
         {
             for (int j = 0; j < _buildSelectManager.CurrentGridEntitySO.Z; j++)
@@ -44,9 +43,8 @@ public class BuildManager
             }
         }
         
-        if(buildCells.Count != _buildSelectManager.CurrentGridEntitySO.X + _buildSelectManager.CurrentGridEntitySO.Z)
+        if(_buildSelectManager.CurrentGridEntitySO.CanBuild(buildCells.Count))
             return;
-
 
         InstantiateSingleCell(buildCells);
         //InstantiateMultipleCells(buildCells);    

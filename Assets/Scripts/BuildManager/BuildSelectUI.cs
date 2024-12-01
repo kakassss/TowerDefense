@@ -5,7 +5,6 @@ using Zenject;
 public class BuildSelectUI : AbstractButtonListener
 {
     [SerializeField] private TMP_Text _buttonNameText;
-    [SerializeField] private int _towerIndex; // TODO: İleride sorun cıkarır değişmesi lazım
     
     private GridEntitySO _gridEntitySo;
     private InputActions _inputActions;
