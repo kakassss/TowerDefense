@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using Cysharp.Threading.Tasks;
 
-[System.Serializable]
+[Serializable]
 public class WaveData
 {
     public int EnemyID;
@@ -27,9 +28,25 @@ public class EnemyWave : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SpawnWave());
+        SpawnWaveAsync().Forget();
+        //StartCoroutine(SpawnWave());
     }
 
+    private async UniTaskVoid SpawnWaveAsync()
+    {
+        var waitTime = _waveData[0].Rate;
+        
+        for (int i = 0; i < _waveData.Count; i++)
+        {
+            for (int j = 0; j < _waveData[i].count; j++)
+            {
+                _enemyPool.GetObjectFromPool(_waveData[i].EnemyID, _spawnPoints[i].position);
+                await UniTask.WaitForSeconds(waitTime);
+            }
+            await UniTask.WaitForSeconds(_waveData[i].Rate);
+        }
+    }
+    
     private IEnumerator SpawnWave()
     {
         WaitForSeconds waitfor = new WaitForSeconds(_waveData[0].Rate);
