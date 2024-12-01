@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -30,29 +29,10 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
         Health = new BaseHealth(100);
     }
     
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     if (!other.TryGetComponent(out IEnemy enemy)) return;
-    //     
-    //     _enemies.Add(enemy);
-    //     Debug.Log("Enemy added");
-    // }
-    //
-    // private void OnTriggerExit(Collider other)
-    // {
-    //     if (!other.TryGetComponent(out IEnemy enemy)) return;
-    //     
-    //     _enemies.Remove(enemy);
-    //     Debug.Log("Enemy removed");
-    // }
-    //
-    
-    
     public void AttackAction()
     {
         if (_targetEnemy == null)
         {
-            //Debug.Log("Find targ");
             _targetEnemy = Attack.DetectEnemies(transform);
         }
         
@@ -75,17 +55,4 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
         // Küre çiz (transform'un pozisyonunda ve targetingRange yarıçapında)
         Gizmos.DrawWireSphere(transform.position, _towerAttackSo.Range);
     }
-
-    
-    // public void AttackAction()
-    // {
-    //     if(_enemies.Count <= 0) return;
-    //
-    //     if (_targetEnemy == null)
-    //     {
-    //         _targetEnemy = Attack.FindClosestEnemy(transform, _enemies);
-    //     }
-    //     
-    //     Attack.AttackRate(_targetEnemy.Health.Damage,_targetEnemy);
-    // }
 }

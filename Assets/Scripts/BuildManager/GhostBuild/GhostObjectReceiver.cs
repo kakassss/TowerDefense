@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GhostObjectReceiver
@@ -12,6 +11,10 @@ public class GhostObjectReceiver
     public int GridIndexZ;
     
     public bool GhostObjectValid;
+    public bool GhostObjectBuildType()
+    {
+        return GridIndexX + GridIndexZ > 2;
+    }
     
     public void OnGhostMaterialGreenFire()
     {

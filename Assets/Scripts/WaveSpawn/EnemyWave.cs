@@ -29,7 +29,6 @@ public class EnemyWave : MonoBehaviour
     private void Start()
     {
         SpawnWaveAsync().Forget();
-        //StartCoroutine(SpawnWave());
     }
 
     private async UniTaskVoid SpawnWaveAsync()

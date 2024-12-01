@@ -20,7 +20,9 @@ public class BaseObject
     
     public GameObject BuildObject;
     public GhostObject GhostObject;
-
+    
+    public BuildType BuildType;
+    
     public bool CanBuild(int buildSlotCount)
     {
         if (X == 1 && Z == 1 && buildSlotCount == 1)
@@ -30,6 +32,12 @@ public class BaseObject
         
         return buildSlotCount != X + Z;
     }
+}
+
+public enum BuildType
+{
+    Single,
+    Multiple
 }
 
 [Serializable]
