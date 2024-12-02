@@ -2,11 +2,12 @@
 using UnityEngine;
 using Zenject;
 
-public class SingleBaseObjectPool<T> : BaseObjectPool<T> where T : Component
+public class SingleBaseObjectPool<T> : BaseObjectPool where T : Component
 {
     private readonly GameObject _prefab;
-    private readonly Transform _spawnParent;
     private readonly int _poolSize;
+    
+    private List<T> _singlePoolObjects;
 
     protected SingleBaseObjectPool(IInstantiator instantiator, GameObject prefab, Transform spawnParent, int poolSize)
         : base(instantiator)
@@ -31,13 +32,21 @@ public class SingleBaseObjectPool<T> : BaseObjectPool<T> where T : Component
         SetSinglePoolActiveStateObjects();
     }
 
+    private void SetSinglePoolActiveStateObjects()
+    {
+        foreach (var poolObject in _singlePoolObjects)
+        {
+            poolObject.gameObject.SetActive(false);
+        }
+    }
+    
     public T GetAvailableObject()
     {
         _singlePoolObjects.RemoveAt(0);
         _singlePoolObjects[0].gameObject.SetActive(true);
         return _singlePoolObjects[0];
     }
-
+    
     protected void ReturnObjectsToPool(T pooledObject)
     {
         pooledObject.gameObject.SetActive(false);
