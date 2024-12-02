@@ -57,7 +57,6 @@ public class MousePos : MonoBehaviour
                     {
                         _ghostObjectReceiver.OnGhostMaterialRedFire();
                         SetMidPosOnGrid(x,z,_ghostObjectReceiver.GhostObjectBuildType());
-                        Debug.Log("onur1");
                         return;
                     }
                     
@@ -65,7 +64,6 @@ public class MousePos : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("onur2");
                     _ghostObjectReceiver.OnGhostMaterialRedFire(); // if there is a cell on out of border position
                 }
             }
@@ -76,6 +74,7 @@ public class MousePos : MonoBehaviour
     
     // get current cells position and calculate ghost position just for one cells
     // If there is a full grid, cant calculate position
+    // BuildType: avoid to 1x1 ghost position fix
     private void SetMidPosOnGrid(int x, int z, bool buildType)
     {
         Vector3 crossMouseGrid = buildType ? _cellManager.GetCellMidPointPositionXZ(x + 1, z + 1) 

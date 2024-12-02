@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
@@ -9,23 +8,21 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
     
     [SerializeField] protected BaseTowerAttackSO _towerAttackSo;
     
-    protected List<IEnemy> _enemies;
-    protected IEnemy _targetEnemy;
-    
-    protected ProjectilePool _projectilePool;
+    private IEnemy _targetEnemy;
+    private ProjectilePoolEvent _projectilePoolEvent;
+    private ProjectilePool _projectilePool;
     
     [Inject]
-    protected void Construct(ProjectilePool projectilePool)
+    protected void Construct(ProjectilePool projectilePool, ProjectilePoolEvent projectilePoolEvent)
     {
         _projectilePool = projectilePool;
+        _projectilePoolEvent = projectilePoolEvent;
         SetTowerStats();
     }
 
     protected virtual void SetTowerStats()
     {
-        _enemies = new List<IEnemy>();
-        
-        Attack = new BaseTowerAttack(_towerAttackSo,_projectilePool);
+        Attack = new BaseTowerAttack(_towerAttackSo,_projectilePool, _projectilePoolEvent);
         Health = new BaseHealth(100);
     }
     

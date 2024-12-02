@@ -1,25 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Zenject;
 
-public class MultipleBaseObjectPool<T> : BaseObjectPool<T> where T : Component
+public class MultipleBaseObjectPool<T> : BaseObjectPool where T : Component
 {
+    private List<BaseObjectPoolData<T>> _multiplePoolDataList;
+    
     private readonly List<T> _prefabs;
     private readonly List<int> _indexes; 
     private readonly List<int> _poolSize;
-    private readonly Transform _parent;
     
-    protected MultipleBaseObjectPool(IInstantiator instantiator, List<T> prefabs,Transform parent, List<int> poolSize, List<int> indexes) 
+    protected MultipleBaseObjectPool(IInstantiator instantiator, List<T> prefabs,Transform spawnParent, List<int> poolSize, List<int> indexes) 
         : base(instantiator)
     {
         _instantiator = instantiator;
         _prefabs = prefabs;
-        _parent = parent;
+        _spawnParent = spawnParent;
         _poolSize = poolSize;
         _indexes = indexes;
         
-        MultiplePrefabObjectPool(_prefabs, _parent, _poolSize, _indexes);
+        MultiplePrefabObjectPool(_prefabs, _spawnParent, _poolSize, _indexes);
     }
 
     private void MultiplePrefabObjectPool(List<T> prefabs,Transform parent, List<int> poolSize, List<int> index)
@@ -38,6 +40,14 @@ public class MultipleBaseObjectPool<T> : BaseObjectPool<T> where T : Component
         }
         
         SetMultiplePoolObjects();
+    }
+    
+    private void SetMultiplePoolObjects()
+    {
+        foreach (var poolData in _multiplePoolDataList)
+        {
+            poolData.prefab.gameObject.SetActive(false);
+        }
     }
     
     public T GetObjectFromPool(int poolID, Vector3 position)
@@ -76,4 +86,29 @@ public class MultipleBaseObjectPool<T> : BaseObjectPool<T> where T : Component
         _multiplePoolDataList.Add(oldData);
     }
 }
+public struct BaseObjectPoolData<T> : IEquatable<BaseObjectPoolData<T>>
+{
+    public T prefab;
+    public int ID;
 
+    public BaseObjectPoolData(T prefab, int ID)
+    {
+        this.prefab = prefab;
+        this.ID = ID;
+    }
+
+    public bool Equals(BaseObjectPoolData<T> other)
+    {
+        return EqualityComparer<T>.Default.Equals(prefab, other.prefab) && ID == other.ID;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is BaseObjectPoolData<T> other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(prefab, ID);
+    }
+}

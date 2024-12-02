@@ -5,7 +5,7 @@ public class GhostSpawn : BaseSpawner, IDisposable
 {
     private GhostBuildManager _ghostBuildManager;
     
-    private Vector3 _spawnPos;
+    private new Vector3 _spawnPos;
     
     private GhostSpawn(Utils utils, GhostBuildManager ghostBuildManager, InputActions inputActions) : base(utils,inputActions)
     {
