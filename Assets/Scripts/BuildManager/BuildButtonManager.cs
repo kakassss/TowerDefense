@@ -4,6 +4,7 @@ using Zenject;
 
 public class BuildButtonManager : MonoBehaviour
 {
+    //TODO: burayı SOdan data alıcak şekile çevir, yoksa her seferinde burayı da güncellemen gerekecek
     [SerializeField] private List<BuildSelectUI> _buildButtons;
     [SerializeField] private Transform _spawnPos;
     

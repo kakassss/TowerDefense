@@ -25,8 +25,9 @@ public class SingleBaseObjectPool<T> : BaseObjectPool where T : Component
         _singlePoolObjects = new List<T>();
         
         for (int i = 0; i < poolSize; i++)
-        { 
+        {
             _singlePoolObjects.Add(_instantiator.InstantiatePrefabForComponent<T>(prefab, parent));
+            _singlePoolObjects[^1].gameObject.SetActive(false);
         }
         
         SetSinglePoolActiveStateObjects();

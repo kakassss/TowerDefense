@@ -72,16 +72,18 @@ public class BaseTowerAttack
         return closestEnemy ?? (enemies[0]);
     }
     
-    public void AttackRate(UnityAction<float> attackAction, IEnemy enemy)
+    public void AttackRate(UnityAction<float> attackAction, IEnemy enemy, Transform towerAimPoint)
     {
         _fireRateTemp += Time.deltaTime;
         
         if (_fireRateTemp > TowerAttackSo.FireRate)
         {
-            _projectilePoolEvent?.FireActivate(enemy.Transform.position);
-            _projectilePool.GetAvailableObject();
+            _projectilePoolEvent?.FireActivate(enemy.Transform.position,towerAimPoint);
+            _projectilePool.GetAvailableObject().transform.position = towerAimPoint.position;
             attackAction?.Invoke(TowerAttackSo.Damage);
             _fireRateTemp = 0;
         }
     }
+    
+    
 }

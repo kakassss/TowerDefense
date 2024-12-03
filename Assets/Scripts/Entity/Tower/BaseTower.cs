@@ -7,7 +7,10 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
     public BaseHealth Health { get; private set;}
     
     [SerializeField] protected BaseTowerAttackSO _towerAttackSo;
+    [SerializeField] private Transform _towerAimPoint;
+    [SerializeField] private Transform _towerAimHead;
     
+    private TowerAimTarget _towerAimTarget;
     private IEnemy _targetEnemy;
     private ProjectilePoolEvent _projectilePoolEvent;
     private ProjectilePool _projectilePool;
@@ -24,6 +27,7 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
     {
         Attack = new BaseTowerAttack(_towerAttackSo,_projectilePool, _projectilePoolEvent);
         Health = new BaseHealth(100);
+        _towerAimTarget = new TowerAimTarget();
     }
     
     public void AttackAction()
@@ -41,15 +45,20 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
             return;
         }
         
-        Attack.AttackRate(_targetEnemy.Health.Damage,_targetEnemy);
+        _towerAimTarget.AimTowerAimTarget(_towerAimHead,_targetEnemy);
+        
+        Attack.AttackRate(_targetEnemy.Health.Damage,_targetEnemy,_towerAimPoint);
     }
     
     void OnDrawGizmos()
     {
-        // Gizmo'nun rengini ayarla
         Gizmos.color = Color.magenta;
-
-        // Küre çiz (transform'un pozisyonunda ve targetingRange yarıçapında)
+        
         Gizmos.DrawWireSphere(transform.position, _towerAttackSo.Range);
+        
+        
+        Gizmos.color = Color.red;
+        if(_targetEnemy == null) return;
+        Gizmos.DrawLine(transform.position,_targetEnemy.Transform.position);
     }
 }
