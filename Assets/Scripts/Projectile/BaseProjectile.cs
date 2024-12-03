@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -6,13 +7,13 @@ using Zenject;
 public class BaseProjectile : MonoBehaviour
 {
     [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private BaseProjectileDataSO _baseProjectileData;
     
     private ProjectilePoolEvent _projectilePoolEvent;
-    //private ProjectileDataReceiver _projectileDataReceiver;
-    
-    private Vector3 _targetDirection;
-    private float _speed = 500f;
-    private float _rotateSpeed = 500f;
+   
+    private Vector3 _direction;
+    private Vector3 _enemyPosition;
+    private Transform _spawnPosition;
     
     [Inject]
     private void Construct(ProjectilePoolEvent projectilePoolEvent)
@@ -22,29 +23,54 @@ public class BaseProjectile : MonoBehaviour
         _projectilePoolEvent.AddProjectileEnable(GetProjectileData);
     }
 
-    private void GetProjectileData(Vector3 targetDirection)
+    private void OnTriggerEnter(Collider other)
     {
-        _targetDirection = targetDirection;
+        this.gameObject.SetActive(false);
+    }
+
+    private void GetProjectileData(Vector3 targetDirection,Transform spawnPosition)
+    {
+        _enemyPosition = targetDirection;
+        _spawnPosition = spawnPosition;
     }
 
     private void OnEnable()
     {
+        // after created by pool system, onEnable event will trigger with first frame,
+        // to avoid that 
+        if(_enemyPosition == Vector3.zero) return;
+        
+        transform.position = _spawnPosition.position;
         _rigidbody.isKinematic = false;
         
-        Vector3 direction = (_targetDirection - transform.position).normalized;
+        _direction = (_enemyPosition - transform.position).normalized;
         
-        transform.rotation = Quaternion.LookRotation(direction);
-        _rigidbody.AddRelativeForce(_speed * transform.forward);
+        transform.rotation = Quaternion.LookRotation(_direction);
+        
     }
-    
+
+    // Not using rigidbody to avoid Physics.Simulate() operation
+    //_rigidbody.AddForce(_baseProjectileData.Speed * transform.forward);
+    private void Update()
+    {
+        transform.position += _baseProjectileData.Speed * Time.deltaTime * transform.forward;
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        
+        Gizmos.DrawLine(_spawnPosition.position,_enemyPosition);
+    }
     private void OnDisable()
     {
         _projectilePoolEvent.FireDeactivated(this);
         
-        _targetDirection = Vector3.zero;
+        _enemyPosition = Vector3.zero;
         _rigidbody.angularVelocity = Vector3.zero;
         _rigidbody.linearVelocity = Vector3.zero;
         _rigidbody.isKinematic = true;
+        transform.position = Vector3.zero;
         transform.rotation = Quaternion.identity;
     }
 
