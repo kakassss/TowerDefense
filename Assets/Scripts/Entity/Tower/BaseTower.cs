@@ -10,16 +10,19 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
     [SerializeField] private Transform _towerAimPoint;
     [SerializeField] private Transform _towerAimHead;
     
-    private TowerAimTarget _towerAimTarget;
     private IEnemy _targetEnemy;
+    
+    private QuaternionUtils _quaternionUtils;
     private ProjectilePoolEvent _projectilePoolEvent;
     private ProjectilePool _projectilePool;
     
     [Inject]
-    protected void Construct(ProjectilePool projectilePool, ProjectilePoolEvent projectilePoolEvent)
+    protected void Construct(ProjectilePool projectilePool, ProjectilePoolEvent projectilePoolEvent,QuaternionUtils quaternionUtils)
     {
         _projectilePool = projectilePool;
         _projectilePoolEvent = projectilePoolEvent;
+        _quaternionUtils = quaternionUtils;
+        
         SetTowerStats();
     }
 
@@ -27,7 +30,6 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
     {
         Attack = new BaseTowerAttack(_towerAttackSo,_projectilePool, _projectilePoolEvent);
         Health = new BaseHealth(100);
-        _towerAimTarget = new TowerAimTarget();
     }
     
     public void AttackAction()
@@ -45,7 +47,7 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
             return;
         }
         
-        _towerAimTarget.AimTowerAimTarget(_towerAimHead,_targetEnemy);
+        _quaternionUtils.AimToTarget(_towerAimHead,_targetEnemy.Transform,_towerAttackSo.RotateSpeed);
         
         Attack.AttackRate(_targetEnemy.Health.Damage,_targetEnemy,_towerAimPoint);
     }

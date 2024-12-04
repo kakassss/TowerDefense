@@ -9,5 +9,6 @@ public class UtilsInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.Bind<Utils>().AsSingle().WithArguments(camera,layerMask).NonLazy();
+        Container.Bind<QuaternionUtils>().AsSingle().NonLazy();
     }
 }

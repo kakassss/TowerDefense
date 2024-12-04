@@ -8,4 +8,7 @@ public class BaseTowerAttackSO : ScriptableObject
     public float Damage;
     public float Range;
     public float FireRate;
+    
+    [Header("RotateAnimation")]
+    public float RotateSpeed;
 }
