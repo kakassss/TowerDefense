@@ -15,20 +15,21 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
     public BaseHealth Health { get; private set;}
     public BaseEnemyDefence Defence { get; private set; }
     public BaseEnemyAttack Attack { get; private set;}
-    
-    public BaseEnemyMovement Movement { get; private set; }
     public EnemyID EnemyID { get; protected set; }
     public Transform Transform => transform;
     
     [SerializeField] protected EnemyDefenceSO _enemyDefenceSo;
     [SerializeField] protected EnemyAttackSO _enemyAttackSo;
-
+    [SerializeField] protected BaseEnemyDataSO _baseEnemyDataSo;
+    
     private EnemyPoolEvent _enemyPoolEvent;
+    protected MovementUtils _movementUtils;
     
     [Inject]
-    protected virtual void Construct(EnemyPoolEvent enemyPoolEvent)
+    protected virtual void Construct(EnemyPoolEvent enemyPoolEvent, MovementUtils movementUtils)
     {
         _enemyPoolEvent = enemyPoolEvent;
+        _movementUtils = movementUtils;
         SetEnemyStats();
     }
 
@@ -40,7 +41,6 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
         };
         Attack = new BaseEnemyAttack(_enemyAttackSo);
         Health = new BaseHealth(Defence.DefenceSo.Health);
-        Movement = new BaseEnemyMovement();
     }
     
     private void OnDisable()

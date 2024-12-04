@@ -10,5 +10,6 @@ public class UtilsInstaller : MonoInstaller
     {
         Container.Bind<Utils>().AsSingle().WithArguments(camera,layerMask).NonLazy();
         Container.Bind<QuaternionUtils>().AsSingle().NonLazy();
+        Container.Bind<MovementUtils>().AsSingle().NonLazy();
     }
 }
