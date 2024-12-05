@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -9,7 +10,7 @@ public class BuildManager
     private BuildSelectManager _buildSelectManager;
     private IInstantiator _instantiator;
     
-    private List<BuildMultipleCells> buildCells;
+    private List<BuildCells> buildCells;
     
     [Inject]
     private void Construct(CellManager cellManager, IInstantiator instantiator, BuildSelectManager buildSelectManager)
@@ -25,7 +26,7 @@ public class BuildManager
         
         if(mousePosCell == null) return;
 
-        buildCells = new List<BuildMultipleCells>();
+        buildCells = new List<BuildCells>();
         
         _cellManager.GetXZ(worldPos,out var x, out var z);
         for (int i = 0; i < _buildSelectManager.CurrentGridEntitySO.X; i++)
@@ -37,8 +38,8 @@ public class BuildManager
                     var buildCell = _cellManager.Grid[x + i, z + j];
                     if(buildCell.Slot.IsFull == true) return;
                 
-                    BuildMultipleCells buildableMultipleCells = new BuildMultipleCells(buildCell);
-                    buildCells.Add(buildableMultipleCells);
+                    BuildCells buildableCells = new BuildCells(buildCell);
+                    buildCells.Add(buildableCells);
                 }
             }
         }
@@ -46,21 +47,23 @@ public class BuildManager
         if(_buildSelectManager.CurrentGridEntitySO.CanBuild(buildCells.Count))
             return;
 
-        InstantiateSingleCell(buildCells);
+        InstantiateSingleCell(buildCells).Forget();
         //InstantiateMultipleCells(buildCells);    
     }
 
-    private void InstantiateSingleCell(List<BuildMultipleCells> buildCells)
+    private async UniTaskVoid InstantiateSingleCell(List<BuildCells> buildCells)
     {
         foreach (var cell in buildCells)
         {
             cell.Cell.Slot.IsFull = true;
         }
+
+        await UniTask.WaitForEndOfFrame();
         var tower = _instantiator.InstantiatePrefab(_buildSelectManager.CurrentGridEntitySO.BuildObject);
         tower.transform.position = SetMidPosMultipleCells();
     }
     
-    private void InstantiateMultipleCells(List<BuildMultipleCells> buildCells)
+    private void InstantiateMultipleCells(List<BuildCells> buildCells)
     {
         foreach (var cell in buildCells)
         {
@@ -71,7 +74,7 @@ public class BuildManager
         }
     }
     
-    public Vector3 SetMidPosMultipleCells()
+    private Vector3 SetMidPosMultipleCells()
     {
         List<Vector3> cellsPosition = buildCells.Select(cell => 
             _cellManager.GetCellMidPointPositionXZ(cell.Cell.Slot.GridIndexX, cell.Cell.Slot.GridIndexZ)).ToList();
@@ -89,12 +92,12 @@ public class BuildManager
     }
 }
 
-public struct BuildMultipleCells
+public struct BuildCells
 {
     public Vector3 SpawnPosition;
     public Grid<Cell<GameObject>> Cell;
         
-    public BuildMultipleCells(Grid<Cell<GameObject>> cell)
+    public BuildCells(Grid<Cell<GameObject>> cell)
     {
         Cell = cell;
         SpawnPosition = new Vector3(cell.Slot.GridIndexX,0, cell.Slot.GridIndexZ);

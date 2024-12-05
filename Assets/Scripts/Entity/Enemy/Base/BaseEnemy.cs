@@ -4,6 +4,8 @@ using Zenject;
 //Enemy IDs
 //0 Troll
 //1 Goblin
+
+//TODO: Enemyler öldükten sonra poola geri gelip sonra tekrar kullanılabildiklerine bakmadın
 public struct EnemyID
 {
     public int ID;
