@@ -17,7 +17,7 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
     public BaseEnemyAttack Attack { get; private set;}
     public EnemyID EnemyID { get; protected set; }
     public Transform Transform => transform;
-    
+
     [SerializeField] protected EnemyDefenceSO _enemyDefenceSo;
     [SerializeField] protected EnemyAttackSO _enemyAttackSo;
     [SerializeField] protected BaseEnemyDataSO _baseEnemyDataSo;
@@ -41,11 +41,19 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
         };
         Attack = new BaseEnemyAttack(_enemyAttackSo);
         Health = new BaseHealth(Defence.DefenceSo.Health);
+        Health.Death = this;
     }
     
     private void OnDisable()
     {
         _enemyPoolEvent.FireDeactivated(this,EnemyID);
+    }
+
+    public void Death()
+    {
+        Transform.gameObject.SetActive(false);
+        transform.position = Vector3.zero;
+        transform.rotation = Quaternion.identity;
     }
 }
 

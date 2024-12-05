@@ -5,6 +5,8 @@ public class BaseHealth : IDamageable
 {
     public float GetCurrentHealth { get; private set; }
 
+    public IDeath Death;
+
     public BaseHealth(float currentHealth)
     {
         GetCurrentHealth = currentHealth;
@@ -21,12 +23,7 @@ public class BaseHealth : IDamageable
         
         if (GetCurrentHealth > 0) return;
         
-        Die();
+        Death.Death();
         GetCurrentHealth = 0;
-    }
-    
-    private void Die()
-    {
-        Debug.Log("Dead");
     }
 }

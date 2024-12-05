@@ -1,7 +1,6 @@
-﻿using Cysharp.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
-public interface IEnemy
+public interface IEnemy : IDeath
 {
     BaseHealth Health { get; }
     BaseEnemyDefence Defence { get;}

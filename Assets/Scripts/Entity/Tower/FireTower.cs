@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-
+﻿
 public class FireTower : BaseTower
 {
     protected override void SetTowerStats()
