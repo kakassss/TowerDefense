@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-public class MousePos : MonoBehaviour
+public class MouseClickBevahiors : MonoBehaviour
 {
     private Utils _utils;
     private GhostObjectReceiver _ghostObjectReceiver;
@@ -11,7 +11,6 @@ public class MousePos : MonoBehaviour
 
     private Grid<Cell<GameObject>> mouseCell;
     List<Cell<GameObject>> buildableCells;
-    private Vector3 _mousePos;
 
     [Inject]
     private void Construct(Utils utils,GhostObjectReceiver ghostObjectReceiver,CellManager cellManager)
