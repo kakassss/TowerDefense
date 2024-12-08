@@ -3,15 +3,15 @@
 public abstract class BaseSpawner
 {
     protected Utils _utils;
-    protected InputActions _inputActions;
+    protected BuildingInputEvents BuildingInputEvents;
     
     protected Vector3 _spawnPos;
     
     protected BaseSpawner(
-        Utils utils, InputActions inputActions)
+        Utils utils, BuildingInputEvents buildingInputEvents)
     {
         _utils = utils;
-        _inputActions = inputActions;
+        BuildingInputEvents = buildingInputEvents;
         
     }
 }

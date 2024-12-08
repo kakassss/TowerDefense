@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
@@ -13,6 +12,7 @@ public class BuildingInputReader : InputSystem_Actions.IInputBuildActions, IDisp
     {
         _buildingInputEvents = buildingInputEvent;
         _ghostObjectReceiver = ghostObjectReceiver;
+        _inputSystem = inputSystem;
         
         _inputSystem.InputSystemActions.InputBuild.SetCallbacks(this);
         _inputSystem.InputSystemActions.InputBuild.Enable();

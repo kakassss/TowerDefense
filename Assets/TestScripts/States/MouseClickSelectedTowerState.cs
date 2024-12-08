@@ -1,15 +1,5 @@
 ﻿using UnityEngine;
 
-public abstract class MouseClickBaseState : State
-{
-    protected readonly MouseClickStateMachine _mouseClickStateMachine;
-    
-    protected MouseClickBaseState(MouseClickStateMachine mouseClickStateMachine)
-    {
-        _mouseClickStateMachine = mouseClickStateMachine;
-    }
-}
-
 public class MouseClickSelectedTowerState : MouseClickBaseState
 {
     private BaseTower _selectedTower;
@@ -22,16 +12,23 @@ public class MouseClickSelectedTowerState : MouseClickBaseState
 
     public override void OnEnter()
     {
+        Debug.Log("yokoso minnassan hideo kojima dess");
         // Tower ui elementlerini aç
     }
 
     public override void OnUpdate(float deltaTime)
     {
         _mouseClickStateMachine.Utils.GetValidPositionWithLayerMask(towerLayerMask);   
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _mouseClickStateMachine.SwitchState(_mouseClickStateMachine.MouseObjectBuildState);
+        }
     }
 
     public override void OnExit()
     {
+        
+        
         // Tower ui elementlerini kapa
     }
 }

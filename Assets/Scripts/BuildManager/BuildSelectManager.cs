@@ -6,14 +6,14 @@ public class BuildSelectManager
 
     public BaseObject CurrentGridEntitySO => _currentGridEntitySO;
 
-    private InputActions _inputActions;
+    private BuildingInputEvents _buildingInputEvents;
 
     [Inject]
-    private void Construct(InputActions inputActions)
+    private void Construct(BuildingInputEvents buildingInputEvents)
     {
-        _inputActions = inputActions;
+        _buildingInputEvents = buildingInputEvents;
         
-        _inputActions.GhostSpawnInputAddAction(SetGhostObjectSelect);
+        _buildingInputEvents.GhostSpawnInputAddAction(SetGhostObjectSelect);
     }
     
     private void SetGhostObjectSelect(BaseObject gridEntitySo)

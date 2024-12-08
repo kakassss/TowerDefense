@@ -15,30 +15,32 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
     
     private QuaternionUtils _quaternionUtils;
     private TowerAttackTypeEvent _towerAttackTypeEvent;
-    private ITargetToEnemy _currentAttackType;
+    //private ITargetToEnemy _currentAttackType;
+    private TowerAttackTypeHolder _towerAttackTypeHolder;
     
     [Inject]
-    protected void Construct(QuaternionUtils quaternionUtils, BaseTowerAttack attack, TowerAttackTypeEvent towerAttackTypeEvent)
+    protected void Construct(QuaternionUtils quaternionUtils, BaseTowerAttack attack, TowerAttackTypeEvent towerAttackTypeEvent,TowerAttackTypeHolder towerAttackTypeHolder)
     {
         _quaternionUtils = quaternionUtils;
         _towerAttackTypeEvent = towerAttackTypeEvent;
+        _towerAttackTypeHolder = towerAttackTypeHolder;
         Attack = attack;
         
         SetTowerStats();
         _towerAttackTypeEvent.AddOnAttackTypeChanged(SetAttackType);
     }
 
+    // Using for once, kind of start
     protected virtual void SetTowerStats()
     {
-        _currentAttackType = _towerAttackType.SelectedTarget;
-        Attack.TargetToEnemy = _currentAttackType;
+        Attack.TargetToEnemy = _towerAttackTypeHolder.AttackTypes[0]; // Default attack type is attack to closest enemy
         Health = new BaseHealth(100);
     }
-
+    
+    // Declare once again with actions
     private void SetAttackType()
     {
-        _currentAttackType = _towerAttackType.SelectedTarget;
-        Attack.TargetToEnemy = _currentAttackType;
+        Attack.TargetToEnemy = _towerAttackType.SelectedTarget;
     }
     
     public void AttackAction()

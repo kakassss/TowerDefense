@@ -7,11 +7,11 @@ public class GhostSpawn : BaseSpawner, IDisposable
     
     private new Vector3 _spawnPos;
     
-    private GhostSpawn(Utils utils, GhostBuildManager ghostBuildManager, InputActions inputActions) : base(utils,inputActions)
+    private GhostSpawn(Utils utils, GhostBuildManager ghostBuildManager, BuildingInputEvents buildingInputEvents) : base(utils,buildingInputEvents)
     {
         _ghostBuildManager = ghostBuildManager;
         
-        _inputActions.GhostSpawnInputAddAction(Spawn);
+        BuildingInputEvents.GhostSpawnInputAddAction(Spawn);
     }
     
     private void Spawn(BaseObject gridEntitySo)
@@ -23,6 +23,6 @@ public class GhostSpawn : BaseSpawner, IDisposable
     
     public void Dispose()
     {
-        _inputActions.GhostSpawnInputRemoveAction(Spawn);
+        BuildingInputEvents.GhostSpawnInputRemoveAction(Spawn);
     }
 }

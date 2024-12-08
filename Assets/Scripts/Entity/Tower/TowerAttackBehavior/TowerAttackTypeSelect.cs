@@ -33,9 +33,8 @@ public class TowerAttackTypeSelect : MonoBehaviour
     private void Construct(TowerAttackTypeHolder towerAttackTypeHolder,TowerAttackTypeEvent towerAttackTypeEvent)
     {
         _towerAttackTypeEvent = towerAttackTypeEvent;
-        SelectedTarget = towerAttackTypeHolder.AttackTypes[0]; // Set Closest Attack type as default
-        
-        _towerAttackTypeEvent.FireOnAttackTypeChanged();
+        //Not necessary for now
+        //SelectedTarget = towerAttackTypeHolder.AttackTypes[0]; // Set Closest Attack type as default
     }
 
     public void ChangeAttackType(ITargetToEnemy target)

@@ -7,14 +7,14 @@ public class BuildSelectUI : AbstractButtonListener
     [SerializeField] private TMP_Text _buttonNameText;
     
     private GridEntitySO _gridEntitySo;
-    private InputActions _inputActions;
+    private BuildingInputEvents _buildingInputEvents;
 
     private BuildUI _buildUI;
     
     [Inject]
-    private void Construct(InputActions inputActions, GridEntitySO gridEntitySo)
+    private void Construct(BuildingInputEvents buildingInputEvents, GridEntitySO gridEntitySo)
     {
-        _inputActions = inputActions;
+        _buildingInputEvents = buildingInputEvents;
         _gridEntitySo = gridEntitySo;
     }
 
@@ -37,6 +37,6 @@ public class BuildSelectUI : AbstractButtonListener
     {
         base.OnclickListener();
         
-        _inputActions.GhostSpawnInputAction(_gridEntitySo.BaseObjects[_buildUI.TowerIndex]);
+        _buildingInputEvents.GhostSpawnInputAction(_gridEntitySo.BaseObjects[_buildUI.TowerIndex]);
     }
 }

@@ -8,14 +8,14 @@ public class TowerSpawn : BaseSpawner, IDisposable
     private BuildManager _buildManager;
     
     private TowerSpawn(
-        TowerEvents towerEvents, Utils utils, InputActions inputActions,
-        CellManager cellManager, BuildManager buildManager) : base(utils,inputActions)
+        TowerEvents towerEvents, Utils utils, BuildingInputEvents buildingInputEvents,
+        CellManager cellManager, BuildManager buildManager) : base(utils,buildingInputEvents)
     {
         _towerEvents = towerEvents;
         _cellManager = cellManager;
         _buildManager = buildManager;
         
-        _inputActions.SpawnInputAddAction(Spawn);
+        BuildingInputEvents.SpawnInputAddAction(Spawn);
     }
 
     
@@ -41,6 +41,6 @@ public class TowerSpawn : BaseSpawner, IDisposable
     
     public void Dispose()
     {
-        _inputActions.SpawnInputRemoveAction(Spawn);
+        BuildingInputEvents.SpawnInputRemoveAction(Spawn);
     }
 }
