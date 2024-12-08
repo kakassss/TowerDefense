@@ -15,7 +15,6 @@ public class BuildingInputReader : InputSystem_Actions.IInputBuildActions, IDisp
         _inputSystem = inputSystem;
         
         _inputSystem.InputSystemActions.InputBuild.SetCallbacks(this);
-        _inputSystem.InputSystemActions.InputBuild.Enable();
     }
 
     public void OnBuilding(InputAction.CallbackContext context)
@@ -28,7 +27,12 @@ public class BuildingInputReader : InputSystem_Actions.IInputBuildActions, IDisp
             _buildingInputEvents.SpawnInputAction();
         }
     }
-    
+
+    public void Enable()
+    {
+        _inputSystem.InputSystemActions.InputBuild.Enable();
+    }
+
     public bool IsEnabled()
     {
         return _inputSystem.InputSystemActions.InputBuild.enabled;

@@ -11,7 +11,7 @@ public class IdleInputReader : InputSystem_Actions.IInputIdleActions, IDisposabl
         _inputSystem = inputSystem;
         
         _inputSystem.InputSystemActions.InputIdle.SetCallbacks(this);
-        _inputSystem.InputSystemActions.InputIdle.Enable();
+        //_inputSystem.InputSystemActions.InputIdle.Enable();
     }
     
     public void OnSelect(InputAction.CallbackContext context)
@@ -19,7 +19,12 @@ public class IdleInputReader : InputSystem_Actions.IInputIdleActions, IDisposabl
         if (EventSystem.current.IsPointerOverGameObject()) return;
         
     }
-    
+
+    public void Enable()
+    {
+        _inputSystem.InputSystemActions.InputIdle.Enable();
+    }
+
     public bool IsEnabled()
     {
         return _inputSystem.InputSystemActions.InputIdle.enabled;

@@ -20,6 +20,11 @@ public class MovementInputReader : InputSystem_Actions.IInputMovementActions, ID
         Movement = context.ReadValue<Vector2>();
     }
 
+    public void Enable()
+    {
+        _inputSystem.InputSystemActions.InputMovement.Enable();
+    }
+    
     public bool IsEnabled()
     {
         return _inputSystem.InputSystemActions.InputMovement.enabled;
