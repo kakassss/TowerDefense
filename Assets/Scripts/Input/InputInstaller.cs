@@ -4,7 +4,15 @@ public class InputInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.Bind<InputReader>().AsSingle().NonLazy();
-        Container.Bind<InputActions>().AsSingle().NonLazy();
+        //Main InputSystem initializer
+        Container.Bind<InputSystem>().AsSingle().NonLazy();
+        
+        //Readers
+        Container.Bind<BuildingInputReader>().AsSingle().NonLazy();
+        Container.Bind<MovementInputReader>().AsSingle().NonLazy();
+        Container.Bind<IdleInputReader>().AsSingle().NonLazy();
+        
+        //Input Reader Events
+        Container.Bind<BuildingInputEvents>().AsSingle().NonLazy();
     }
 }

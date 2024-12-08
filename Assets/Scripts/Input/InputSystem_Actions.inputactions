@@ -2,35 +2,17 @@
     "name": "InputSystem_Actions",
     "maps": [
         {
-            "name": "TowerDefence",
+            "name": "InputBuild",
             "id": "0a43264c-b547-4989-acfc-be5f42427fa4",
             "actions": [
                 {
-                    "name": "TowerSpawn",
+                    "name": "Building",
                     "type": "Button",
                     "id": "b2b65d69-c21e-4546-bb64-f0676f2528a0",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Space",
-                    "type": "Button",
-                    "id": "95f77615-3906-49e6-b453-26c1f4ab1070",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "CameraMovement",
-                    "type": "Value",
-                    "id": "15575619-d3cc-464e-a252-4cc75e4cdeea",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -41,24 +23,30 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "TowerSpawn",
+                    "action": "Building",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
+                }
+            ]
+        },
+        {
+            "name": "InputMovement",
+            "id": "e01c3a29-8815-4cff-b088-f027b5d109d8",
+            "actions": [
                 {
-                    "name": "",
-                    "id": "417c2543-40f7-478d-a910-754d6a229ae4",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
+                    "name": "CameraMovement",
+                    "type": "Value",
+                    "id": "7a83a328-ad25-455e-a6fb-18a3392c8c03",
+                    "expectedControlType": "Vector2",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Space",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
                 {
                     "name": "WASD",
-                    "id": "e75a3c3b-adc4-4fb6-bb63-90557f77edf9",
+                    "id": "7a8ffa52-9564-4343-a0b5-4f2d982c523f",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -69,7 +57,7 @@
                 },
                 {
                     "name": "up",
-                    "id": "443688cc-4a71-42a2-b87d-2a526994ec78",
+                    "id": "959d66ce-09a3-4859-a61c-895a083221b9",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
@@ -80,7 +68,7 @@
                 },
                 {
                     "name": "down",
-                    "id": "533b54d2-e6b8-44d5-a5b3-cee46aebb612",
+                    "id": "ada9ee2e-d034-4fb3-baf7-f06111a7f101",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
@@ -91,7 +79,7 @@
                 },
                 {
                     "name": "left",
-                    "id": "8651a90c-62f2-471e-bde4-47b5c351dc3c",
+                    "id": "f26eb399-1323-4d40-8929-5cd6e699bc1a",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
@@ -102,7 +90,7 @@
                 },
                 {
                     "name": "right",
-                    "id": "a138a3e2-bc84-4ffb-a7f4-2ceb09cdd8e1",
+                    "id": "15ea84a5-d368-4b09-8aff-e19bf8662a85",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
@@ -110,6 +98,34 @@
                     "action": "CameraMovement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "InputIdle",
+            "id": "eb50b941-92a7-4bad-8fec-1f6d6a426ff1",
+            "actions": [
+                {
+                    "name": "Select",
+                    "type": "Button",
+                    "id": "f14ff38c-2958-497b-869e-3dca1bc9f6ac",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "69b74277-1ac5-4656-a31e-3b4f30251b29",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

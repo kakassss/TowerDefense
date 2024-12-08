@@ -24,35 +24,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     ""name"": ""InputSystem_Actions"",
     ""maps"": [
         {
-            ""name"": ""TowerDefence"",
+            ""name"": ""InputBuild"",
             ""id"": ""0a43264c-b547-4989-acfc-be5f42427fa4"",
             ""actions"": [
                 {
-                    ""name"": ""TowerSpawn"",
+                    ""name"": ""Building"",
                     ""type"": ""Button"",
                     ""id"": ""b2b65d69-c21e-4546-bb64-f0676f2528a0"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Space"",
-                    ""type"": ""Button"",
-                    ""id"": ""95f77615-3906-49e6-b453-26c1f4ab1070"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""CameraMovement"",
-                    ""type"": ""Value"",
-                    ""id"": ""15575619-d3cc-464e-a252-4cc75e4cdeea"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -63,24 +45,30 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""TowerSpawn"",
+                    ""action"": ""Building"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
+                }
+            ]
+        },
+        {
+            ""name"": ""InputMovement"",
+            ""id"": ""e01c3a29-8815-4cff-b088-f027b5d109d8"",
+            ""actions"": [
                 {
-                    ""name"": """",
-                    ""id"": ""417c2543-40f7-478d-a910-754d6a229ae4"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
+                    ""name"": ""CameraMovement"",
+                    ""type"": ""Value"",
+                    ""id"": ""7a83a328-ad25-455e-a6fb-18a3392c8c03"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Space"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
                 {
                     ""name"": ""WASD"",
-                    ""id"": ""e75a3c3b-adc4-4fb6-bb63-90557f77edf9"",
+                    ""id"": ""7a8ffa52-9564-4343-a0b5-4f2d982c523f"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -91,7 +79,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""443688cc-4a71-42a2-b87d-2a526994ec78"",
+                    ""id"": ""959d66ce-09a3-4859-a61c-895a083221b9"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -102,7 +90,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""533b54d2-e6b8-44d5-a5b3-cee46aebb612"",
+                    ""id"": ""ada9ee2e-d034-4fb3-baf7-f06111a7f101"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -113,7 +101,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""8651a90c-62f2-471e-bde4-47b5c351dc3c"",
+                    ""id"": ""f26eb399-1323-4d40-8929-5cd6e699bc1a"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -124,7 +112,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""a138a3e2-bc84-4ffb-a7f4-2ceb09cdd8e1"",
+                    ""id"": ""15ea84a5-d368-4b09-8aff-e19bf8662a85"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -132,6 +120,34 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""CameraMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                }
+            ]
+        },
+        {
+            ""name"": ""InputIdle"",
+            ""id"": ""eb50b941-92a7-4bad-8fec-1f6d6a426ff1"",
+            ""actions"": [
+                {
+                    ""name"": ""Select"",
+                    ""type"": ""Button"",
+                    ""id"": ""f14ff38c-2958-497b-869e-3dca1bc9f6ac"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""69b74277-1ac5-4656-a31e-3b4f30251b29"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -199,16 +215,22 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // TowerDefence
-        m_TowerDefence = asset.FindActionMap("TowerDefence", throwIfNotFound: true);
-        m_TowerDefence_TowerSpawn = m_TowerDefence.FindAction("TowerSpawn", throwIfNotFound: true);
-        m_TowerDefence_Space = m_TowerDefence.FindAction("Space", throwIfNotFound: true);
-        m_TowerDefence_CameraMovement = m_TowerDefence.FindAction("CameraMovement", throwIfNotFound: true);
+        // InputBuild
+        m_InputBuild = asset.FindActionMap("InputBuild", throwIfNotFound: true);
+        m_InputBuild_Building = m_InputBuild.FindAction("Building", throwIfNotFound: true);
+        // InputMovement
+        m_InputMovement = asset.FindActionMap("InputMovement", throwIfNotFound: true);
+        m_InputMovement_CameraMovement = m_InputMovement.FindAction("CameraMovement", throwIfNotFound: true);
+        // InputIdle
+        m_InputIdle = asset.FindActionMap("InputIdle", throwIfNotFound: true);
+        m_InputIdle_Select = m_InputIdle.FindAction("Select", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
     {
-        UnityEngine.Debug.Assert(!m_TowerDefence.enabled, "This will cause a leak and performance issues, InputSystem_Actions.TowerDefence.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_InputBuild.enabled, "This will cause a leak and performance issues, InputSystem_Actions.InputBuild.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_InputMovement.enabled, "This will cause a leak and performance issues, InputSystem_Actions.InputMovement.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_InputIdle.enabled, "This will cause a leak and performance issues, InputSystem_Actions.InputIdle.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -267,67 +289,143 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // TowerDefence
-    private readonly InputActionMap m_TowerDefence;
-    private List<ITowerDefenceActions> m_TowerDefenceActionsCallbackInterfaces = new List<ITowerDefenceActions>();
-    private readonly InputAction m_TowerDefence_TowerSpawn;
-    private readonly InputAction m_TowerDefence_Space;
-    private readonly InputAction m_TowerDefence_CameraMovement;
-    public struct TowerDefenceActions
+    // InputBuild
+    private readonly InputActionMap m_InputBuild;
+    private List<IInputBuildActions> m_InputBuildActionsCallbackInterfaces = new List<IInputBuildActions>();
+    private readonly InputAction m_InputBuild_Building;
+    public struct InputBuildActions
     {
         private @InputSystem_Actions m_Wrapper;
-        public TowerDefenceActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @TowerSpawn => m_Wrapper.m_TowerDefence_TowerSpawn;
-        public InputAction @Space => m_Wrapper.m_TowerDefence_Space;
-        public InputAction @CameraMovement => m_Wrapper.m_TowerDefence_CameraMovement;
-        public InputActionMap Get() { return m_Wrapper.m_TowerDefence; }
+        public InputBuildActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Building => m_Wrapper.m_InputBuild_Building;
+        public InputActionMap Get() { return m_Wrapper.m_InputBuild; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(TowerDefenceActions set) { return set.Get(); }
-        public void AddCallbacks(ITowerDefenceActions instance)
+        public static implicit operator InputActionMap(InputBuildActions set) { return set.Get(); }
+        public void AddCallbacks(IInputBuildActions instance)
         {
-            if (instance == null || m_Wrapper.m_TowerDefenceActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_TowerDefenceActionsCallbackInterfaces.Add(instance);
-            @TowerSpawn.started += instance.OnTowerSpawn;
-            @TowerSpawn.performed += instance.OnTowerSpawn;
-            @TowerSpawn.canceled += instance.OnTowerSpawn;
-            @Space.started += instance.OnSpace;
-            @Space.performed += instance.OnSpace;
-            @Space.canceled += instance.OnSpace;
+            if (instance == null || m_Wrapper.m_InputBuildActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_InputBuildActionsCallbackInterfaces.Add(instance);
+            @Building.started += instance.OnBuilding;
+            @Building.performed += instance.OnBuilding;
+            @Building.canceled += instance.OnBuilding;
+        }
+
+        private void UnregisterCallbacks(IInputBuildActions instance)
+        {
+            @Building.started -= instance.OnBuilding;
+            @Building.performed -= instance.OnBuilding;
+            @Building.canceled -= instance.OnBuilding;
+        }
+
+        public void RemoveCallbacks(IInputBuildActions instance)
+        {
+            if (m_Wrapper.m_InputBuildActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IInputBuildActions instance)
+        {
+            foreach (var item in m_Wrapper.m_InputBuildActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_InputBuildActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public InputBuildActions @InputBuild => new InputBuildActions(this);
+
+    // InputMovement
+    private readonly InputActionMap m_InputMovement;
+    private List<IInputMovementActions> m_InputMovementActionsCallbackInterfaces = new List<IInputMovementActions>();
+    private readonly InputAction m_InputMovement_CameraMovement;
+    public struct InputMovementActions
+    {
+        private @InputSystem_Actions m_Wrapper;
+        public InputMovementActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @CameraMovement => m_Wrapper.m_InputMovement_CameraMovement;
+        public InputActionMap Get() { return m_Wrapper.m_InputMovement; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InputMovementActions set) { return set.Get(); }
+        public void AddCallbacks(IInputMovementActions instance)
+        {
+            if (instance == null || m_Wrapper.m_InputMovementActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_InputMovementActionsCallbackInterfaces.Add(instance);
             @CameraMovement.started += instance.OnCameraMovement;
             @CameraMovement.performed += instance.OnCameraMovement;
             @CameraMovement.canceled += instance.OnCameraMovement;
         }
 
-        private void UnregisterCallbacks(ITowerDefenceActions instance)
+        private void UnregisterCallbacks(IInputMovementActions instance)
         {
-            @TowerSpawn.started -= instance.OnTowerSpawn;
-            @TowerSpawn.performed -= instance.OnTowerSpawn;
-            @TowerSpawn.canceled -= instance.OnTowerSpawn;
-            @Space.started -= instance.OnSpace;
-            @Space.performed -= instance.OnSpace;
-            @Space.canceled -= instance.OnSpace;
             @CameraMovement.started -= instance.OnCameraMovement;
             @CameraMovement.performed -= instance.OnCameraMovement;
             @CameraMovement.canceled -= instance.OnCameraMovement;
         }
 
-        public void RemoveCallbacks(ITowerDefenceActions instance)
+        public void RemoveCallbacks(IInputMovementActions instance)
         {
-            if (m_Wrapper.m_TowerDefenceActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_InputMovementActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(ITowerDefenceActions instance)
+        public void SetCallbacks(IInputMovementActions instance)
         {
-            foreach (var item in m_Wrapper.m_TowerDefenceActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_InputMovementActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_TowerDefenceActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_InputMovementActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public TowerDefenceActions @TowerDefence => new TowerDefenceActions(this);
+    public InputMovementActions @InputMovement => new InputMovementActions(this);
+
+    // InputIdle
+    private readonly InputActionMap m_InputIdle;
+    private List<IInputIdleActions> m_InputIdleActionsCallbackInterfaces = new List<IInputIdleActions>();
+    private readonly InputAction m_InputIdle_Select;
+    public struct InputIdleActions
+    {
+        private @InputSystem_Actions m_Wrapper;
+        public InputIdleActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Select => m_Wrapper.m_InputIdle_Select;
+        public InputActionMap Get() { return m_Wrapper.m_InputIdle; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InputIdleActions set) { return set.Get(); }
+        public void AddCallbacks(IInputIdleActions instance)
+        {
+            if (instance == null || m_Wrapper.m_InputIdleActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_InputIdleActionsCallbackInterfaces.Add(instance);
+            @Select.started += instance.OnSelect;
+            @Select.performed += instance.OnSelect;
+            @Select.canceled += instance.OnSelect;
+        }
+
+        private void UnregisterCallbacks(IInputIdleActions instance)
+        {
+            @Select.started -= instance.OnSelect;
+            @Select.performed -= instance.OnSelect;
+            @Select.canceled -= instance.OnSelect;
+        }
+
+        public void RemoveCallbacks(IInputIdleActions instance)
+        {
+            if (m_Wrapper.m_InputIdleActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IInputIdleActions instance)
+        {
+            foreach (var item in m_Wrapper.m_InputIdleActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_InputIdleActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public InputIdleActions @InputIdle => new InputIdleActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -373,10 +471,16 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_XRSchemeIndex];
         }
     }
-    public interface ITowerDefenceActions
+    public interface IInputBuildActions
     {
-        void OnTowerSpawn(InputAction.CallbackContext context);
-        void OnSpace(InputAction.CallbackContext context);
+        void OnBuilding(InputAction.CallbackContext context);
+    }
+    public interface IInputMovementActions
+    {
         void OnCameraMovement(InputAction.CallbackContext context);
+    }
+    public interface IInputIdleActions
+    {
+        void OnSelect(InputAction.CallbackContext context);
     }
 }
