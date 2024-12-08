@@ -25,10 +25,23 @@ public class Utils
         }
     }
     
+    //Using with building
     public Vector3 GetValidPositionWithLayerMask()
     {
         Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
         return Physics.Raycast(ray, out RaycastHit hit,float.MaxValue, _layerMask) ? hit.point : Vector3.zero;
+    }
+    
+    public Vector3 GetValidPositionWithLayerMask(LayerMask layerMask)
+    {
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+        return Physics.Raycast(ray, out RaycastHit hit,float.MaxValue, layerMask) ? hit.point : Vector3.zero;
+    }
+    
+    public Vector3 GetValidPositionWithLayerMask(int layerMask)
+    {
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+        return Physics.Raycast(ray, out RaycastHit hit,float.MaxValue, layerMask) ? hit.point : Vector3.zero;
     }
     
     public Vector3 GetValidPositionWithLayerMask(Camera camera,LayerMask layerMask)
