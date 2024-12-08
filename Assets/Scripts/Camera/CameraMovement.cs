@@ -10,17 +10,19 @@ public class CameraMovement : MonoBehaviour
     
     [SerializeField] private GameObject movementRelativeGO;
 
-    private InputReader _inputReader;
+    private MovementInputReader _movementInputReader;
+    private BuildingInputReader _buildingInputReader;
 
     [Inject]
-    private void Construct(InputReader inputReader)
+    private void Construct(MovementInputReader movementInputReader)
     {
-        _inputReader = inputReader;
+        _movementInputReader = movementInputReader;
     }
 
     //50x 45y rotation
     private void Update()
     {
+        if(_movementInputReader.IsEnabled() == false) return;
         Movement();
     }
     
@@ -34,10 +36,9 @@ public class CameraMovement : MonoBehaviour
         
         forward.Normalize();
         right.Normalize();
-
-
-        Vector3 movementForward = forward * _inputReader.movement.y;
-        Vector3 movementRight = right * _inputReader.movement.x;
+        
+        Vector3 movementForward = forward * _movementInputReader.Movement.y;
+        Vector3 movementRight = right * _movementInputReader.Movement.x;
 
         Vector3 relativeMovement = (movementForward + movementRight) * movementSpeed;
 
