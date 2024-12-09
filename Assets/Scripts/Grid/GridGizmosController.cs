@@ -1,6 +1,8 @@
 ﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
+
 
 public class GridGizmosController : MonoBehaviour
 {
@@ -11,19 +13,21 @@ public class GridGizmosController : MonoBehaviour
     private Vector3 _originPosition = Vector3.zero;
     [SerializeField] private int _gridSize;
     [SerializeField] private int _cellSize;
+   
     
     [Inject]
     private void Construct(CellManager cellManager)
     {
         _cellManager = cellManager;
     }
-
+    
+    [InfoBox("You can use after changing gizmos object transform position")]
+    [Button("Calculate Grid Gizmos", ButtonSizes.Medium, ButtonStyle.Box)]
     private void OnValidate()
     {
         _originPosition.x = -(_gridSize * _cellSize) / 2 + transform.position.x;
         _originPosition.y = 0;
         _originPosition.z = -(_gridSize * _cellSize) / 2 + transform.position.z;
-        
         _tempCellManager = new CellManager(_gridSize,_gridSize,_cellSize,_originPosition);
     }
     
