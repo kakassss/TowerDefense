@@ -609,6 +609,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3920d35ec9c743da91bd497804efb2dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _originPosition: {x: -3, y: 0, z: -3}
+  _gridSize: 3
+  _cellSize: 2
 --- !u!1001 &648676233
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1559,6 +1562,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_Model_Basic_Tower_1X1_Main_V5
       objectReference: {fileID: 0}
+    - target: {fileID: 1819166031059786881, guid: d885cc897a8815b46a0c6b1531be7ad2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2485,7 +2492,7 @@ Transform:
   m_GameObject: {fileID: 1774306590}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 29.652218, y: 3.8428, z: 4.578577}
+  m_LocalPosition: {x: 45.652218, y: 3.8428, z: 4.578575}
   m_LocalScale: {x: 100.46876, y: 14.354159, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2793,7 +2800,7 @@ Transform:
   m_GameObject: {fileID: 2023541343}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6, z: 0}
+  m_LocalPosition: {x: 0, y: 2.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -16,7 +16,25 @@ public class CellManager
     public float CellSize => _cellSize;
     public Vector3 OriginPosition => _originPosition;
     
-    
+    public CellManager(int width, int height,float cellSize, Vector3 originPosition)
+    {
+        _grid = new Grid<Cell<GameObject>>[width, height];
+        _width = width;
+        _height = height;
+        _cellSize = cellSize;
+        _originPosition = originPosition;
+        
+        for (int i = 0; i < _grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < _grid.GetLength(1); j++)
+            {
+                _grid[i, j] = new Grid<Cell<GameObject>>
+                {
+                    Slot = new Cell<GameObject>(i,j,false, CellPower.Normal)
+                };
+            }
+        }
+    }
     public CellManager(int width, int height,float cellSize, Vector3 originPosition,Utils utils)
     {
         _grid = new Grid<Cell<GameObject>>[width, height];
