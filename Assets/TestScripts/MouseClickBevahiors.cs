@@ -9,8 +9,8 @@ public class MouseClickBevahiors : MonoBehaviour
     private GhostObjectReceiver _ghostObjectReceiver;
     private CellManager _cellManager;
 
-    private Grid<Cell<GameObject>> mouseCell;
-    List<Cell<GameObject>> buildableCells;
+    private Grid<Cell> mouseCell;
+    List<Cell> buildableCells;
 
     [Inject]
     private void Construct(Utils utils,GhostObjectReceiver ghostObjectReceiver,CellManager cellManager)
@@ -42,7 +42,7 @@ public class MouseClickBevahiors : MonoBehaviour
     {
         _cellManager.GetXZ(_utils.GetValidPositionWithLayerMask(),out var x, out var z);
 
-        buildableCells = new List<Cell<GameObject>>();
+        buildableCells = new List<Cell>();
 
         for (int i = 0; i < _ghostObjectReceiver.GridIndexX; i++) // object grid size for x
         {

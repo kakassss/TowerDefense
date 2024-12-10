@@ -3,6 +3,7 @@ using Zenject;
 
 public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
 {
+    public bool CanGizmos;
     public BaseTowerAttack Attack { get; private set;}
     public BaseHealth Health { get; private set;}
     
@@ -66,6 +67,8 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
     
     void OnDrawGizmos()
     {
+        if(CanGizmos == false) return;
+        
         Gizmos.color = Color.magenta;
         
         Gizmos.DrawWireSphere(transform.position, _towerAttackSo.Range);

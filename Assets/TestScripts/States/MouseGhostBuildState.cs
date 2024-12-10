@@ -7,8 +7,8 @@ public class MouseGhostBuildState : MouseClickBaseState
     private GhostObjectReceiver _ghostObjectReceiver;
     private CellManager _cellManager;
 
-    private Grid<Cell<GameObject>> _mouseCell;
-    private List<Cell<GameObject>> _buildableCells;
+    private Grid<Cell> _mouseCell;
+    private List<Cell> _buildableCells;
     
     private BuildingInputReader _buildingInputReader;
     
@@ -62,7 +62,7 @@ public class MouseGhostBuildState : MouseClickBaseState
     {
         _cellManager.GetXZ(_mouseClickStateMachine.Utils.GetValidPositionWithLayerMask(),out var x, out var z);
 
-        _buildableCells = new List<Cell<GameObject>>();
+        _buildableCells = new List<Cell>();
 
         for (int i = 0; i < _ghostObjectReceiver.GridIndexX; i++) // object grid size for x
         {

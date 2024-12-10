@@ -95,9 +95,9 @@ public class BuildManager
 public struct BuildCells
 {
     public Vector3 SpawnPosition;
-    public Grid<Cell<GameObject>> Cell;
+    public Grid<Cell> Cell;
         
-    public BuildCells(Grid<Cell<GameObject>> cell)
+    public BuildCells(Grid<Cell> cell)
     {
         Cell = cell;
         SpawnPosition = new Vector3(cell.Slot.GridIndexX,0, cell.Slot.GridIndexZ);

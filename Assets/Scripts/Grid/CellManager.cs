@@ -1,16 +1,20 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class CellManager
 {
-    private Grid<Cell<GameObject>>[,] _grid;
+    private Grid<Cell>[,] _grid;
     private int _width;
     private int _height;
     private float _cellSize;
     private Vector3 _originPosition;
     
     private Utils _utils;
+
+    private List<Cell> _activeCells = new List<Cell>();
+    private List<int> _activeColumns = new List<int>();
     
-    public Grid<Cell<GameObject>>[,] Grid => _grid;
+    public Grid<Cell>[,] Grid => _grid;
     public int Width => _width;
     public int Height => _height;
     public float CellSize => _cellSize;
@@ -18,7 +22,7 @@ public class CellManager
     
     public CellManager(int width, int height,float cellSize, Vector3 originPosition)
     {
-        _grid = new Grid<Cell<GameObject>>[width, height];
+        _grid = new Grid<Cell>[width, height];
         _width = width;
         _height = height;
         _cellSize = cellSize;
@@ -28,16 +32,25 @@ public class CellManager
         {
             for (int j = 0; j < _grid.GetLength(1); j++)
             {
-                _grid[i, j] = new Grid<Cell<GameObject>>
+                _grid[i, j] = new Grid<Cell>
                 {
-                    Slot = new Cell<GameObject>(i,j,false, CellPower.Normal)
+                    Slot = new Cell(i,j,j,i,false, CellPower.Normal)
                 };
             }
         }
+        
+        //Grid[0,X] => will give column index
+        //Grid[X,0] => will give row index
+        
+        // for (int i = 0; i < _grid.GetLength(0); i++)
+        // {
+        //     Debug.Log(_grid[0,i].Slot  + " Current grid column " + _grid[0,i].Slot.Column);
+        //     Debug.Log(_grid[0,i].Slot.Name);
+        // }
     }
     public CellManager(int width, int height,float cellSize, Vector3 originPosition,Utils utils)
     {
-        _grid = new Grid<Cell<GameObject>>[width, height];
+        _grid = new Grid<Cell>[width, height];
         _width = width;
         _height = height;
         _cellSize = cellSize;
@@ -49,10 +62,18 @@ public class CellManager
         {
             for (int j = 0; j < _grid.GetLength(1); j++)
             {
-                _grid[i, j] = new Grid<Cell<GameObject>>
+                _grid[i, j] = new Grid<Cell>
                 {
-                    Slot = new Cell<GameObject>(i,j,false, CellPower.Normal)
+                    Slot = new Cell(i,j,i,j,false, CellPower.Normal)
                 };
+            }
+        }
+
+        for (int i = 0; i < _grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < _grid.GetLength(1); j++)
+            {
+                Debug.Log(_grid[i,j].Slot  + " Current grid column " + _grid[i,j].Slot.Column);
             }
         }
     }
@@ -76,9 +97,35 @@ public class CellManager
         return cell.Slot.IsFull;
     }
     
+    public List<int> GetActiveColumns()
+    {
+        _activeColumns.Clear();
+
+        for (int i = 0; i < _grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < _grid.GetLength(1); j++)
+            {
+                if (_grid[i, j].Slot.IsFull)
+                {
+                    if(_activeColumns.Contains(j)) continue;
+                    _activeColumns.Add(j);
+                    //break; // break current inner loop and allows the outer loop to proceed to next iteration
+                }   
+            }
+        }
+        return _activeColumns;
+    }
+    
+    //Use after GetActiveColumns function
+    public Cell GetRandomCellAtActiveColumn(int columnIndex)
+    {
+        if(_activeColumns.Count <= 0) return null;
+        return _grid[Random.Range(0,Width), columnIndex].Slot;
+    }
+    
     #region GetCellActions
     
-    public Grid<Cell<GameObject>> GetCellAtIndex(Vector3 worldPos)
+    public Grid<Cell> GetCellAtIndex(Vector3 worldPos)
     {
         GetXZ(worldPos,out var x, out var z);
         if ( x >= 0 && z >= 0 && x < _width && z < _height)
@@ -119,13 +166,13 @@ public class CellManager
         SetCellFull(cell,gameObject);
     }
     
-    public void SetCellFull(Grid<Cell<GameObject>> cell, GameObject gameObject)
+    public void SetCellFull(Grid<Cell> cell, GameObject gameObject)
     {
         cell.Slot.IsFull = true;
         cell.Slot.Entity = gameObject;
     }
 
-    public void SetCellEmptyWithDestroy(Grid<Cell<GameObject>> cell,GameObject gameObject)
+    public void SetCellEmptyWithDestroy(Grid<Cell> cell,GameObject gameObject)
     {
         cell.Slot.IsFull = false;
         cell.Slot.Entity = null;

@@ -8,20 +8,30 @@ public class Grid<T>
     public Vector3 OriginPosition;
 }
 
-public class Cell<T>
+public class Cell
 {
-    public int GridIndexX;
-    public int GridIndexZ;
+    public int GridIndexX; // Using for building system, getting grid at this index
+    public int GridIndexZ; // Using for building system, getting grid at this index
     public bool IsFull;
-    public T Entity; // Gameobject tutmak için yapmıstın şimdilik boş duruyor
-    public CellPower DefaultCellPower;
-    public List<CellPower> CellPowerEnumList;
     
-    public Cell(int gridIndexX, int gridIndexZ, bool isfull, CellPower defaultCellPower)
+    public int Column;
+    public int Row;
+    
+    public string Name; // Only for testing 
+    
+    public GameObject Entity; // Gameobject tutmak için yapmıstın şimdilik boş duruyor
+    public CellPower DefaultCellPower;// Currently no feature
+    public List<CellPower> CellPowerEnumList;// Currently no feature
+    
+    public Cell(int gridIndexX, int gridIndexZ,int column,int row, bool isFull, CellPower defaultCellPower)
     {
         GridIndexX = gridIndexX;
         GridIndexZ = gridIndexZ;
-        IsFull = isfull;
+        IsFull = isFull;
+        Column = column;
+        Row = row;
+        Name = "Cell At" + gridIndexX + "-" + gridIndexZ;
+        
         DefaultCellPower = defaultCellPower;
         
         //Default Power 
