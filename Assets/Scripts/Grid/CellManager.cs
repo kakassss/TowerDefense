@@ -123,6 +123,17 @@ public class CellManager
         return _grid[Random.Range(0,Width), columnIndex].Slot;
     }
     
+    public Cell GetDefaultCellAtActiveColumn()// Only works with odd numbers,
+    {
+        return _grid[Height-1, Mathf.FloorToInt(Width/2)].Slot;
+    }
+    
+    public Cell GetFrontCellAtActiveColumn(int columnIndex)
+    {
+        if(_activeColumns.Count <= 0) return null;
+        return _grid[Height-1, columnIndex].Slot;
+    }
+    
     #region GetCellActions
     
     public Grid<Cell> GetCellAtIndex(Vector3 worldPos)
