@@ -2,20 +2,26 @@ using Zenject;
 
 public class MouseClickStateMachine : StateMachine
 {
-    public Utils Utils;
-
+    //Stored states
     public MouseClickSelectedTowerState MouseClickSelectedTowerState;
     public MouseGhostBuildState MouseGhostBuildState;
     
-    private GhostObjectReceiver _ghostObjectReceiver;
-    private CellManager _cellManager;
+    //Manager References
+    public Utils Utils;
     
+    protected GhostObjectReceiver _ghostObjectReceiver;
+    protected CellManager _cellManager;
+    
+    //Readers
     private BuildingInputReader _buildingInputReader;
     private IdleInputReader _idleInputReader;
     
+    //Events
+    protected MouseClickStateEvents _mouseClickStateEvents;
+    
     [Inject]
     protected void Construct(Utils utils, CellManager cellManager, GhostObjectReceiver ghostObjectReceiver
-    , BuildingInputReader buildingInputReader, IdleInputReader idleInputReader)
+    , BuildingInputReader buildingInputReader, IdleInputReader idleInputReader, MouseClickStateEvents mouseClickStateEvents)
     {
         //Public references
         Utils = utils;
@@ -24,11 +30,10 @@ public class MouseClickStateMachine : StateMachine
         _ghostObjectReceiver = ghostObjectReceiver;
         _buildingInputReader = buildingInputReader;
         _idleInputReader = idleInputReader;
+        _mouseClickStateEvents = mouseClickStateEvents;
         
-        
-        
-        MouseClickSelectedTowerState = new MouseClickSelectedTowerState(this,_idleInputReader);
-        MouseGhostBuildState = new MouseGhostBuildState(this,_ghostObjectReceiver,_cellManager,_buildingInputReader);
+        MouseClickSelectedTowerState = new MouseClickSelectedTowerState(this,_idleInputReader,_mouseClickStateEvents);
+        MouseGhostBuildState = new MouseGhostBuildState(this,_ghostObjectReceiver,_cellManager,_buildingInputReader,_mouseClickStateEvents);
     }
 
     private void Start()

@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
+//GEÇİCİ OLARAK VAR İLERİDE POPUP SİSTEMİ TARZI Bİ ŞEY LAZIM 
 public class SetStateUIGameobject : MonoBehaviour
 {
     [SerializeField] private GameObject _uiGoTarget; 

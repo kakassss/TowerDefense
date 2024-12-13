@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 using Cysharp.Threading.Tasks;
+using Sirenix.OdinInspector;
 
 [Serializable]
+
 public class WaveData
 {
     public int EnemyID;
@@ -15,13 +17,16 @@ public class WaveData
 
 public class EnemyWave : MonoBehaviour
 {
+    [InfoBox("Enemy ID -> Goblin -> 1 " + " Troll -> 0")]
     public bool canGizmos = false;
     
     [SerializeField] private List<Transform> _spawnPoints;
     [SerializeField] private List<WaveData> _waveData;
+    [SerializeField] private Vector3 _spawnPointOffset;
+    
+    private List<Vector3> _calculatedSpawnPoints = new List<Vector3>();
     
     private EnemyPool _enemyPool;
-
     private CellManager _cellManager;
     
     [Inject]
@@ -31,8 +36,12 @@ public class EnemyWave : MonoBehaviour
         _cellManager = cellManager;
     }
 
+    private Cell _defaultOpenCell;
+    private DrawCubeGizmos _defaultCellGizmos;
     private void Start()
     {
+        _defaultOpenCell = _cellManager.GetDefaultCellAtActiveColumn();
+        _defaultCellGizmos = new DrawCubeGizmos(_cellManager.GetCellMidPointPositionXZ(_defaultOpenCell.GridIndexX, _defaultOpenCell.GridIndexZ));
         //SpawnWaveAsync().Forget();
     }
 
@@ -45,8 +54,6 @@ public class EnemyWave : MonoBehaviour
             canGizmos = true;
         }
     }
-
-    private List<Vector3> _calculatedSpawnPoints = new List<Vector3>();
     
     private void ActiveCellWays()// to calculate enemy spawn position
     {
@@ -56,14 +63,15 @@ public class EnemyWave : MonoBehaviour
 
         foreach (var activeColumn in activeColumns)
         {
-            var cell = _cellManager.GetRandomCellAtActiveColumn(activeColumn);
+            var cell = _cellManager.GetFrontCellAtActiveColumn(activeColumn);
             Debug.Log("active column selected cell " + cell.Name);
-            _calculatedSpawnPoints.Add(_cellManager.GetCellMidPointPositionXZ(cell.GridIndexX,cell.GridIndexZ));
+            _calculatedSpawnPoints.Add(_cellManager.GetCellMidPointPositionXZ(cell.GridIndexX,cell.GridIndexZ) + _spawnPointOffset);
         }
     }
 
     private void OnDrawGizmos()
     {
+        _defaultCellGizmos?.DrawGizmos(Color.yellow); // default open cell gizmos
         if(canGizmos == false) return;
         if(_calculatedSpawnPoints.Count == 0) return;
         Gizmos.color = Color.green;
@@ -87,5 +95,4 @@ public class EnemyWave : MonoBehaviour
             await UniTask.WaitForSeconds(_waveData[i].Rate);
         }
     }
-    
 }

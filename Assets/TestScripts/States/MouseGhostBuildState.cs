@@ -12,23 +12,27 @@ public class MouseGhostBuildState : MouseClickBaseState
     
     private BuildingInputReader _buildingInputReader;
     
+    private MouseClickStateEvents _mouseClickStateEvents;
+    
     public MouseGhostBuildState(MouseClickStateMachine mouseClickStateMachine, GhostObjectReceiver ghostObjectReceiver, CellManager cellManager,
-        BuildingInputReader buildingInputReader)
+        BuildingInputReader buildingInputReader, MouseClickStateEvents mouseClickStateEvents)
         : base(mouseClickStateMachine)
     {
         _ghostObjectReceiver = ghostObjectReceiver;
         _cellManager = cellManager;
         _buildingInputReader = buildingInputReader;
+        _mouseClickStateEvents = mouseClickStateEvents;
     }
 
     public override void OnEnter()
     {
+        _mouseClickStateEvents.OnTowerBuildRelease += OnTowerBuildRelease;
         _buildingInputReader.Enable();
         Debug.Log("dettü strangingü fayv years anniversary");
         //UI elementlerini açabilirsin
         //_mouseClickStateMachine.transform.position = _mouseClickStateMachine.Utils.GetValidPositionWithLayerMask();
     }
-
+    
     public override void OnUpdate(float deltaTime)
     {
         BuildAction();
@@ -36,6 +40,7 @@ public class MouseGhostBuildState : MouseClickBaseState
 
     public override void OnExit()
     {
+        _mouseClickStateEvents.OnTowerBuildRelease -= OnTowerBuildRelease;
         _buildingInputReader.Disable();
         //UI elementlerini kapatabilirsin
     }
@@ -118,6 +123,11 @@ public class MouseGhostBuildState : MouseClickBaseState
             averageZ += new Vector3(0, 0, pos.z);
         }
         _ghostObjectReceiver.GameObject.transform.position = new Vector3(averageX.x / cellsPosition.Count, 0, averageZ.z / cellsPosition.Count);
+    }
+    
+    private void OnTowerBuildRelease()
+    {
+        _mouseClickStateMachine.SwitchState(_mouseClickStateMachine.MouseClickSelectedTowerState);
     }
     
 }

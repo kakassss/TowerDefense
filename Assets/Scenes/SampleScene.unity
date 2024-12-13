@@ -591,7 +591,7 @@ Transform:
   m_GameObject: {fileID: 497817658}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.45, y: 0, z: 1.32}
+  m_LocalPosition: {x: 5, y: 0, z: 6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -902,7 +902,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1044589489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -915,6 +915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5230f0dd94ff04c4d854bb11e23b2eaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canGizmos: 1
   _spawnPoints:
   - {fileID: 1368439740}
   - {fileID: 1347483459}
@@ -925,6 +926,7 @@ MonoBehaviour:
   - EnemyID: 1
     count: 25
     Rate: 1
+  _spawnPointOffset: {x: 20, y: 0, z: 0}
 --- !u!4 &1044589490
 Transform:
   m_ObjectHideFlags: 0
@@ -1754,6 +1756,7 @@ GameObject:
   - component: {fileID: 1451143645}
   - component: {fileID: 1451143646}
   - component: {fileID: 1451143647}
+  - component: {fileID: 1451143648}
   - component: {fileID: 1451143639}
   m_Layer: 0
   m_Name: SceneContext
@@ -1796,6 +1799,7 @@ MonoBehaviour:
   - {fileID: 1451143642}
   - {fileID: 1451143645}
   - {fileID: 1451143647}
+  - {fileID: 1451143648}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -1869,10 +1873,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 158d1ea8460469642900c7fd3f8329b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 11
-  height: 11
+  width: 3
+  height: 3
   cellSize: 4
-  originPos: {x: -25, y: 0, z: -20}
+  originPos: {x: 0, y: 0, z: 0}
 --- !u!114 &1451143644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1927,6 +1931,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd203ef0abedccf4796f4ebddf68911e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1451143648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451143637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dda861e9bb434e24bb12d6a8680d725c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1497538332
@@ -2305,7 +2321,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1770445910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2514,6 +2530,7 @@ GameObject:
   - component: {fileID: 1852220762}
   - component: {fileID: 1852220761}
   - component: {fileID: 1852220764}
+  - component: {fileID: 1852220765}
   - component: {fileID: 1852220763}
   m_Layer: 5
   m_Name: Button_Close_TowerBuild
@@ -2649,6 +2666,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &1852220765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852220759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99dfb71965fe40d478920afa80ff22ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 1852220764}
 --- !u!1 &1919000733
 GameObject:
   m_ObjectHideFlags: 0
@@ -2905,6 +2935,7 @@ GameObject:
   - component: {fileID: 2146147085}
   - component: {fileID: 2146147084}
   - component: {fileID: 2146147087}
+  - component: {fileID: 2146147088}
   m_Layer: 5
   m_Name: Button_Build
   m_TagString: Untagged
@@ -3040,6 +3071,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _uiGoTarget: {fileID: 746210292}
   _uiGoCurrent: {fileID: 2146147082}
+--- !u!114 &2146147088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146147082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc77a223e5ec5c349afdf23ac4828d9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 2146147084}
 --- !u!1001 &1642170342530519776
 PrefabInstance:
   m_ObjectHideFlags: 0
