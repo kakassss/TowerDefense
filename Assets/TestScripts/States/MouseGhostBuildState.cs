@@ -42,6 +42,8 @@ public class MouseGhostBuildState : MouseClickBaseState
     {
         _mouseClickStateEvents.OnTowerBuildRelease -= OnTowerBuildRelease;
         _buildingInputReader.Disable();
+
+        _ghostObjectReceiver.ResetGhostObject();
         //UI elementlerini kapatabilirsin
     }
 
