@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[System.Serializable] // Using for bool
 public class DrawCubeGizmos : CustomGizmos
 {
     public DrawCubeGizmos(Vector3 center) : base(center)

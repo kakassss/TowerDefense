@@ -10,9 +10,9 @@ public class BuildCloseButtonListener : AbstractButtonListener
         _mouseClickStateEvents = mouseClickStateEvents;
     }
     
-    protected override void OnclickListener()
+    protected override void OnClickListener()
     {
-        base.OnclickListener();
+        base.OnClickListener();
         _mouseClickStateEvents.OnTowerBuildRelease?.Invoke();    
     }
 }

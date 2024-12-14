@@ -7,10 +7,10 @@ public abstract class AbstractButtonListener : MonoBehaviour
 
     private void Awake()
     {
-        _button.onClick.AddListener(OnclickListener);
+        _button.onClick.AddListener(OnClickListener);
     }
 
-    protected virtual void OnclickListener()
+    protected virtual void OnClickListener()
     {
     }
 }

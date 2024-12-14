@@ -1,5 +1,4 @@
-﻿using System;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
@@ -26,7 +25,7 @@ public class GridGizmosController : MonoBehaviour
     private void OnValidate()
     {
         _originPosition.x = -(_gridSize * _cellSize) / 2 + transform.position.x;
-        _originPosition.y = 0;
+        _originPosition.y = 0.1f;
         _originPosition.z = -(_gridSize * _cellSize) / 2 + transform.position.z;
         _tempCellManager = new CellManager(_gridSize,_gridSize,_cellSize,_originPosition);
     }

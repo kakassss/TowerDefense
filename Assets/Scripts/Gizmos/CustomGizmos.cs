@@ -2,7 +2,7 @@
 
 public class CustomGizmos
 {
-    public bool CanDrawGizmos = true;
+    public bool CanDrawGizmos = false;
     protected Vector3 Center;
 
     protected CustomGizmos(Vector3 center)

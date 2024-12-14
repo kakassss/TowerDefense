@@ -33,9 +33,9 @@ public class BuildSelectUI : AbstractButtonListener
         _buttonNameText.text = _gridEntitySo.BaseObjects[_buildUI.TowerIndex].Name;
     }
 
-    protected override void OnclickListener()
+    protected override void OnClickListener()
     {
-        base.OnclickListener();
+        base.OnClickListener();
         
         _buildingInputEvents.GhostSpawnInputAction(_gridEntitySo.BaseObjects[_buildUI.TowerIndex]);
     }
