@@ -37,7 +37,7 @@ public class BuildManager
                 {
                     var buildCell = _cellManager.Grid[x + i, z + j].Slot;
                     if(buildCell.IsFull == true) return;
-                
+                    
                     BuildCells buildableCells = new BuildCells(buildCell);
                     buildCells.Add(buildableCells);
                 }
@@ -53,9 +53,12 @@ public class BuildManager
 
     private async UniTaskVoid InstantiateSingleCell(List<BuildCells> buildCells)
     {
+        var induvialCellPower = _buildSelectManager.CurrentGridEntitySO.AttackPower /
+                                _buildSelectManager.CurrentGridEntitySO.PowerSize;
         foreach (var cell in buildCells)
         {
             cell.Cell.IsFull = true;
+            cell.Cell.Power = induvialCellPower;
         }
 
         await UniTask.WaitForEndOfFrame();

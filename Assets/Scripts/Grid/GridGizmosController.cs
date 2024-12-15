@@ -32,52 +32,52 @@ public class GridGizmosController : MonoBehaviour
     
     private void OnDrawGizmos()
     {
-        //if(Application.isPlaying == false) return;
+        if(Application.isPlaying == false) return;
         
         Gizmos.color = Color.red;
-        for (int i = 0; i < _gridSize; i++)
-        {
-            for (int j = 0; j < _gridSize; j++)
-            {
-                Gizmos.DrawLine(
-                    _tempCellManager.GetWorldPosition(j, i),
-                    _tempCellManager.GetWorldPosition(j + 1, i));
-
-                Gizmos.DrawLine(
-                    _tempCellManager.GetWorldPosition(j, i + 1),
-                    _tempCellManager.GetWorldPosition(j,i));   
-            }
-        }
-
-        Gizmos.DrawLine(
-            _tempCellManager.GetWorldPosition(0, _gridSize),
-            _tempCellManager.GetWorldPosition(_gridSize, _gridSize));
-        
-        Gizmos.DrawLine(
-            _tempCellManager.GetWorldPosition(_gridSize,0),
-            _tempCellManager.GetWorldPosition(_gridSize, _gridSize));
-        
-        // for (int i = 0; i < _cellManager.Width; i++)
+        // for (int i = 0; i < _gridSize; i++)
         // {
-        //     for (int j = 0; j < _cellManager.Height; j++)
+        //     for (int j = 0; j < _gridSize; j++)
         //     {
         //         Gizmos.DrawLine(
-        //             _cellManager.GetWorldPosition(j, i),
-        //             _cellManager.GetWorldPosition(j + 1, i));
+        //             _tempCellManager.GetWorldPosition(j, i),
+        //             _tempCellManager.GetWorldPosition(j + 1, i));
         //
         //         Gizmos.DrawLine(
-        //             _cellManager.GetWorldPosition(j, i + 1),
-        //             _cellManager.GetWorldPosition(j,i));   
+        //             _tempCellManager.GetWorldPosition(j, i + 1),
+        //             _tempCellManager.GetWorldPosition(j,i));   
         //     }
         // }
         //
         // Gizmos.DrawLine(
-        //     _cellManager.GetWorldPosition(0, _cellManager.Height),
-        //     _cellManager.GetWorldPosition(_cellManager.Width, _cellManager.Height));
+        //     _tempCellManager.GetWorldPosition(0, _gridSize),
+        //     _tempCellManager.GetWorldPosition(_gridSize, _gridSize));
         //
         // Gizmos.DrawLine(
-        //     _cellManager.GetWorldPosition(_cellManager.Width,0),
-        //     _cellManager.GetWorldPosition(_cellManager.Width, _cellManager.Height));
+        //     _tempCellManager.GetWorldPosition(_gridSize,0),
+        //     _tempCellManager.GetWorldPosition(_gridSize, _gridSize));
+        //
+        for (int i = 0; i < _cellManager.Width; i++)
+        {
+            for (int j = 0; j < _cellManager.Height; j++)
+            {
+                Gizmos.DrawLine(
+                    _cellManager.GetWorldPosition(j, i) + new Vector3(0,0.2f,0),
+                    _cellManager.GetWorldPosition(j + 1, i) + new Vector3(0,0.2f,0));
+        
+                Gizmos.DrawLine(
+                    _cellManager.GetWorldPosition(j, i + 1) + new Vector3(0,0.2f,0),
+                    _cellManager.GetWorldPosition(j,i) + new Vector3(0,0.2f,0));   
+            }
+        }
+        
+        Gizmos.DrawLine(
+            _cellManager.GetWorldPosition(0, _cellManager.Height),
+            _cellManager.GetWorldPosition(_cellManager.Width, _cellManager.Height));
+        
+        Gizmos.DrawLine(
+            _cellManager.GetWorldPosition(_cellManager.Width,0),
+            _cellManager.GetWorldPosition(_cellManager.Width, _cellManager.Height));
     }
     
 

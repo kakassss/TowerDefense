@@ -18,8 +18,8 @@ public class Cell
     public int Row;
     
     public string Name; // Only for testing 
-    
-    public GameObject Entity; // Gameobject tutmak için yapmıstın şimdilik boş duruyor
+    public float Power;
+    public BaseTower Entity; // Gameobject tutmak için yapmıstın şimdilik boş duruyor
     public CellPower DefaultCellPower;// Currently no feature
     public List<CellPower> CellPowerEnumList;// Currently no feature
     

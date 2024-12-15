@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -13,5 +11,6 @@ public class GridInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.Bind<CellManager>().AsSingle().WithArguments(width,height,cellSize,originPos).NonLazy();
+        Container.Bind<CellPowerManager>().AsSingle().NonLazy();
     }
 }

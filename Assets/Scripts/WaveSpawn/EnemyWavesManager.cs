@@ -4,9 +4,7 @@ using Zenject;
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 
-
-
-public class EnemyWave : MonoBehaviour
+public class EnemyWavesManager : MonoBehaviour
 {
     [InfoBox("Enemy ID")]
     [InfoBox("Troll -> 0")]
@@ -16,34 +14,36 @@ public class EnemyWave : MonoBehaviour
     [SerializeField] private List<WaveDataContainer> _totalWaveData;
     [SerializeField] private Vector3 _spawnPointOffset;
     
-    private List<Vector3> _calculatedSpawnPoints = new List<Vector3>();
     
     private EnemyPool _enemyPool;
     private CellManager _cellManager;
+    private EnemyWavesPathFinding _enemyWavesPathFinding;
     
     //First Init cell references
     private Cell _defaultOpenCell;
     [SerializeField] private DrawCubeGizmos _defaultCellGizmos;
     
     [Inject]
-    private void Construct(EnemyPool enemyPool, CellManager cellManager)
+    private void Construct(EnemyPool enemyPool, CellManager cellManager,EnemyWavesPathFinding enemyWavesPathFinding)
     {
         _enemyPool = enemyPool;
         _cellManager = cellManager;
+        _enemyWavesPathFinding = enemyWavesPathFinding;
     }
     
     private void Start()
     {
         SetFirstActiveCell();
-        Spawner().Forget();
+        //Spawner().Forget();
     }
-
     
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            ActiveCellWays();
+            //ActiveCellWays();
+            var path = _enemyWavesPathFinding.GetCalculatedPowerSizeSpawnPoints(_spawnPointOffset);
+            Debug.Log("ChoosenPath " + path);
         }
     }
 
@@ -53,31 +53,20 @@ public class EnemyWave : MonoBehaviour
         _defaultCellGizmos = new DrawCubeGizmos(_cellManager.GetCellMidPointPositionXZ(_defaultOpenCell.GridIndexX, _defaultOpenCell.GridIndexZ));
     }
     
-    private void ActiveCellWays()// to calculate enemy spawn position
-    {
-        _calculatedSpawnPoints.Clear();
-        
-        var activeColumns = _cellManager.GetActiveColumns();
-
-        foreach (var activeColumn in activeColumns)
-        {
-            var cell = _cellManager.GetFrontCellAtActiveColumn(activeColumn);
-            Debug.Log("active column selected cell " + cell.Name);
-            _calculatedSpawnPoints.Add(_cellManager.GetCellMidPointPositionXZ(cell.GridIndexX,cell.GridIndexZ) + _spawnPointOffset);
-        }
-    }
-
+    
     private void OnDrawGizmos()
     {
         if(_defaultCellGizmos.CanDrawGizmos) _defaultCellGizmos.DrawGizmos(Color.yellow); // default open cell gizmos
-        if(_calculatedSpawnPoints.Count == 0) return;
+        if(_enemyWavesPathFinding == null) return;
+        if(_enemyWavesPathFinding.CalculatedSpawnPoint == Vector3.zero) return;
         
         Gizmos.color = Color.green;
+        Gizmos.DrawCube(_enemyWavesPathFinding.CalculatedSpawnPoint,Vector3.one);
         
-        for (int i = 0; i < _calculatedSpawnPoints.Count; i++)
-        {
-            Gizmos.DrawCube(_calculatedSpawnPoints[i],new Vector3(1f,1f,1f));
-        }
+        // for (int i = 0; i < _enemyWavesPathFinding?.SpawnPoints.Count; i++)
+        // {
+        //     Gizmos.DrawCube(_enemyWavesPathFinding.SpawnPoints[i],new Vector3(1f,1f,1f));
+        // }
     }
 
     private async UniTaskVoid Spawner()
@@ -90,7 +79,9 @@ public class EnemyWave : MonoBehaviour
                 {
                     for (int i = 0; i < wave.Count; i++)
                     {
-                        _enemyPool.GetObjectFromPool(wave.EnemyID, _spawnPoints[0].position);
+                        var path = _enemyWavesPathFinding.GetCalculatedPowerSizeSpawnPoints(_spawnPointOffset);
+                        Debug.Log("ChoosenPath " + path);
+                        _enemyPool.GetObjectFromPool(wave.EnemyID,path);
                         await UniTask.WaitForSeconds(wave.Rate);
                     }
                 }

@@ -20,9 +20,12 @@ public class BaseObject
     
     public GameObject BuildObject;
     public GhostObject GhostObject;
-    
     public BuildType BuildType;
-    
+
+    [HideInInspector] public float PowerSize => X * Z;
+    [Header("Power")] 
+    public float AttackPower;
+    public int PowerLevel; // buna bir şey düşünmedin daha
     public bool CanBuild(int buildSlotCount)
     {
         if (X == 1 && Z == 1 && buildSlotCount == 1)

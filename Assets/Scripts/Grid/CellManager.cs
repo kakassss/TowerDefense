@@ -38,6 +38,8 @@ public class CellManager
                 };
             }
         }
+        //GridIndexX -> Row
+        //GridIndexZ -> Column
         
         //Grid[0,X] => will give column index
         //Grid[X,0] => will give row index
@@ -108,6 +110,7 @@ public class CellManager
                 if (_grid[i, j].Slot.IsFull)
                 {
                     if(_activeColumns.Contains(j)) continue;
+                    Debug.Log(j + " Current grid column ");
                     _activeColumns.Add(j);
                     //break; // break current inner loop and allows the outer loop to proceed to next iteration
                 }   
@@ -116,8 +119,10 @@ public class CellManager
         return _activeColumns;
     }
     
+    
     //Use after GetActiveColumns function
-    public Cell GetRandomCellAtActiveColumn(int columnIndex)
+    //These functions are just giving active column, not indivual cell
+    public Cell GetRandomCellAtActiveColumn(int columnIndex) 
     {
         if(_activeColumns.Count <= 0) return null;
         return _grid[Random.Range(0,Width), columnIndex].Slot;
@@ -169,27 +174,27 @@ public class CellManager
     
     #region SetCellActions
 
-    public void SetCellAtIndex(Vector3 worldPos,GameObject gameObject)
+    public void SetCellAtIndex(Vector3 worldPos,BaseTower baseTower)
     {
         var cell = GetCellAtIndex(worldPos);
         if(cell == null) return;
         
-        SetCellFull(cell,gameObject);
+        SetCellFull(cell,baseTower);
     }
     
-    public void SetCellFull(Grid<Cell> cell, GameObject gameObject)
+    public void SetCellFull(Grid<Cell> cell, BaseTower baseTower)
     {
         cell.Slot.IsFull = true;
-        cell.Slot.Entity = gameObject;
+        cell.Slot.Entity = baseTower;
     }
 
-    public void SetCellEmptyWithDestroy(Grid<Cell> cell,GameObject gameObject)
+    public void SetCellEmptyWithDestroy(Grid<Cell> cell)
     {
         cell.Slot.IsFull = false;
         cell.Slot.Entity = null;
     }
 
-    public void SetCellEmptyWithInput(Vector3 worldPos, GameObject gameObject)
+    public void SetCellEmptyWithInput(Vector3 worldPos)
     {
         var cell = GetCellAtIndex(worldPos);
         cell.Slot.IsFull = false;
