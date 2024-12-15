@@ -35,8 +35,8 @@ public class BuildManager
             {
                 if ( x + i >= 0 && z + j >= 0 && x + i < _cellManager.Width && z + j < _cellManager.Height)
                 {
-                    var buildCell = _cellManager.Grid[x + i, z + j];
-                    if(buildCell.Slot.IsFull == true) return;
+                    var buildCell = _cellManager.Grid[x + i, z + j].Slot;
+                    if(buildCell.IsFull == true) return;
                 
                     BuildCells buildableCells = new BuildCells(buildCell);
                     buildCells.Add(buildableCells);
@@ -55,7 +55,7 @@ public class BuildManager
     {
         foreach (var cell in buildCells)
         {
-            cell.Cell.Slot.IsFull = true;
+            cell.Cell.IsFull = true;
         }
 
         await UniTask.WaitForEndOfFrame();
@@ -67,7 +67,7 @@ public class BuildManager
     {
         foreach (var cell in buildCells)
         {
-            cell.Cell.Slot.IsFull = true;
+            cell.Cell.IsFull = true;
             var tower = _instantiator.InstantiatePrefab(_buildSelectManager.CurrentGridEntitySO.BuildObject);
             tower.transform.position = cell.SpawnPosition * _cellManager.CellSize + _cellManager.OriginPosition + 
                                        new Vector3(_cellManager.CellSize / 2, 0, _cellManager.CellSize / 2);
@@ -77,7 +77,7 @@ public class BuildManager
     private Vector3 SetMidPosMultipleCells()
     {
         List<Vector3> cellsPosition = buildCells.Select(cell => 
-            _cellManager.GetCellMidPointPositionXZ(cell.Cell.Slot.GridIndexX, cell.Cell.Slot.GridIndexZ)).ToList();
+            _cellManager.GetCellMidPointPositionXZ(cell.Cell.GridIndexX, cell.Cell.GridIndexZ)).ToList();
 
         Vector3 averageX = Vector3.zero;
         Vector3 averageZ = Vector3.zero;
@@ -95,11 +95,11 @@ public class BuildManager
 public struct BuildCells
 {
     public Vector3 SpawnPosition;
-    public Grid<Cell> Cell;
+    public Cell Cell;
         
-    public BuildCells(Grid<Cell> cell)
+    public BuildCells(Cell cell)
     {
         Cell = cell;
-        SpawnPosition = new Vector3(cell.Slot.GridIndexX,0, cell.Slot.GridIndexZ);
+        SpawnPosition = new Vector3(cell.GridIndexX,0, cell.GridIndexZ);
     }
 }
