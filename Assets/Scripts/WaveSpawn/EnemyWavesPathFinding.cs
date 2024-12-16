@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyWavesPathFinding
@@ -39,23 +40,24 @@ public class EnemyWavesPathFinding
     public Vector3 GetCalculatedPowerSizeSpawnPoints(Vector3 spawnPointOffset)
     {
         var dic = _cellPowerManager.GetAllColumnsPowerSize();
-        
-        
+        var keyValuePairs = dic.OrderBy(powerSize => powerSize.Value);
+
         if (dic.Count == 1)
         {
             List<int> keyList = new List<int>(dic.Keys);
             return CalculatedSpawnPoint = GetColumnSpawnPoint(keyList[0]) + spawnPointOffset;
         }
+        var random = Random.Range(0, 100);
 
-        for (int i = 0; i < dic.Count; i++)
+        foreach (var column in keyValuePairs)
         {
-            var random = Random.Range(0, 100); 
-            if (random <= dic[i])
+            if (random <= column.Value)
             {
-                Debug.Log("random " + random +"column hase choosen " + i);
-                return CalculatedSpawnPoint = GetColumnSpawnPoint(i) + spawnPointOffset;
+                //Debug.Log("random " + random +"column hase choosen " + column.Key);
+                return CalculatedSpawnPoint = GetColumnSpawnPoint(column.Key) + spawnPointOffset;
             }
         }
+
         Debug.LogError("Couldn't calculate power spawn points");
         return Vector3.zero;
     }
