@@ -19,13 +19,11 @@ public class BuildingInputReader : InputSystem_Actions.IInputBuildActions, IDisp
 
     public void OnBuilding(InputAction.CallbackContext context)
     {
+        if (!context.performed) return;
         if (EventSystem.current.IsPointerOverGameObject()) return;
         if(_ghostObjectReceiver.GhostObjectValid == false) return;
-        
-        if (context.performed)
-        {
-            _buildingInputEvents.SpawnInputAction();
-        }
+            
+        _buildingInputEvents.SpawnInputAction();
     }
 
     public void Enable()

@@ -5,7 +5,9 @@ using UnityEngine.InputSystem;
 public class IdleInputReader : InputSystem_Actions.IInputIdleActions, IDisposable, IInputActions
 {
     private readonly InputSystem _inputSystem;
-
+    
+    public Action OnTowerSelected;
+    
     private IdleInputReader(InputSystem inputSystem)
     {
         _inputSystem = inputSystem;
@@ -16,8 +18,10 @@ public class IdleInputReader : InputSystem_Actions.IInputIdleActions, IDisposabl
     
     public void OnSelect(InputAction.CallbackContext context)
     {
+        if (!context.performed) return;
         if (EventSystem.current.IsPointerOverGameObject()) return;
-        
+            
+        OnTowerSelected?.Invoke();
     }
 
     public void Enable()
