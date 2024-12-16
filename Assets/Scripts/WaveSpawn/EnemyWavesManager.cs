@@ -34,7 +34,7 @@ public class EnemyWavesManager : MonoBehaviour
     private void Start()
     {
         SetFirstActiveCell();
-        //Spawner().Forget();
+        
     }
     
     private void Update()
@@ -42,8 +42,9 @@ public class EnemyWavesManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //ActiveCellWays();
-            var path = _enemyWavesPathFinding.GetCalculatedPowerSizeSpawnPoints(_spawnPointOffset);
-            Debug.Log("ChoosenPath " + path);
+            Spawner().Forget();
+            //var path = _enemyWavesPathFinding.GetCalculatedPowerSizeSpawnPoints(_spawnPointOffset);
+            //Debug.Log("ChoosenPath " + path);
         }
     }
 

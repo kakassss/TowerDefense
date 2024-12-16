@@ -56,7 +56,7 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
     public void Death()
     {
         Transform.gameObject.SetActive(false);
-        transform.position = Vector3.zero;
+        transform.position = Vector3.one * 25f;
         transform.rotation = Quaternion.identity;
     }
 }
