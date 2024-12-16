@@ -15,19 +15,19 @@ MonoBehaviour:
   WaveStages:
   - Waves:
     - EnemyID: 0
-      Count: 0
-      Rate: 0
+      Count: 5
+      Rate: 0.25
     - EnemyID: 0
-      Count: 0
-      Rate: 0
+      Count: 4
+      Rate: 0.15
   - Waves:
     - EnemyID: 0
-      Count: 0
-      Rate: 0
+      Count: 3
+      Rate: 0.1
   - Waves:
-    - EnemyID: 0
-      Count: 0
-      Rate: 0
-    - EnemyID: 0
-      Count: 0
-      Rate: 0
+    - EnemyID: 1
+      Count: 5
+      Rate: 0.3
+    - EnemyID: 1
+      Count: 3
+      Rate: 0.1

@@ -1,0 +1,47 @@
+using System.Collections.Generic;
+using UnityEngine;
+using Zenject;
+
+//Adressable sistemi kur
+//hem popup hem assetler için kurabiliriz
+public class PopupManager
+{
+    private readonly IInstantiator _instantiator;
+    private readonly Transform _popupContainerParent;
+    private readonly (string, GameObject) _towerStats;
+    
+    private Dictionary<string, GameObject> _allPopups = new Dictionary<string, GameObject>();
+    private List<GameObject> _activePopups = new List<GameObject>();
+    private List<GameObject> _deActivePopups = new List<GameObject>();
+    
+    private GameObject _activePopup;
+    
+    public PopupManager((string, GameObject) towerStats, IInstantiator instantiator, Transform popupContainerParent)
+    {
+        _instantiator = instantiator;
+        _towerStats = towerStats;
+        _popupContainerParent = popupContainerParent;
+        
+        _allPopups.Add(_towerStats.Item1, _towerStats.Item2);
+    }
+    
+    public void InstantiatePopupByName(string name)
+    {
+        if (_activePopup != null) return;
+        
+        _activePopup = _instantiator.InstantiatePrefab(GetPopupByName(name), _popupContainerParent);
+    }
+
+    public void ClosePopupByName(string name)
+    {
+        if (_activePopup == null) return;
+        
+        _activePopup.gameObject.SetActive(false);
+        _activePopup = null;
+    }
+    
+    public GameObject GetPopupByName(string name)
+    {
+        return _allPopups[name];
+    }
+}

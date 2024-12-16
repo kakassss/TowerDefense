@@ -25,6 +25,20 @@ public class Utils
         }
     }
     
+    public BaseTower GetValidPositionWithLayerMask(int layerMask)
+    {
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+        if(Physics.Raycast(ray, out RaycastHit hit,float.MaxValue, layerMask))
+        {
+            if (hit.collider.TryGetComponent<BaseTower>(out BaseTower tower))
+            {
+                return tower;
+            }
+        }
+        return null;
+        //return Physics.Raycast(ray, out RaycastHit hit,float.MaxValue, layerMask) ? hit.point : Vector3.zero;
+    }
+    
     //Using with building
     public Vector3 GetValidPositionWithLayerMask()
     {
@@ -33,12 +47,6 @@ public class Utils
     }
     
     public Vector3 GetValidPositionWithLayerMask(LayerMask layerMask)
-    {
-        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-        return Physics.Raycast(ray, out RaycastHit hit,float.MaxValue, layerMask) ? hit.point : Vector3.zero;
-    }
-    
-    public Vector3 GetValidPositionWithLayerMask(int layerMask)
     {
         Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
         return Physics.Raycast(ray, out RaycastHit hit,float.MaxValue, layerMask) ? hit.point : Vector3.zero;
