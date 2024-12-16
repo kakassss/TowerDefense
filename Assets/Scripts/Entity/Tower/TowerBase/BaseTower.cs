@@ -41,7 +41,9 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
     // Declare once again with actions
     private void SetAttackType()
     {
-        Attack.TargetToEnemy = _towerAttackType.SelectedTarget;
+        //TowerAttackType.SelectedTarget currently empty but
+        //whenever player has chosen an attack type, it will be filled by TowerAttackTypeSelect.cs
+        Attack.TargetToEnemy = _towerAttackType.SelectedTarget; 
     }
     
     public void AttackAction()

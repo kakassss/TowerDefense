@@ -78,12 +78,13 @@ public class CellPowerManager
         //PowerSize[0] -> 0, 40
         //PowerSize[1] -> 1, 80
         //PowerSize[2] -> 2, 20
-        Debug.Log("total power " + _totalPower);
+        
+        //Debug.Log("total power " + _totalPower);
         for (int i = 0; i < _powerSizeDic.Count; i++)
         {
            var powerRate = Mathf.CeilToInt(_totalPower/ _powerSizeDic[i]) * 10;
            
-           Debug.Log(i  + " power rate: " + powerRate);
+           //Debug.Log(i  + " power rate: " + powerRate);
            _columnPowerRate.Add(i, powerRate);
         }
 
