@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,7 +16,11 @@ public class TowerAttackTypeUI : MonoBehaviour
         _towerAttackTypeHolder = towerAttackTypeHolder;
     }
 
-    
+    private void OnEnable()
+    {
+        SetButtons();
+    }
+
     private void SetButtons()
     {
         CloseButtons();

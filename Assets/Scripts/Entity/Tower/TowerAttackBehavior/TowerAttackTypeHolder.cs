@@ -13,3 +13,9 @@ public class TowerAttackTypeHolder
         };
     }
 }
+
+public enum AttackTypeEnum
+{
+    AttackClosest = 0,
+    AttackMostHp =1,
+}

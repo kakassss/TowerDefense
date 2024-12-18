@@ -12,6 +12,7 @@ public class MouseClickStateMachine : StateMachine
     private GhostObjectReceiver _ghostObjectReceiver;
     private CellManager _cellManager;
     private PopupManager _popupManager;
+    private TowerAttackTypeReceiver _towerAttackTypeReceiver;
     
     //Readers
     private BuildingInputReader _buildingInputReader;
@@ -23,7 +24,7 @@ public class MouseClickStateMachine : StateMachine
     [Inject]
     protected void Construct(Utils utils, CellManager cellManager, GhostObjectReceiver ghostObjectReceiver
     , BuildingInputReader buildingInputReader, IdleInputReader idleInputReader, MouseClickStateEvents mouseClickStateEvents,
-    PopupManager popupManager)
+    TowerAttackTypeReceiver towerAttackTypeReceiver, PopupManager popupManager)
     {
         //Public references
         Utils = utils;
@@ -34,9 +35,10 @@ public class MouseClickStateMachine : StateMachine
         _idleInputReader = idleInputReader;
         _mouseClickStateEvents = mouseClickStateEvents;
         _popupManager = popupManager;
+        _towerAttackTypeReceiver = towerAttackTypeReceiver;
         
         //Public constructers
-        MouseClickSelectedTowerState = new MouseClickSelectedTowerState(this,_idleInputReader,_mouseClickStateEvents,_popupManager);
+        MouseClickSelectedTowerState = new MouseClickSelectedTowerState(this,_idleInputReader,_mouseClickStateEvents,_popupManager,_towerAttackTypeReceiver);
         MouseGhostBuildState = new MouseGhostBuildState(this,_ghostObjectReceiver,_cellManager,_buildingInputReader,_mouseClickStateEvents);
     }
 

@@ -3,23 +3,26 @@
 public class MouseClickSelectedTowerState : MouseClickBaseState
 {
     private BaseTower _selectedTower;
-    private readonly int towerLayerMask;
+    private readonly int _towerLayerMask;
     
-    private IdleInputReader _idleInputReader;
-    private MouseClickStateEvents _mouseClickStateEvents;
-    private PopupManager _popupManager;
+    private readonly IdleInputReader _idleInputReader;
+    private readonly MouseClickStateEvents _mouseClickStateEvents;
+    private readonly PopupManager _popupManager;
+    private readonly TowerAttackTypeReceiver _towerAttackTypeReceiver;
     
     private string TowerStatPopupName = "TowerStatPopup";
     
     public MouseClickSelectedTowerState(MouseClickStateMachine mouseClickStateMachine, 
-        IdleInputReader idleInputReader, MouseClickStateEvents mouseClickStateEvents, PopupManager popupManager) 
+        IdleInputReader idleInputReader, MouseClickStateEvents mouseClickStateEvents, PopupManager popupManager,
+        TowerAttackTypeReceiver towerAttackTypeReceiver) 
         : base(mouseClickStateMachine)
     {
         _idleInputReader = idleInputReader;
         _mouseClickStateEvents = mouseClickStateEvents;
         _popupManager = popupManager;
+        _towerAttackTypeReceiver = towerAttackTypeReceiver;
         
-        towerLayerMask = 1 << 8;
+        _towerLayerMask = 1 << 8;
     }
 
     public override void OnEnter()
@@ -28,7 +31,7 @@ public class MouseClickSelectedTowerState : MouseClickBaseState
         _idleInputReader.OnTowerSelected += OnTowerSelected;
         _idleInputReader.Enable();
         
-        Debug.Log("yokoso minnassan hideo kojima dess");
+        //Debug.Log("yokoso minnassan hideo kojima dess");
         // Tower ui elementlerini aç
     }
     
@@ -41,8 +44,10 @@ public class MouseClickSelectedTowerState : MouseClickBaseState
     public override void OnExit()
     {
         _selectedTower = null;
+        _towerAttackTypeReceiver.SelectedTower = null;
+        _popupManager.ClosePopupByName(TowerStatPopupName);
         
-        _mouseClickStateEvents.OnTowerBuildStart += OnTowerBuildingClick;
+        _mouseClickStateEvents.OnTowerBuildStart -= OnTowerBuildingClick;
         _idleInputReader.OnTowerSelected -= OnTowerSelected;
         _idleInputReader.Disable();
         // Tower ui elementlerini kapa
@@ -50,12 +55,20 @@ public class MouseClickSelectedTowerState : MouseClickBaseState
 
     private void OnTowerSelected()
     {
-        _selectedTower = _mouseClickStateMachine.Utils.GetValidPositionWithLayerMask(towerLayerMask);
+        _selectedTower = _mouseClickStateMachine.Utils.GetValidPositionWithLayerMask(_towerLayerMask);
+        
+        OpenTowerStatPopup();
+    }
+
+    private void OpenTowerStatPopup()
+    {
         if (_selectedTower == null)
         {
             _popupManager.ClosePopupByName(TowerStatPopupName);
             return;
         }
+        
+        _towerAttackTypeReceiver.SelectedTower = _selectedTower;
         _popupManager.InstantiatePopupByName(TowerStatPopupName);
     }
     

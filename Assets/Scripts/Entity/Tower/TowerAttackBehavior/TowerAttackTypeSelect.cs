@@ -1,46 +1,38 @@
-using System;
 using UnityEngine;
 using Zenject;
 
-public class TowerAttackTypeEvent
+public class TowerAttackTypeReceiver
 {
-    private Action _onAttackTypeChanged;
-
-    public void FireOnAttackTypeChanged()
-    {
-        _onAttackTypeChanged?.Invoke();
-    }
-
-    public void AddOnAttackTypeChanged(Action action)
-    {
-        _onAttackTypeChanged += action;
-    }
-
-    public void RemoveOnAttackTypeChanged(Action action)
-    {
-        _onAttackTypeChanged -= action;
-    }
-    
+    public BaseTower SelectedTower;
 }
 
-public class TowerAttackTypeSelect : MonoBehaviour
+public class TowerAttackTypeSelect : AbstractButtonListener
 {
-    public ITargetToEnemy SelectedTarget;
+    private ITargetToEnemy SelectedAttackType;
 
-    private TowerAttackTypeEvent _towerAttackTypeEvent;
+    [SerializeField] private AttackTypeEnum _attackTypeEnum;
+    
+    private TowerAttackTypeReceiver _towerAttackTypeReceiver;
+    private TowerAttackTypeHolder _towerAttackTypeHolder;
     
     [Inject]
-    private void Construct(TowerAttackTypeHolder towerAttackTypeHolder,TowerAttackTypeEvent towerAttackTypeEvent)
+    private void Construct(TowerAttackTypeHolder towerAttackTypeHolder,TowerAttackTypeReceiver towerAttackTypeReceiver)
     {
-        _towerAttackTypeEvent = towerAttackTypeEvent;
+        _towerAttackTypeReceiver = towerAttackTypeReceiver;
+        _towerAttackTypeHolder = towerAttackTypeHolder;
         
         //Not necessary for init process, every tower has own default attackTypes defined at BaseTower.cs
         //SelectedTarget = towerAttackTypeHolder.AttackTypes[0]; // Set Closest Attack type as default
     }
 
-    public void ChangeAttackType(ITargetToEnemy target)
+    protected override void OnClickListener()
     {
-        SelectedTarget = target;
-        _towerAttackTypeEvent.FireOnAttackTypeChanged();
+        ChangeAttackType();
+    }
+
+    private void ChangeAttackType()
+    {
+        SelectedAttackType = _towerAttackTypeHolder.AttackTypes[(int)_attackTypeEnum];
+        _towerAttackTypeReceiver.SelectedTower.AttackType = SelectedAttackType;
     }
 }

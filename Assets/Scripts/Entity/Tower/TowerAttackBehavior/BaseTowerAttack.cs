@@ -8,8 +8,6 @@ public class BaseTowerAttack
     
     protected const int enemyLayerMask = 1 << 9;
     protected float _fireRateTemp;
-
-    public ITargetToEnemy TargetToEnemy;
     
     public BaseTowerAttack(ProjectilePool projectilePool, ProjectilePoolEvent projectilePoolEvent)
     {

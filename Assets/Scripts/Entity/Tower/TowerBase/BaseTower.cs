@@ -7,53 +7,42 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
     public BaseTowerAttack Attack { get; private set;}
     public BaseHealth Health { get; private set;}
     
+    public ITargetToEnemy AttackType;
+    
     [SerializeField] protected BaseTowerAttackSO _towerAttackSo;
-    [SerializeField] private TowerAttackTypeSelect _towerAttackType;
     [SerializeField] private Transform _towerAimPoint;
     [SerializeField] private Transform _towerAimHead;
     
     private IEnemy _targetEnemy;
-    
     private QuaternionUtils _quaternionUtils;
-    private TowerAttackTypeEvent _towerAttackTypeEvent;
-    //private ITargetToEnemy _currentAttackType;
     private TowerAttackTypeHolder _towerAttackTypeHolder;
     
     [Inject]
-    protected void Construct(QuaternionUtils quaternionUtils, BaseTowerAttack attack, TowerAttackTypeEvent towerAttackTypeEvent,TowerAttackTypeHolder towerAttackTypeHolder)
+    protected void Construct(QuaternionUtils quaternionUtils, BaseTowerAttack attack, TowerAttackTypeHolder towerAttackTypeHolder)
     {
         _quaternionUtils = quaternionUtils;
-        _towerAttackTypeEvent = towerAttackTypeEvent;
         _towerAttackTypeHolder = towerAttackTypeHolder;
         Attack = attack;
         
         SetTowerStats();
-        _towerAttackTypeEvent.AddOnAttackTypeChanged(SetAttackType);
     }
 
     // Using for once, kind of start
     protected virtual void SetTowerStats()
     {
-        Attack.TargetToEnemy = _towerAttackTypeHolder.AttackTypes[0]; // Default attack type is attack to closest enemy
+        AttackType = _towerAttackTypeHolder.AttackTypes[0];// Default attack type is attack to the closest enemy
+        
         Health = new BaseHealth(100);
-    }
-    
-    // Declare once again with actions
-    private void SetAttackType()
-    {
-        //TowerAttackType.SelectedTarget currently empty but
-        //whenever player has chosen an attack type, it will be filled by TowerAttackTypeSelect.cs
-        Attack.TargetToEnemy = _towerAttackType.SelectedTarget; 
     }
     
     public void AttackAction()
     {
         if (_targetEnemy == null)
         {
-            _targetEnemy = Attack.TargetToEnemy.TargetAction(transform,_towerAttackSo);
+            _targetEnemy = AttackType.TargetAction(transform,_towerAttackSo);
         }
         
-        if(_targetEnemy == null) return;
+        if(_targetEnemy == null) return;//?
         
         if (Attack.InRange(_targetEnemy.Transform,transform,_towerAttackSo) == false)
         {

@@ -10,7 +10,7 @@ public class TowerAttackMostHp : BaseTowerAttack, ITargetToEnemy
     {
         Collider[] targetableEnemies = Physics.OverlapSphere(transform.position, towerAttackSo.Range,enemyLayerMask);
 
-        IEnemy mostHpEnemy = targetableEnemies[0].GetComponent<IEnemy>();
+        IEnemy mostHpEnemy = null;
         float minHp = 1f;
         
         for (int i = 0; i < targetableEnemies.Length; i++)

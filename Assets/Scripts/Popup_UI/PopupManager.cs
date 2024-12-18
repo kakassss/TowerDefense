@@ -37,6 +37,7 @@ public class PopupManager
         if (_activePopup == null) return;
         
         _activePopup.gameObject.SetActive(false);
+        Object.Destroy(_activePopup.gameObject);
         _activePopup = null;
     }
     
