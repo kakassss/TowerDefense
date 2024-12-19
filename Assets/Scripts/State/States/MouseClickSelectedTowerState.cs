@@ -69,7 +69,7 @@ public class MouseClickSelectedTowerState : MouseClickBaseState
         }
         
         _towerAttackTypeReceiver.SelectedTower = _selectedTower;
-        _popupManager.InstantiatePopupByName(TowerStatPopupName);
+        _popupManager.OpenPopupByNameWithPosition(TowerStatPopupName, _selectedTower.transform, Vector3.up * 5f); 
     }
     
     private void OnTowerBuildingClick()

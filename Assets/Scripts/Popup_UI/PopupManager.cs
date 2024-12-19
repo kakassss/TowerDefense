@@ -25,13 +25,21 @@ public class PopupManager
         _allPopups.Add(_towerStats.Item1, _towerStats.Item2);
     }
     
-    public void InstantiatePopupByName(string name)
+    public void OpenPopupByName(string name)
     {
         if (_activePopup != null) return;
         
         _activePopup = _instantiator.InstantiatePrefab(GetPopupByName(name), _popupContainerParent);
     }
-
+    
+    public void OpenPopupByNameWithPosition(string name, Transform transform, Vector3 offSet)
+    {
+        if (_activePopup != null) return;
+        
+        _activePopup = _instantiator.InstantiatePrefab(GetPopupByName(name), _popupContainerParent);
+        _activePopup.transform.position = transform.position + offSet;
+    }
+    
     public void ClosePopupByName(string name)
     {
         if (_activePopup == null) return;
