@@ -1,5 +1,34 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
+public struct Column : IEquatable<Column>
+{
+    public int Index;
+    public int ColumnTotalPower;
+
+    public Column(int index, int columnTotalPower)
+    {
+        Index = index;
+        ColumnTotalPower = columnTotalPower;
+    }
+
+    public bool Equals(Column other)
+    {
+        return Index == other.Index && ColumnTotalPower == other.ColumnTotalPower;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is Column other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Index, ColumnTotalPower);
+    }
+}
 
 public class CellManager
 {
@@ -13,6 +42,8 @@ public class CellManager
 
     private List<Cell> _activeCells = new List<Cell>();
     private List<int> _activeColumns = new List<int>();
+    private List<Column> _columns = new List<Column>();
+    private List<Column> _activeColumns2 = new List<Column>();
     
     public Grid<Cell>[,] Grid => _grid;
     public int Width => _width;
@@ -38,6 +69,12 @@ public class CellManager
                 };
             }
         }
+
+        for (int i = 0; i < _height; i++)
+        {
+            _columns.Add(new Column(i, 0));
+        }
+        
         //GridIndexX -> Row
         //GridIndexZ -> Column
         
@@ -70,6 +107,11 @@ public class CellManager
                 };
             }
         }
+        
+        for (int i = 0; i < _height; i++)
+        {
+            _columns.Add(new Column(i, 0));
+        }
 
         for (int i = 0; i < _grid.GetLength(0); i++)
         {
@@ -98,7 +140,27 @@ public class CellManager
         
         return cell.Slot.IsFull;
     }
-    
+    public List<Column> GetActiveColumnsStruct()
+    {
+        _activeColumns2.Clear();
+
+        for (int i = 0; i < _grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < _grid.GetLength(1); j++)
+            {
+                if (_grid[i, j].Slot.IsFull)
+                {
+                    if(_activeColumns2.Contains(new Column(j,0))) continue;
+                    _activeColumns2.Add(new Column(j,0));
+                    
+                    
+                    //break; // break current inner loop and allows the outer loop to proceed to next iteration
+                }   
+            }
+        }
+        //Debug.Log("_activeColumns2  " + _activeColumns2.Count);
+        return _activeColumns2;
+    }
     public List<int> GetActiveColumns()
     {
         _activeColumns.Clear();
@@ -110,12 +172,13 @@ public class CellManager
                 if (_grid[i, j].Slot.IsFull)
                 {
                     if(_activeColumns.Contains(j)) continue;
-                    Debug.Log(j + " Current grid column ");
+                    //Debug.Log(j + " Current grid column ");
                     _activeColumns.Add(j);
                     //break; // break current inner loop and allows the outer loop to proceed to next iteration
                 }   
             }
         }
+        Debug.Log("_activeColumns " + _activeColumns.Count);
         return _activeColumns;
     }
     
@@ -128,14 +191,22 @@ public class CellManager
         return _grid[Random.Range(0,Width), columnIndex].Slot;
     }
     
+    //Get mid cell at grid
     public Cell GetDefaultCellAtActiveColumn()// Only works with odd numbers,
     {
         return _grid[Height-1, Mathf.FloorToInt(Width/2)].Slot;
     }
     
+    //Find the front cell at selected column
     public Cell GetFrontCellAtActiveColumn(int columnIndex)
     {
         if(_activeColumns.Count <= 0) return null;
+        return _grid[Height-1, columnIndex].Slot;
+    }
+    
+    public Cell GetFrontCellAtActiveColumn2(int columnIndex)
+    {
+        if(_activeColumns2.Count <= 0) return null;
         return _grid[Height-1, columnIndex].Slot;
     }
     

@@ -55,6 +55,7 @@ public class BuildManager
     {
         var induvialCellPower = _buildSelectManager.CurrentGridEntitySO.AttackPower /
                                 _buildSelectManager.CurrentGridEntitySO.PowerSize;
+        
         foreach (var cell in buildCells)
         {
             cell.Cell.IsFull = true;
