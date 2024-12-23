@@ -8,19 +8,19 @@ public class MouseClickSelectedTowerState : MouseClickBaseState
     private readonly IdleInputReader _idleInputReader;
     private readonly MouseClickStateEvents _mouseClickStateEvents;
     private readonly PopupManager _popupManager;
-    private readonly TowerAttackTypeReceiver _towerAttackTypeReceiver;
+    private readonly SelectedTowerReceiver _selectedTowerReceiver;
     
     private string TowerStatPopupName = "TowerStatPopup";
     
     public MouseClickSelectedTowerState(MouseClickStateMachine mouseClickStateMachine, 
         IdleInputReader idleInputReader, MouseClickStateEvents mouseClickStateEvents, PopupManager popupManager,
-        TowerAttackTypeReceiver towerAttackTypeReceiver) 
+        SelectedTowerReceiver selectedTowerReceiver) 
         : base(mouseClickStateMachine)
     {
         _idleInputReader = idleInputReader;
         _mouseClickStateEvents = mouseClickStateEvents;
         _popupManager = popupManager;
-        _towerAttackTypeReceiver = towerAttackTypeReceiver;
+        _selectedTowerReceiver = selectedTowerReceiver;
         
         _towerLayerMask = 1 << 8;
     }
@@ -44,7 +44,7 @@ public class MouseClickSelectedTowerState : MouseClickBaseState
     public override void OnExit()
     {
         _selectedTower = null;
-        _towerAttackTypeReceiver.SelectedTower = null;
+        _selectedTowerReceiver.SelectedTower = null;
         _popupManager.ClosePopupByName(TowerStatPopupName);
         
         _mouseClickStateEvents.OnTowerBuildStart -= OnTowerBuildingClick;
@@ -68,8 +68,8 @@ public class MouseClickSelectedTowerState : MouseClickBaseState
             return;
         }
         
-        _towerAttackTypeReceiver.SelectedTower = _selectedTower;
-        _popupManager.OpenPopupByNameWithPosition(TowerStatPopupName, _selectedTower.transform, Vector3.up * 5f); 
+        _selectedTowerReceiver.SelectedTower = _selectedTower;
+        _popupManager.OpenPopupByNameWithPosition(TowerStatPopupName, _selectedTower.transform, (Vector3.right + Vector3.up) * 5f); 
     }
     
     private void OnTowerBuildingClick()

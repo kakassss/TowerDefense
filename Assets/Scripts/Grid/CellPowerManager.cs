@@ -169,6 +169,7 @@ public class CellPowerManager
             {
                 var cell = _cellManager.Grid[j, column.Index];
                 //Debug.Log("current " + j + " "+ cell.Slot.Power);
+                
                 GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 cube.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
                 cube.transform.position =
@@ -180,7 +181,7 @@ public class CellPowerManager
             _activedColumnsPowerSize.Add(new Column(column.Index, (int)_tempPower));
         }
     
-        //Calculate powerRate for each colomn
+        //Calculate powerRate for each column
         foreach (var power in _activedColumnsPowerSize)
         {
             float powerRate = Mathf.CeilToInt(_totalPower/ power.ColumnTotalPower) * 10;

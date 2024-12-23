@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class TowerAttackTypeReceiver
+public class SelectedTowerReceiver
 {
     public BaseTower SelectedTower;
 }
@@ -12,13 +12,13 @@ public class TowerAttackTypeSelect : AbstractButtonListener
 
     [SerializeField] private AttackTypeEnum _attackTypeEnum;
     
-    private TowerAttackTypeReceiver _towerAttackTypeReceiver;
+    private SelectedTowerReceiver _selectedTowerReceiver;
     private TowerAttackTypeHolder _towerAttackTypeHolder;
     
     [Inject]
-    private void Construct(TowerAttackTypeHolder towerAttackTypeHolder,TowerAttackTypeReceiver towerAttackTypeReceiver)
+    private void Construct(TowerAttackTypeHolder towerAttackTypeHolder,SelectedTowerReceiver selectedTowerReceiver)
     {
-        _towerAttackTypeReceiver = towerAttackTypeReceiver;
+        _selectedTowerReceiver = selectedTowerReceiver;
         _towerAttackTypeHolder = towerAttackTypeHolder;
         
         //Not necessary for init process, every tower has own default attackTypes defined at BaseTower.cs
@@ -33,6 +33,6 @@ public class TowerAttackTypeSelect : AbstractButtonListener
     private void ChangeAttackType()
     {
         SelectedAttackType = _towerAttackTypeHolder.AttackTypes[(int)_attackTypeEnum];
-        _towerAttackTypeReceiver.SelectedTower.AttackType = SelectedAttackType;
+        _selectedTowerReceiver.SelectedTower.AttackType = SelectedAttackType;
     }
 }

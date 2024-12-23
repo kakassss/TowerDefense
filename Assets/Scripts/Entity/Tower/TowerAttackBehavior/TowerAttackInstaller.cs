@@ -9,6 +9,6 @@ public class TowerAttackInstaller : MonoInstaller
         Container.Bind<BaseTowerAttack>().AsSingle().NonLazy();
 
         Container.Bind<TowerAttackTypeHolder>().AsSingle().NonLazy();
-        Container.Bind<TowerAttackTypeReceiver>().AsSingle().NonLazy();
+        Container.Bind<SelectedTowerReceiver>().AsSingle().NonLazy();
     }
 }

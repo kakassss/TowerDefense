@@ -40,10 +40,7 @@ public class CellManager
     
     private Utils _utils;
 
-    private List<Cell> _activeCells = new List<Cell>();
-    private List<int> _activeColumns = new List<int>();
-    private List<Column> _columns = new List<Column>();
-    private List<Column> _activeColumns2 = new List<Column>();
+    private List<Column> _activeColumns = new List<Column>();
     
     public Grid<Cell>[,] Grid => _grid;
     public int Width => _width;
@@ -70,10 +67,10 @@ public class CellManager
             }
         }
 
-        for (int i = 0; i < _height; i++)
-        {
-            _columns.Add(new Column(i, 0));
-        }
+        // for (int i = 0; i < _height; i++)
+        // {
+        //     _columns.Add(new Column(i, 0));
+        // }
         
         //GridIndexX -> Row
         //GridIndexZ -> Column
@@ -108,10 +105,10 @@ public class CellManager
             }
         }
         
-        for (int i = 0; i < _height; i++)
-        {
-            _columns.Add(new Column(i, 0));
-        }
+        // for (int i = 0; i < _height; i++)
+        // {
+        //     _columns.Add(new Column(i, 0));
+        // }
 
         for (int i = 0; i < _grid.GetLength(0); i++)
         {
@@ -142,27 +139,6 @@ public class CellManager
     }
     public List<Column> GetActiveColumnsStruct()
     {
-        _activeColumns2.Clear();
-
-        for (int i = 0; i < _grid.GetLength(0); i++)
-        {
-            for (int j = 0; j < _grid.GetLength(1); j++)
-            {
-                if (_grid[i, j].Slot.IsFull)
-                {
-                    if(_activeColumns2.Contains(new Column(j,0))) continue;
-                    _activeColumns2.Add(new Column(j,0));
-                    
-                    
-                    //break; // break current inner loop and allows the outer loop to proceed to next iteration
-                }   
-            }
-        }
-        //Debug.Log("_activeColumns2  " + _activeColumns2.Count);
-        return _activeColumns2;
-    }
-    public List<int> GetActiveColumns()
-    {
         _activeColumns.Clear();
 
         for (int i = 0; i < _grid.GetLength(0); i++)
@@ -171,16 +147,36 @@ public class CellManager
             {
                 if (_grid[i, j].Slot.IsFull)
                 {
-                    if(_activeColumns.Contains(j)) continue;
-                    //Debug.Log(j + " Current grid column ");
-                    _activeColumns.Add(j);
+                    if(_activeColumns.Contains(new Column(j,0))) continue;
+                    _activeColumns.Add(new Column(j,0));
+                    
+                    
                     //break; // break current inner loop and allows the outer loop to proceed to next iteration
                 }   
             }
         }
-        Debug.Log("_activeColumns " + _activeColumns.Count);
+        
         return _activeColumns;
     }
+    // public List<int> GetActiveColumns()
+    // {
+    //     _activeColumns.Clear();
+    //
+    //     for (int i = 0; i < _grid.GetLength(0); i++)
+    //     {
+    //         for (int j = 0; j < _grid.GetLength(1); j++)
+    //         {
+    //             if (_grid[i, j].Slot.IsFull)
+    //             {
+    //                 if(_activeColumns.Contains(j)) continue;
+    //                 
+    //                 _activeColumns.Add(j);
+    //             }   
+    //         }
+    //     }
+    //     Debug.Log("_activeColumns " + _activeColumns.Count);
+    //     return _activeColumns;
+    // }
     
     
     //Use after GetActiveColumns function
@@ -206,7 +202,7 @@ public class CellManager
     
     public Cell GetFrontCellAtActiveColumn2(int columnIndex)
     {
-        if(_activeColumns2.Count <= 0) return null;
+        if(_activeColumns.Count <= 0) return null;
         return _grid[Height-1, columnIndex].Slot;
     }
     

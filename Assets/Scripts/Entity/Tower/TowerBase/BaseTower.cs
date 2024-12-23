@@ -6,6 +6,8 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
     public bool CanGizmos;
     public BaseTowerAttack Attack { get; private set;}
     public BaseHealth Health { get; private set;}
+
+    public BaseTowerAttackSO AttackStats => _towerAttackSo;
     
     public ITargetToEnemy AttackType;
     
