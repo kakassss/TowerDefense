@@ -41,10 +41,7 @@ public class EnemyWavesManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            //ActiveCellWays();
             Spawner().Forget();
-            //var path = _enemyWavesPathFinding.GetCalculatedPowerSizeSpawnPoints(_spawnPointOffset);
-            //Debug.Log("ChoosenPath " + path);
         }
     }
 
@@ -60,7 +57,6 @@ public class EnemyWavesManager : MonoBehaviour
         if(_defaultCellGizmos.CanDrawGizmos) _defaultCellGizmos.DrawGizmos(Color.yellow); // default open cell gizmos
         if(_enemyWavesPathFinding == null) return;
         if(_enemyWavesPathFinding.CalculatedSpawnPoint == Vector3.zero) return;
-        
         Gizmos.color = Color.green;
         Gizmos.DrawCube(_enemyWavesPathFinding.CalculatedSpawnPoint,Vector3.one);
         
@@ -81,7 +77,6 @@ public class EnemyWavesManager : MonoBehaviour
                     for (int i = 0; i < wave.Count; i++)
                     {
                         var path = _enemyWavesPathFinding.GetCalculatedPowerSizeSpawnPoints(_spawnPointOffset);
-                        Debug.Log("ChoosenPath " + path);
                         _enemyPool.GetObjectFromPool(wave.EnemyID,path);
                         await UniTask.WaitForSeconds(wave.Rate);
                     }

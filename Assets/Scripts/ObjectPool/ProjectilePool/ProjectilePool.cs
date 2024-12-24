@@ -10,11 +10,11 @@ public class ProjectilePool : SingleBaseObjectPool<BaseProjectile>, IDisposable
     {
         _projectilePoolEvent = projectilePoolEvent;
         
-        _projectilePoolEvent.AddDeactivatedListener(ReturnObjectsToPool);
+        _projectilePoolEvent.OnProjectileDeactivated += ReturnObjectsToPool;
     }
 
     public void Dispose()
     {
-        _projectilePoolEvent.RemoveDeactivatedListener(ReturnObjectsToPool);
+        _projectilePoolEvent.OnProjectileDeactivated -= ReturnObjectsToPool;
     }
 }

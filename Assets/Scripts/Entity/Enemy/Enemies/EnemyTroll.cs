@@ -1,4 +1,3 @@
-using Random = UnityEngine.Random;
 
 public class EnemyTroll : BaseEnemy
 {
@@ -13,8 +12,5 @@ public class EnemyTroll : BaseEnemy
         base.SetEnemyStats();
     }
 
-    private void Update()
-    {
-        _movementUtils.TranslateForward(Transform,_baseEnemyDataSo.MovementSpeed * Random.Range(1,3));
-    }
+    
 }

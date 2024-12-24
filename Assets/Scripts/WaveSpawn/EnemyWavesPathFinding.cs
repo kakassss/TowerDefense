@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Profiling;
 using UnityEngine;
+using UnityEngine.Profiling;
 using Random = UnityEngine.Random;
 
 public class EnemyWavesPathFinding
@@ -11,8 +13,7 @@ public class EnemyWavesPathFinding
     
     private List<Column> _allColumnsPowerSize = new List<Column>();
     private List<Column> _columnsPowerSizeSorted = new List<Column>();
-    
-   
+    private IOrderedEnumerable<Column> _shuffleList;
     
     private List<Vector3> _calculatedSpawnPoints = new List<Vector3>();
     private CellManager _cellManager;
@@ -28,11 +29,11 @@ public class EnemyWavesPathFinding
     {
         _calculatedSpawnPoints.Clear();
         
-        var activeColumns = _cellManager.GetActiveColumns();
+        var activeColumns = _cellManager.GetActiveColumnsStruct();
 
         foreach (var activeColumn in activeColumns)
         {
-            var cell = _cellManager.GetFrontCellAtActiveColumn(activeColumn);
+            var cell = _cellManager.GetFrontCellAtActiveColumn(activeColumn.Index);
             Debug.Log("active column selected cell " + cell.Name);
             _calculatedSpawnPoints.Add(_cellManager.GetCellMidPointPositionXZ(cell.GridIndexX,cell.GridIndexZ) + spawnPointOffset);
         }
@@ -128,23 +129,21 @@ public class EnemyWavesPathFinding
         return CalculatedSpawnPoint;
     }
 
-    private IOrderedEnumerable<Column> _shuffleList;
     private Vector3 CalculateSpawnPoint2(List<Column> columnList, Vector3 spawnPointOffset)
     {
+        //Profiler.BeginSample("SpawnPoint");
         var random = Random.Range(0, 100);
-
-        System.Random random2 = new System.Random();
         
+        System.Random random2 = new System.Random();
         _shuffleList = columnList.OrderBy(c => random2.Next());
-        Debug.Log("onur ");
         foreach (var column in _shuffleList)
         {
             if (random <= column.ColumnTotalPower)// column value is spawn rate
             {
-                Debug.Log("onur ran " + random + " "  + column.Index);
                 return GetColumnSpawnPoint(column.Index) + spawnPointOffset;
             }
         }
+        //Profiler.EndSample();
         return Vector3.zero;
     }
 }

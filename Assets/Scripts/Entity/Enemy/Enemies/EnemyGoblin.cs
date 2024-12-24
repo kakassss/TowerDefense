@@ -1,6 +1,4 @@
 ﻿
-using Random = UnityEngine.Random;
-
 public class EnemyGoblin : BaseEnemy
 {
     protected override void Construct(EnemyPoolEvent enemyPoolEvent, MovementUtils movementUtils)
@@ -13,9 +11,5 @@ public class EnemyGoblin : BaseEnemy
     {
         base.SetEnemyStats();
     }
-
-    private void Update()
-    {
-        _movementUtils.TranslateForward(Transform,_baseEnemyDataSo.MovementSpeed * Random.Range(1,3));
-    }
+    
 }

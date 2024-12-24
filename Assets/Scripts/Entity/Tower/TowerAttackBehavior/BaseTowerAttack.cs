@@ -21,15 +21,15 @@ public class BaseTowerAttack
         return distance <= towerAttackSo.Range;
     }
     
-    public void AttackRate(UnityAction<float> attackAction, IEnemy enemy, Transform towerAimPoint,BaseTowerAttackSO towerAttackSo)
+    public void AttackRate(IEnemy enemy, Transform towerAimPoint,BaseTowerAttackSO towerAttackSo)
     {
         _fireRateTemp += Time.deltaTime;
         
         if (_fireRateTemp > towerAttackSo.FireRate)
         {
-            _projectilePoolEvent?.FireActivate(enemy.Transform.position,towerAimPoint);
-            _projectilePool.GetAvailableObject().transform.position = towerAimPoint.position;
-            attackAction?.Invoke(towerAttackSo.Damage);
+            // Send data to projectile
+            _projectilePoolEvent.OnProjectileEnable?.Invoke(enemy.Transform.position,towerAimPoint,enemy,towerAttackSo.Damage);
+            _projectilePool.GetAvailableObject().transform.position = towerAimPoint.position; // Projectile Spawn at certain position
             _fireRateTemp = 0;
         }
     }

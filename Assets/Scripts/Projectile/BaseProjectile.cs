@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Zenject;
 
@@ -10,8 +9,11 @@ public class BaseProjectile : MonoBehaviour
     [SerializeField] private BaseProjectileDataSO _baseProjectileData;
     
     private ProjectilePoolEvent _projectilePoolEvent;
-   
+    
     private Vector3 _direction;
+
+    private float _damage;
+    private IEnemy _targetEnemy;
     private Vector3 _enemyPosition;
     private Transform _spawnPosition;
     
@@ -19,19 +21,27 @@ public class BaseProjectile : MonoBehaviour
     private void Construct(ProjectilePoolEvent projectilePoolEvent)
     {
         _projectilePoolEvent = projectilePoolEvent;
-        
-        _projectilePoolEvent.AddProjectileEnable(GetProjectileData);
+
+        _projectilePoolEvent.OnProjectileEnable += GetProjectileData;
+        //_projectilePoolEvent.AddProjectileEnable(GetProjectileData);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (_targetEnemy != null)
+        {
+            _targetEnemy.Health.Damage(_damage);
+        }
+        
         this.gameObject.SetActive(false);
     }
 
-    private void GetProjectileData(Vector3 targetDirection,Transform spawnPosition)
+    private void GetProjectileData(Vector3 targetDirection,Transform spawnPosition, IEnemy targetEnemy, float damage)
     {
         _enemyPosition = targetDirection;
         _spawnPosition = spawnPosition;
+        _targetEnemy = targetEnemy;
+        _damage = damage;
     }
 
     private void OnEnable()
@@ -64,7 +74,8 @@ public class BaseProjectile : MonoBehaviour
     }
     private void OnDisable()
     {
-        _projectilePoolEvent.FireDeactivated(this);
+        _projectilePoolEvent.OnProjectileDeactivated?.Invoke(this);
+        //_projectilePoolEvent.FireDeactivated(this);
         
         _enemyPosition = Vector3.zero;
         _rigidbody.angularVelocity = Vector3.zero;
@@ -76,6 +87,7 @@ public class BaseProjectile : MonoBehaviour
 
     private void OnDestroy()
     {
-        _projectilePoolEvent.RemoveProjectileEnable(GetProjectileData);
+        _projectilePoolEvent.OnProjectileEnable -= GetProjectileData;
+        //_projectilePoolEvent.RemoveProjectileEnable(GetProjectileData);
     }
 }

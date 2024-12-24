@@ -55,7 +55,7 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
         _quaternionUtils.
             AimToTarget(_towerAimHead,_targetEnemy.Transform,_towerAttackSo.RotateSpeed);
         Attack.
-            AttackRate(_targetEnemy.Health.Damage,_targetEnemy,_towerAimPoint,_towerAttackSo);
+            AttackRate(_targetEnemy,_towerAimPoint,_towerAttackSo);
     }
     
     void OnDrawGizmos()

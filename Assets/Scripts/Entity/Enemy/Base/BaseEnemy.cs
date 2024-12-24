@@ -25,7 +25,7 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
     [SerializeField] protected BaseEnemyDataSO _baseEnemyDataSo;
     
     private EnemyPoolEvent _enemyPoolEvent;
-    protected MovementUtils _movementUtils;
+    private MovementUtils _movementUtils;
     
     [Inject]
     protected virtual void Construct(EnemyPoolEvent enemyPoolEvent, MovementUtils movementUtils)
@@ -46,6 +46,16 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
         {
             Death = this
         };
+    }
+
+    protected virtual void Update()
+    {
+        Movement();
+    }
+
+    private void Movement()
+    {
+        _movementUtils.TranslateForward(Transform,_baseEnemyDataSo.MovementSpeed);
     }
     
     private void OnDisable()
