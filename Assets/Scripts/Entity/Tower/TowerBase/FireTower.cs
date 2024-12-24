@@ -5,9 +5,4 @@ public class FireTower : BaseTower
     {
         base.SetTowerStats();
     }
-
-    private void Update()
-    {
-        AttackAction();
-    }
 }

@@ -6,7 +6,12 @@ public class TowerAttackInstaller : MonoInstaller
     {
         Container.BindInterfacesAndSelfTo<TowerAttackMostHp>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<TowerAttackClosest>().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<TowerSphereRange>().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<TowerBoxRange>().AsSingle().NonLazy();
+        
         Container.Bind<BaseTowerAttack>().AsSingle().NonLazy();
+        
+        
 
         Container.Bind<TowerAttackTypeHolder>().AsSingle().NonLazy();
         Container.Bind<SelectedTowerReceiver>().AsSingle().NonLazy();

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
 public class BaseTowerAttack
 {
@@ -14,13 +13,7 @@ public class BaseTowerAttack
         _projectilePool = projectilePool;
         _projectilePoolEvent = projectilePoolEvent;
     }
-    
-    public bool InRange(Transform enemyPosition,Transform towerPosition,BaseTowerAttackSO towerAttackSo)
-    {
-        float distance = Vector3.Distance(enemyPosition.position, towerPosition.position);
-        return distance <= towerAttackSo.Range;
-    }
-    
+
     public void AttackRate(IEnemy enemy, Transform towerAimPoint,BaseTowerAttackSO towerAttackSo)
     {
         _fireRateTemp += Time.deltaTime;
