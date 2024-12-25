@@ -21,7 +21,7 @@ public class BaseEnemyAttack : IEnemyAttack
     {
         if(InRange(_targetPosition) == false) return;
         
-        AttackRate(_targetHealth.Damage,AttackSO.AttackPower);
+        AttackRate(_targetHealth.Damage,AttackSO);
     }
 
     private bool InRange(Transform targetPosition)
@@ -29,14 +29,14 @@ public class BaseEnemyAttack : IEnemyAttack
         return targetPosition.position.magnitude <= AttackSO.Range;
     }
 
-    private void AttackRate(UnityAction<float> attackAction,float damage)
+    private void AttackRate(UnityAction<float,ElementType> attackAction,EnemyAttackSO attackSo)
     {
         _fireRateTemp += Time.deltaTime;
 
         if (_fireRateTemp > _fireRate)
         {
             _fireRate += Time.deltaTime;
-            attackAction?.Invoke(damage);
+            attackAction?.Invoke(attackSo.AttackPower,attackSo.AttackElement);
         }
     }
 }

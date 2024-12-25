@@ -42,7 +42,7 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
             DefenceSo = _enemyDefenceSo
         };
         Attack = new BaseEnemyAttack(_enemyAttackSo);
-        Health = new BaseHealth(Defence.DefenceSo.Health)
+        Health = new BaseHealth(Defence.DefenceSo.Health,Defence.DefenceSo.DefenceType)
         {
             Death = this
         };
