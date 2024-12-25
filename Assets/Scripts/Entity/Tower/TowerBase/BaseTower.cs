@@ -1,13 +1,12 @@
-﻿ using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
 {
     public bool CanGizmos;
     public BaseTowerAttack Attack { get; private set;}
-    public BaseHealth Health { get; private set;}
-
+    public BaseHealth Health { get; set;}
+    
     public BaseTowerAttackSO AttackStats => _towerAttackSo;
     
     public ITargetToEnemy AttackType;
@@ -37,7 +36,7 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
         // Default attack type is attack to the closest enemy
         AttackType = _towerAttackTypeHolder.AttackTypes[(int)AttackTypeEnum.AttackClosest];
         
-        Health = new BaseHealth(100);
+        //Health = new BaseHealth(100);
     }
 
     protected void Update()

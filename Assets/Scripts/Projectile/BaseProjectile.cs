@@ -12,7 +12,8 @@ public class BaseProjectile : MonoBehaviour
     
     private Vector3 _direction;
 
-    private float _damage;
+    private float _damagePower;
+    private ElementType _damageType;
     private IEnemy _targetEnemy;
     private Vector3 _enemyPosition;
     private Transform _spawnPosition;
@@ -30,18 +31,20 @@ public class BaseProjectile : MonoBehaviour
     {
         if (_targetEnemy != null)
         {
-            _targetEnemy.Health.Damage(_damage);
+            _targetEnemy.Health.Damage(_damagePower,_damageType);
         }
         
         this.gameObject.SetActive(false);
     }
 
-    private void GetProjectileData(Vector3 targetDirection,Transform spawnPosition, IEnemy targetEnemy, float damage)
+    private void GetProjectileData(Vector3 targetDirection,Transform spawnPosition, IEnemy targetEnemy, BaseTowerAttackSO attackSo)
     {
         _enemyPosition = targetDirection;
         _spawnPosition = spawnPosition;
         _targetEnemy = targetEnemy;
-        _damage = damage;
+        
+        _damagePower = attackSo.Damage;
+        _damageType = attackSo.ElementType;
     }
 
     private void OnEnable()
@@ -56,7 +59,6 @@ public class BaseProjectile : MonoBehaviour
         _direction = (_enemyPosition - transform.position).normalized;
         
         transform.rotation = Quaternion.LookRotation(_direction);
-        
     }
 
     // Not using rigidbody to avoid Physics.Simulate() operation

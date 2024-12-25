@@ -21,7 +21,7 @@ public class BaseTowerAttack
         if (_fireRateTemp > towerAttackSo.FireRate)
         {
             // Send data to projectile
-            _projectilePoolEvent.OnProjectileEnable?.Invoke(enemy.Transform.position,towerAimPoint,enemy,towerAttackSo.Damage);
+            _projectilePoolEvent.OnProjectileEnable?.Invoke(enemy.Transform.position,towerAimPoint,enemy,towerAttackSo);
             _projectilePool.GetAvailableObject().transform.position = towerAimPoint.position; // Projectile Spawn at certain position
             _fireRateTemp = 0;
         }
