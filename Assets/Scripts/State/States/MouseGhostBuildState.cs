@@ -28,7 +28,7 @@ public class MouseGhostBuildState : MouseClickBaseState
     {
         _mouseClickStateEvents.OnTowerBuildRelease += OnTowerBuildRelease;
         _buildingInputReader.Enable();
-        Debug.Log("dettü strangingü fayv years anniversary");
+        //Debug.Log("dettü strangingü fayv years anniversary");
         //UI elementlerini açabilirsin
         //_mouseClickStateMachine.transform.position = _mouseClickStateMachine.Utils.GetValidPositionWithLayerMask();
     }
@@ -85,7 +85,7 @@ public class MouseGhostBuildState : MouseClickBaseState
                         SetMidPosOnGrid(x,z,_ghostObjectReceiver.GhostObjectBuildType());
                         return;
                     }
-                    
+                    Debug.Log("onur xd2");            
                     _ghostObjectReceiver.OnGhostMaterialGreenFire();
                 }
                 else
@@ -95,7 +95,17 @@ public class MouseGhostBuildState : MouseClickBaseState
             }
         }
 
+        Debug.Log("onur xd3");
         SetMidPosMultipleGrid();
+        
+        if (Vector3.Distance(_midPosition, _mouseClickStateMachine.Utils.GetValidPositionWithLayerMask()) <=
+            _midPosOffset)
+        {
+            _ghostObjectReceiver.GameObject.transform.position = _midPosition;
+        }
+        
+        //Set Ghost object position, if there is non full cells
+        
     }
     
     // get current cells position and calculate ghost position just for one cells
@@ -124,7 +134,19 @@ public class MouseGhostBuildState : MouseClickBaseState
             averageX += new Vector3(pos.x,0,0);
             averageZ += new Vector3(0, 0, pos.z);
         }
-        _ghostObjectReceiver.GameObject.transform.position = new Vector3(averageX.x / cellsPosition.Count, 0, averageZ.z / cellsPosition.Count);
+        //_ghostObjectReceiver.GameObject.transform.position = new Vector3(averageX.x / cellsPosition.Count, 0, averageZ.z / cellsPosition.Count);
+        _midPosition = new Vector3(averageX.x / cellsPosition.Count, 0, averageZ.z / cellsPosition.Count);
+    }
+
+    private Vector3 _midPosition;
+    private float _midPosOffset = 3f;
+    private void SetMidCell()
+    {
+        if (Vector3.Distance(_midPosition, _mouseClickStateMachine.Utils.GetValidPositionWithLayerMask()) <=
+            _midPosOffset)
+        {
+            //_ghostObjectReceiver.GameObject.transform.position = new Vector3(averageX.x / cellsPosition.Count, 0, averageZ.z / cellsPosition.Count);
+        }
     }
     
     private void OnTowerBuildRelease()
