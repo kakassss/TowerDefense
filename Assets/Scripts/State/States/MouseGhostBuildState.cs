@@ -8,7 +8,7 @@ public class MouseGhostBuildState : MouseClickBaseState
     private CellManager _cellManager;
 
     private Grid<Cell> _mouseCell;
-    private List<Cell> _buildableCells;
+    private List<Cell> _buildableCells = new List<Cell>();
     
     private BuildingInputReader _buildingInputReader;
     
@@ -64,45 +64,61 @@ public class MouseGhostBuildState : MouseClickBaseState
         //_cellManager.GetXZ(_utils.GetValidPositionWithLayerMask(),out var X, out var Z);
         //_cellManager.GetWorldPosition(X, Z);
     }
+
+    private (int x, int z) XZTuple;
     
     private void CalculateGridPos()
     {
-        _cellManager.GetXZ(_mouseClickStateMachine.Utils.GetValidPositionWithLayerMask(),out var x, out var z);
-
-        _buildableCells = new List<Cell>();
-
-        for (int i = 0; i < _ghostObjectReceiver.GridIndexX; i++) // object grid size for x
+        if (_buildableCells != null)
         {
-            for (int j = 0; j < _ghostObjectReceiver.GridIndexZ; j++) // object grid size for z
+            
+            
+            if (Vector3.Distance(_midPosition, _mouseClickStateMachine.Utils.GetValidPositionWithLayerMask()) <=
+                _midPosOffset)
             {
-                if ( x + i >= 0 && z + j >= 0 && x + i < _cellManager.Width && z + j < _cellManager.Height)
-                {
-                    var buildCell = _cellManager.Grid[x + i, z + j].Slot;
-                    _buildableCells.Add(buildCell);
-                    if (buildCell.IsFull)
-                    {
-                        _ghostObjectReceiver.OnGhostMaterialRedFire();
-                        SetMidPosOnGrid(x,z,_ghostObjectReceiver.GhostObjectBuildType());
-                        return;
-                    }
-                    Debug.Log("onur xd2");            
-                    _ghostObjectReceiver.OnGhostMaterialGreenFire();
-                }
-                else
-                {
-                    _ghostObjectReceiver.OnGhostMaterialRedFire(); // if there is a cell on out of border position
-                }
+                _ghostObjectReceiver.GameObject.transform.position = _midPosition;
+                Debug.Log("onur xd3 " +
+                          Vector3.Distance(_midPosition, _mouseClickStateMachine.Utils.GetValidPositionWithLayerMask()));
+            }
+            else
+            {
+                CalculateGridPos();
             }
         }
 
-        Debug.Log("onur xd3");
-        SetMidPosMultipleGrid();
-        
-        if (Vector3.Distance(_midPosition, _mouseClickStateMachine.Utils.GetValidPositionWithLayerMask()) <=
-            _midPosOffset)
+        void CalculateGridPos()
         {
-            _ghostObjectReceiver.GameObject.transform.position = _midPosition;
+            XZTuple = _cellManager.GetXZ(_mouseClickStateMachine.Utils.GetValidPositionWithLayerMask(),XZTuple.x, XZTuple.z);
+
+            _buildableCells.Clear();
+
+            for (int i = 0; i < _ghostObjectReceiver.GridIndexX; i++) // object grid size for x
+            {
+                for (int j = 0; j < _ghostObjectReceiver.GridIndexZ; j++) // object grid size for z
+                {
+                    if ( XZTuple.x + i >= 0 && XZTuple.z + j >= 0 && XZTuple.x + i < _cellManager.Width && XZTuple.z + j < _cellManager.Height)
+                    {
+                        var buildCell = _cellManager.Grid[XZTuple.x + i, XZTuple.z + j].Slot;
+                        _buildableCells.Add(buildCell);
+                        if (buildCell.IsFull)
+                        {
+                            _ghostObjectReceiver.OnGhostMaterialRedFire();
+                            SetMidPosOnGrid(XZTuple.x,XZTuple.z,_ghostObjectReceiver.GhostObjectBuildType());
+                            return;
+                        }
+                        Debug.Log("onur xd2");            
+                        _ghostObjectReceiver.OnGhostMaterialGreenFire();
+                    }
+                    else
+                    {
+                        _ghostObjectReceiver.OnGhostMaterialRedFire(); // if there is a cell on out of border position
+                    }
+                }
+            }
+
+            SetMidPosMultipleGrid();
         }
+        
         
         //Set Ghost object position, if there is non full cells
         
