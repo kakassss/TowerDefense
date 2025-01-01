@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using Zenject;
 using Random = UnityEngine.Random;
 
-public struct Column : IEquatable<Column>
+public struct Column
 {
     public int Index;
     public int ColumnTotalPower;
@@ -13,48 +16,42 @@ public struct Column : IEquatable<Column>
         Index = index;
         ColumnTotalPower = columnTotalPower;
     }
-
-    public bool Equals(Column other)
-    {
-        return Index == other.Index && ColumnTotalPower == other.ColumnTotalPower;
-    }
-
-    public override bool Equals(object obj)
-    {
-        return obj is Column other && Equals(other);
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Index, ColumnTotalPower);
-    }
+    
 }
 
 public class CellManager
 {
+    #region PrivateVariables
+    
     private Grid<Cell>[,] _grid;
     private int _width;
     private int _height;
     private float _cellSize;
     private Vector3 _originPosition;
+    #endregion
     
     private Utils _utils;
-
     private List<Column> _activeColumns = new List<Column>();
-    
+
+    #region Properties
     public Grid<Cell>[,] Grid => _grid;
     public int Width => _width;
     public int Height => _height;
     public float CellSize => _cellSize;
     public Vector3 OriginPosition => _originPosition;
+    #endregion
     
-    public CellManager(int width, int height,float cellSize, Vector3 originPosition)
+    private IInstantiator _instantiator;
+    private int randomer;
+    #region Constructer
+    public CellManager(int width, int height,float cellSize, Vector3 originPosition, GameObject gridPrefab, IInstantiator instantiator, Transform parent)
     {
         _grid = new Grid<Cell>[width, height];
         _width = width;
         _height = height;
         _cellSize = cellSize;
         _originPosition = originPosition;
+        _instantiator = instantiator;
         
         for (int i = 0; i < _grid.GetLength(0); i++)
         {
@@ -62,15 +59,27 @@ public class CellManager
             {
                 _grid[i, j] = new Grid<Cell>
                 {
-                    Slot = new Cell(i,j,j,i,false, CellPower.Normal)
+                    Slot = new Cell(i,j,false, ElementType.Normal)
                 };
+                    
+                var text =  _instantiator.InstantiatePrefab(gridPrefab, GetWorldPosition(i, j), Quaternion.identity, parent);
+                text.transform.position += new Vector3(cellSize/2, 0.15f, cellSize/2);
+                text.GetComponentInChildren<TextMeshProUGUI>().text = i + "," + j;
+                if (randomer == 0)
+                {
+                    randomer = 1;
+                    text.GetComponentInChildren<Image>().color = Color.blue;
+                    continue;
+                }
+                
+                if (randomer == 1)
+                {
+                    text.GetComponentInChildren<Image>().color = Color.green;
+                    randomer = 0;
+                    continue;
+                }
             }
         }
-
-        // for (int i = 0; i < _height; i++)
-        // {
-        //     _columns.Add(new Column(i, 0));
-        // }
         
         //GridIndexX -> Row
         //GridIndexZ -> Column
@@ -84,40 +93,36 @@ public class CellManager
         //     Debug.Log(_grid[0,i].Slot.Name);
         // }
     }
-    public CellManager(int width, int height,float cellSize, Vector3 originPosition,Utils utils)
-    {
-        _grid = new Grid<Cell>[width, height];
-        _width = width;
-        _height = height;
-        _cellSize = cellSize;
-        _originPosition = originPosition;
-        
-        _utils = utils;
-        
-        for (int i = 0; i < _grid.GetLength(0); i++)
-        {
-            for (int j = 0; j < _grid.GetLength(1); j++)
-            {
-                _grid[i, j] = new Grid<Cell>
-                {
-                    Slot = new Cell(i,j,i,j,false, CellPower.Normal)
-                };
-            }
-        }
-        
-        // for (int i = 0; i < _height; i++)
-        // {
-        //     _columns.Add(new Column(i, 0));
-        // }
-
-        for (int i = 0; i < _grid.GetLength(0); i++)
-        {
-            for (int j = 0; j < _grid.GetLength(1); j++)
-            {
-                Debug.Log(_grid[i,j].Slot  + " Current grid column " + _grid[i,j].Slot.Column);
-            }
-        }
-    }
+    // public CellManager(int width, int height,float cellSize, Vector3 originPosition,Utils utils)
+    // {
+    //     _grid = new Grid<Cell>[width, height];
+    //     _width = width;
+    //     _height = height;
+    //     _cellSize = cellSize;
+    //     _originPosition = originPosition;
+    //     
+    //     _utils = utils;
+    //     
+    //     for (int i = 0; i < _grid.GetLength(0); i++)
+    //     {
+    //         for (int j = 0; j < _grid.GetLength(1); j++)
+    //         {
+    //             _grid[i, j] = new Grid<Cell>
+    //             {
+    //                 Slot = new Cell(i,j,false, ElementType.Normal)
+    //             };
+    //         }
+    //     }
+    //     
+    //     // for (int i = 0; i < _grid.GetLength(0); i++)
+    //     // {
+    //     //     for (int j = 0; j < _grid.GetLength(1); j++)
+    //     //     {
+    //     //         Debug.Log(_grid[i,j].Slot  + " Current grid column " + _grid[i,j].Slot.Column);
+    //     //     }
+    //     // }
+    // }
+    #endregion
     
     public Vector3 GetWorldPosition(int x, int z)
     {
@@ -130,6 +135,12 @@ public class CellManager
         z = Mathf.FloorToInt((worldPos- _originPosition).z/ _cellSize);
     }
     
+    public (int X,int Z) GetXZ(Vector3 worldPos)
+    {
+        return (Mathf.FloorToInt((worldPos - _originPosition).x / _cellSize), 
+            Mathf.FloorToInt((worldPos - _originPosition).z / _cellSize));
+    }
+    
     public bool CheckCellState(Vector3 worldPos)
     {
         var cell = GetCellAtIndex(worldPos);
@@ -140,44 +151,23 @@ public class CellManager
     public List<Column> GetActiveColumnsStruct()
     {
         _activeColumns.Clear();
-
-        for (int i = 0; i < _grid.GetLength(0); i++)
+        
+        // Iterate through columns first (j)
+        for (int j = 0; j < _grid.GetLength(1); j++) 
         {
-            for (int j = 0; j < _grid.GetLength(1); j++)
+            // Then check each row in that column (i)
+            for (int i = 0; i < _grid.GetLength(0); i++)
             {
                 if (_grid[i, j].Slot.IsFull)
                 {
-                    if(_activeColumns.Contains(new Column(j,0))) continue;
-                    _activeColumns.Add(new Column(j,0));
-                    
-                    
-                    //break; // break current inner loop and allows the outer loop to proceed to next iteration
-                }   
+                    _activeColumns.Add(new Column(j, 0));
+                    break; // Exit inner loop once we find a full cell
+                }
             }
         }
         
         return _activeColumns;
     }
-    // public List<int> GetActiveColumns()
-    // {
-    //     _activeColumns.Clear();
-    //
-    //     for (int i = 0; i < _grid.GetLength(0); i++)
-    //     {
-    //         for (int j = 0; j < _grid.GetLength(1); j++)
-    //         {
-    //             if (_grid[i, j].Slot.IsFull)
-    //             {
-    //                 if(_activeColumns.Contains(j)) continue;
-    //                 
-    //                 _activeColumns.Add(j);
-    //             }   
-    //         }
-    //     }
-    //     Debug.Log("_activeColumns " + _activeColumns.Count);
-    //     return _activeColumns;
-    // }
-    
     
     //Use after GetActiveColumns function
     //These functions are just giving active column, not indivual cell
@@ -195,12 +185,6 @@ public class CellManager
     
     //Find the front cell at selected column
     public Cell GetFrontCellAtActiveColumn(int columnIndex)
-    {
-        if(_activeColumns.Count <= 0) return null;
-        return _grid[Height-1, columnIndex].Slot;
-    }
-    
-    public Cell GetFrontCellAtActiveColumn2(int columnIndex)
     {
         if(_activeColumns.Count <= 0) return null;
         return _grid[Height-1, columnIndex].Slot;
