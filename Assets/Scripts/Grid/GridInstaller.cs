@@ -7,10 +7,11 @@ public class GridInstaller : MonoInstaller
     [SerializeField] private int height;
     [SerializeField] private float cellSize;
     [SerializeField] private Vector3 originPos;
+    [SerializeField] private GameObject gridText;
     
     public override void InstallBindings()
     {
-        Container.Bind<CellManager>().AsSingle().WithArguments(width,height,cellSize,originPos).NonLazy();
+        Container.Bind<CellManager>().AsSingle().WithArguments(width,height,cellSize,originPos,gridText,transform).NonLazy();
         Container.Bind<CellPowerManager>().AsSingle().NonLazy();
     }
 }
