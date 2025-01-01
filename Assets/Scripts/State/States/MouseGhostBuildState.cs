@@ -151,18 +151,12 @@ public class MouseGhostBuildState : MouseClickBaseState
                     }
                 }
             }
-            _cellsSet = _buildableCells.ToHashSet();
-            Debug.Log("asdasd " + _cellsSet.Count);
-            foreach (var cell in _cellsSet)
-            {
-                Debug.Log("sadasd " + cell.GridIndexX + " " + cell.GridIndexZ);
-            }
             
-            if (_buildableCells.Count != 2 && _buildableCells.Count != 1)
-            {
-                SetMidPosMultipleGrid();
-                _ghostObjectReceiver.GameObject.transform.position = _midPosition;
-            }
+            _cellsSet = _buildableCells.ToHashSet();
+            
+            SetMidPosMultipleGrid();
+            _ghostObjectReceiver.GameObject.transform.position = _midPosition;
+            
         }
         
         
