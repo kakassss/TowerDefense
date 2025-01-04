@@ -1,18 +1,21 @@
+using System;
 
 public class GameCurrency
 {
-    public int coins { get; private set; }
+    public Action OnCurrencyChanged;
+    public int Coins { get; private set; }
     
     public GameCurrency(int startingCoins = 100)
     {
-        coins = startingCoins;
+        Coins = startingCoins;
     }
     
     public void AddCoins(int amount)
     {
         if (amount > 0)
         {
-            coins += amount;
+            Coins += amount;
+            OnCurrencyChanged?.Invoke();
         }
     }
     
@@ -20,9 +23,10 @@ public class GameCurrency
     {
         if (amount <= 0) return false;
         
-        if (coins >= amount)
+        if (Coins >= amount)
         {
-            coins -= amount;
+            Coins -= amount;
+            OnCurrencyChanged?.Invoke();
             return true;
         }
         
@@ -31,11 +35,11 @@ public class GameCurrency
     
     public bool HasEnoughCoins(int amount)
     {
-        return coins >= amount;
+        return Coins >= amount;
     }
     
     public int GetCurrentCoins()
     {
-        return coins;
+        return Coins;
     }
 }

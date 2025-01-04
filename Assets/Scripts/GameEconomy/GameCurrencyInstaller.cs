@@ -1,6 +1,6 @@
 using Zenject;
 
-public class CurrencyInstaller : MonoInstaller
+public class GameCurrencyInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
