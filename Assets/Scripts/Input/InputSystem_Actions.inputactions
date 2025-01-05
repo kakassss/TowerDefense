@@ -30,7 +30,7 @@
             ]
         },
         {
-            "name": "InputMovement",
+            "name": "InputMovementKeyboard",
             "id": "e01c3a29-8815-4cff-b088-f027b5d109d8",
             "actions": [
                 {

@@ -1,6 +1,5 @@
-﻿using Zenject;
-
-public class BuildSelectManager
+﻿
+public class BuildObjectReceiver
 {
     private BaseObject _currentGridEntitySO;
 
@@ -8,8 +7,7 @@ public class BuildSelectManager
 
     private BuildingInputEvents _buildingInputEvents;
 
-    [Inject]
-    private void Construct(BuildingInputEvents buildingInputEvents)
+    public BuildObjectReceiver(BuildingInputEvents buildingInputEvents)
     {
         _buildingInputEvents = buildingInputEvents;
         

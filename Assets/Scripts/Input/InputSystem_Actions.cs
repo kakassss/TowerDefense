@@ -52,7 +52,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""InputMovement"",
+            ""name"": ""InputMovementKeyboard"",
             ""id"": ""e01c3a29-8815-4cff-b088-f027b5d109d8"",
             ""actions"": [
                 {
@@ -218,9 +218,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         // InputBuild
         m_InputBuild = asset.FindActionMap("InputBuild", throwIfNotFound: true);
         m_InputBuild_Building = m_InputBuild.FindAction("Building", throwIfNotFound: true);
-        // InputMovement
-        m_InputMovement = asset.FindActionMap("InputMovement", throwIfNotFound: true);
-        m_InputMovement_CameraMovement = m_InputMovement.FindAction("CameraMovement", throwIfNotFound: true);
+        // InputMovementKeyboard
+        m_InputMovementKeyboard = asset.FindActionMap("InputMovementKeyboard", throwIfNotFound: true);
+        m_InputMovementKeyboard_CameraMovement = m_InputMovementKeyboard.FindAction("CameraMovement", throwIfNotFound: true);
         // InputIdle
         m_InputIdle = asset.FindActionMap("InputIdle", throwIfNotFound: true);
         m_InputIdle_Select = m_InputIdle.FindAction("Select", throwIfNotFound: true);
@@ -229,7 +229,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     ~@InputSystem_Actions()
     {
         UnityEngine.Debug.Assert(!m_InputBuild.enabled, "This will cause a leak and performance issues, InputSystem_Actions.InputBuild.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_InputMovement.enabled, "This will cause a leak and performance issues, InputSystem_Actions.InputMovement.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_InputMovementKeyboard.enabled, "This will cause a leak and performance issues, InputSystem_Actions.InputMovementKeyboard.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_InputIdle.enabled, "This will cause a leak and performance issues, InputSystem_Actions.InputIdle.Disable() has not been called.");
     }
 
@@ -335,51 +335,51 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     }
     public InputBuildActions @InputBuild => new InputBuildActions(this);
 
-    // InputMovement
-    private readonly InputActionMap m_InputMovement;
-    private List<IInputMovementActions> m_InputMovementActionsCallbackInterfaces = new List<IInputMovementActions>();
-    private readonly InputAction m_InputMovement_CameraMovement;
-    public struct InputMovementActions
+    // InputMovementKeyboard
+    private readonly InputActionMap m_InputMovementKeyboard;
+    private List<IInputMovementKeyboardActions> m_InputMovementKeyboardActionsCallbackInterfaces = new List<IInputMovementKeyboardActions>();
+    private readonly InputAction m_InputMovementKeyboard_CameraMovement;
+    public struct InputMovementKeyboardActions
     {
         private @InputSystem_Actions m_Wrapper;
-        public InputMovementActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @CameraMovement => m_Wrapper.m_InputMovement_CameraMovement;
-        public InputActionMap Get() { return m_Wrapper.m_InputMovement; }
+        public InputMovementKeyboardActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @CameraMovement => m_Wrapper.m_InputMovementKeyboard_CameraMovement;
+        public InputActionMap Get() { return m_Wrapper.m_InputMovementKeyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(InputMovementActions set) { return set.Get(); }
-        public void AddCallbacks(IInputMovementActions instance)
+        public static implicit operator InputActionMap(InputMovementKeyboardActions set) { return set.Get(); }
+        public void AddCallbacks(IInputMovementKeyboardActions instance)
         {
-            if (instance == null || m_Wrapper.m_InputMovementActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_InputMovementActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_InputMovementKeyboardActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_InputMovementKeyboardActionsCallbackInterfaces.Add(instance);
             @CameraMovement.started += instance.OnCameraMovement;
             @CameraMovement.performed += instance.OnCameraMovement;
             @CameraMovement.canceled += instance.OnCameraMovement;
         }
 
-        private void UnregisterCallbacks(IInputMovementActions instance)
+        private void UnregisterCallbacks(IInputMovementKeyboardActions instance)
         {
             @CameraMovement.started -= instance.OnCameraMovement;
             @CameraMovement.performed -= instance.OnCameraMovement;
             @CameraMovement.canceled -= instance.OnCameraMovement;
         }
 
-        public void RemoveCallbacks(IInputMovementActions instance)
+        public void RemoveCallbacks(IInputMovementKeyboardActions instance)
         {
-            if (m_Wrapper.m_InputMovementActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_InputMovementKeyboardActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IInputMovementActions instance)
+        public void SetCallbacks(IInputMovementKeyboardActions instance)
         {
-            foreach (var item in m_Wrapper.m_InputMovementActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_InputMovementKeyboardActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_InputMovementActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_InputMovementKeyboardActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public InputMovementActions @InputMovement => new InputMovementActions(this);
+    public InputMovementKeyboardActions @InputMovementKeyboard => new InputMovementKeyboardActions(this);
 
     // InputIdle
     private readonly InputActionMap m_InputIdle;
@@ -475,7 +475,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     {
         void OnBuilding(InputAction.CallbackContext context);
     }
-    public interface IInputMovementActions
+    public interface IInputMovementKeyboardActions
     {
         void OnCameraMovement(InputAction.CallbackContext context);
     }

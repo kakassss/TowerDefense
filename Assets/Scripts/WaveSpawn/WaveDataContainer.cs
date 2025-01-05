@@ -19,5 +19,5 @@ public class Wave
 {
     public int EnemyID;
     public int Count;
-    public float Rate;
+    [Range(0.5f,3f)] public float Rate;
 }
