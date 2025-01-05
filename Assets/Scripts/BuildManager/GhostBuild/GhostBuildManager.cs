@@ -3,7 +3,7 @@ using Zenject;
 
 public class GhostBuildManager
 {
-    private BuildSelectManager _buildSelectManager;
+    private BuildObjectReceiver _buildObjectReceiver;
     private GhostObjectReceiver _ghostObjectReceiver;
     private Utils _utils;
     private IInstantiator _instantiator;
@@ -11,12 +11,12 @@ public class GhostBuildManager
     [Inject]
     private void Construct(
           Utils utils, GhostObjectReceiver ghostObjectReceiver, IInstantiator instantiator,
-          BuildSelectManager buildSelectManager)
+          BuildObjectReceiver buildObjectReceiver)
     {
         _ghostObjectReceiver = ghostObjectReceiver;
         _utils = utils;
         _instantiator = instantiator;
-        _buildSelectManager = buildSelectManager;
+        _buildObjectReceiver = buildObjectReceiver;
     }
     
     public void BuildAction()
@@ -32,14 +32,14 @@ public class GhostBuildManager
             Object.Destroy(_ghostObjectReceiver.GameObject);
         }
         
-        if (_buildSelectManager.CurrentGridEntitySO == null)
+        if (_buildObjectReceiver.CurrentGridEntitySO == null)
         {
             Debug.LogError("Selected Entity is null");
             _ghostObjectReceiver.GhostObjectValid = false;
             return;
         }
 
-        var currentEntity = _buildSelectManager.CurrentGridEntitySO;
+        var currentEntity = _buildObjectReceiver.CurrentGridEntitySO;
         
         _ghostObjectReceiver.GridIndexX = currentEntity.X;
         _ghostObjectReceiver.GridIndexZ = currentEntity.Z;

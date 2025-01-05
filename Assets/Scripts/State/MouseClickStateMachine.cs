@@ -14,7 +14,7 @@ public class MouseClickStateMachine : StateMachine
     private PopupManager _popupManager;
     private SelectedTowerReceiver _selectedTowerReceiver;
     
-    //Readers
+    //Input Readers
     private BuildingInputReader _buildingInputReader;
     private IdleInputReader _idleInputReader;
     
@@ -37,7 +37,7 @@ public class MouseClickStateMachine : StateMachine
         _popupManager = popupManager;
         _selectedTowerReceiver = selectedTowerReceiver;
         
-        //Public constructers
+        //Public constructors
         MouseClickSelectedTowerState = new MouseClickSelectedTowerState(this,_idleInputReader,_mouseClickStateEvents,_popupManager,_selectedTowerReceiver);
         MouseGhostBuildState = new MouseGhostBuildState(this,_ghostObjectReceiver,_cellManager,_buildingInputReader,_mouseClickStateEvents);
     }

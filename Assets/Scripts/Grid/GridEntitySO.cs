@@ -21,7 +21,8 @@ public class BaseObject
     public GameObject BuildObject;
     public GhostObject GhostObject;
     public BuildType BuildType;
-
+    
+    public int BuildCost;
     [HideInInspector] public float PowerSize => X * Z;
     [Header("Power")] 
     public float AttackPower;

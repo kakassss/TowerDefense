@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MovementInputReader : InputSystem_Actions.IInputMovementActions, IDisposable,IInputActions
+public class MovementInputReader : InputSystem_Actions.IInputMovementKeyboardActions, IDisposable,IInputActions
 {
     public Vector2 Movement { get; private set; }
     
@@ -11,8 +11,8 @@ public class MovementInputReader : InputSystem_Actions.IInputMovementActions, ID
     private MovementInputReader(InputSystem inputSystem)
     {
         _inputSystem = inputSystem;
-        _inputSystem.InputSystemActions.InputMovement.SetCallbacks(this);
-        _inputSystem.InputSystemActions.InputMovement.Enable();
+        _inputSystem.InputSystemActions.InputMovementKeyboard.SetCallbacks(this);
+        _inputSystem.InputSystemActions.InputMovementKeyboard.Enable();
     }
     
     public void OnCameraMovement(InputAction.CallbackContext context)
@@ -22,21 +22,21 @@ public class MovementInputReader : InputSystem_Actions.IInputMovementActions, ID
 
     public void Enable()
     {
-        _inputSystem.InputSystemActions.InputMovement.Enable();
+        _inputSystem.InputSystemActions.InputMovementKeyboard.Enable();
     }
     
     public bool IsEnabled()
     {
-        return _inputSystem.InputSystemActions.InputMovement.enabled;
+        return _inputSystem.InputSystemActions.InputMovementKeyboard.enabled;
     }
 
     public void Disable()
     { 
-        _inputSystem.InputSystemActions.InputMovement.Disable();
+        _inputSystem.InputSystemActions.InputMovementKeyboard.Disable();
     }
     
     public void Dispose()
     {
-        _inputSystem.InputSystemActions.InputMovement.Disable();
+        _inputSystem.InputSystemActions.InputMovementKeyboard.Disable();
     }
 }

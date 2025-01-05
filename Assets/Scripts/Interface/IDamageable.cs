@@ -1,6 +1,6 @@
 ﻿public interface IDamageable
 {
-    void Damage(float value);
+    void Damage(float value, ElementType damageType);
 }
 
 public interface IDeath

@@ -1,7 +1,8 @@
+using System;
 using UnityEngine;
 using Zenject;
 
-public class CameraMovement : MonoBehaviour
+public class CameraMovement : MonoBehaviour, IUpdate
 {
     [SerializeField] private float horizontalSpeed;
     [SerializeField] private float verticalSpeed;
@@ -11,16 +12,19 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private GameObject movementRelativeGO;
 
     private MovementInputReader _movementInputReader;
-    private BuildingInputReader _buildingInputReader;
+    private UpdateProvider _updateProvider;
 
     [Inject]
-    private void Construct(MovementInputReader movementInputReader)
+    private void Construct(MovementInputReader movementInputReader, UpdateProvider updateProvider)
     {
         _movementInputReader = movementInputReader;
+        _updateProvider = updateProvider;
+        
+        _updateProvider.AddListener(this);
     }
 
     //50x 45y rotation
-    private void Update()
+    public void UpdateBehavior()
     {
         if(_movementInputReader.IsEnabled() == false) return;
         Movement();
@@ -43,5 +47,15 @@ public class CameraMovement : MonoBehaviour
         Vector3 relativeMovement = (movementForward + movementRight) * movementSpeed;
 
         transform.position += relativeMovement * Time.deltaTime;
+    }
+
+    private void OnDisable()
+    {
+        _updateProvider.RemoveListener(this);
+    }
+
+    private void OnDestroy()
+    {
+        _updateProvider.RemoveListener(this);
     }
 }

@@ -12,7 +12,7 @@ public class GridGizmosController : MonoBehaviour
 
     private CellManager _tempCellManager;
     private Utils _utils;
-    
+    private (int x, int z) _tuple;
     private Vector3 _originPosition = Vector3.zero;
     [SerializeField] private int _gridSize;
     [SerializeField] private int _cellSize;
@@ -40,7 +40,7 @@ public class GridGizmosController : MonoBehaviour
     //     Debug.Log("onur + " + _cellManager.GetXZ(_utils.GetValidPosition()));
     // }
 
-    private (int x, int z) _tuple;
+    
     // private void OnDrawGizmos()
     // {
     //     if(Application.isPlaying == false) return;

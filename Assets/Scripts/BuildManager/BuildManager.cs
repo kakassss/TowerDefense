@@ -7,17 +7,20 @@ using Zenject;
 public class BuildManager
 {
     private CellManager _cellManager;
-    private BuildSelectManager _buildSelectManager;
+    private BuildObjectReceiver _buildObjectReceiver;
     private IInstantiator _instantiator;
+    private GameCurrency _gameCurrency;
     
     private List<BuildCells> buildCells;
     
     [Inject]
-    private void Construct(CellManager cellManager, IInstantiator instantiator, BuildSelectManager buildSelectManager)
+    private void Construct(CellManager cellManager, IInstantiator instantiator, BuildObjectReceiver buildObjectReceiver,
+        GameCurrency gameCurrency)
     {
         _cellManager = cellManager;
         _instantiator = instantiator;
-        _buildSelectManager = buildSelectManager;
+        _buildObjectReceiver = buildObjectReceiver;
+        _gameCurrency = gameCurrency;
     }
     
     public void BuildAction(Vector3 worldPos)
@@ -29,9 +32,9 @@ public class BuildManager
         buildCells = new List<BuildCells>();
         
         _cellManager.GetXZ(worldPos,out var x, out var z);
-        for (int i = 0; i < _buildSelectManager.CurrentGridEntitySO.X; i++)
+        for (int i = 0; i < _buildObjectReceiver.CurrentGridEntitySO.X; i++)
         {
-            for (int j = 0; j < _buildSelectManager.CurrentGridEntitySO.Z; j++)
+            for (int j = 0; j < _buildObjectReceiver.CurrentGridEntitySO.Z; j++)
             {
                 if ( x + i >= 0 && z + j >= 0 && x + i < _cellManager.Width && z + j < _cellManager.Height)
                 {
@@ -44,17 +47,20 @@ public class BuildManager
             }
         }
         
-        if(_buildSelectManager.CurrentGridEntitySO.CanBuild(buildCells.Count))
+        if(_buildObjectReceiver.CurrentGridEntitySO.CanBuild(buildCells.Count))
             return;
 
+        if(_gameCurrency.HasEnoughCoins(_buildObjectReceiver.CurrentGridEntitySO.BuildCost) == false)
+            return;
+        
         InstantiateSingleCell(buildCells).Forget();
         //InstantiateMultipleCells(buildCells);    
     }
 
     private async UniTaskVoid InstantiateSingleCell(List<BuildCells> buildCells)
     {
-        var induvialCellPower = _buildSelectManager.CurrentGridEntitySO.AttackPower /
-                                _buildSelectManager.CurrentGridEntitySO.PowerSize;
+        var induvialCellPower = _buildObjectReceiver.CurrentGridEntitySO.AttackPower /
+                                _buildObjectReceiver.CurrentGridEntitySO.PowerSize;
         
         foreach (var cell in buildCells)
         {
@@ -63,8 +69,9 @@ public class BuildManager
         }
 
         await UniTask.WaitForEndOfFrame();
-        var tower = _instantiator.InstantiatePrefab(_buildSelectManager.CurrentGridEntitySO.BuildObject);
+        var tower = _instantiator.InstantiatePrefab(_buildObjectReceiver.CurrentGridEntitySO.BuildObject);
         tower.transform.position = SetMidPosMultipleCells();
+        _gameCurrency.SpendCoins(_buildObjectReceiver.CurrentGridEntitySO.BuildCost);
     }
     
     private void InstantiateMultipleCells(List<BuildCells> buildCells)
@@ -72,7 +79,7 @@ public class BuildManager
         foreach (var cell in buildCells)
         {
             cell.Cell.IsFull = true;
-            var tower = _instantiator.InstantiatePrefab(_buildSelectManager.CurrentGridEntitySO.BuildObject);
+            var tower = _instantiator.InstantiatePrefab(_buildObjectReceiver.CurrentGridEntitySO.BuildObject);
             tower.transform.position = cell.SpawnPosition * _cellManager.CellSize + _cellManager.OriginPosition + 
                                        new Vector3(_cellManager.CellSize / 2, 0, _cellManager.CellSize / 2);
         }

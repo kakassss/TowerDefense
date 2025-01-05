@@ -102,7 +102,7 @@ public class EnemyWavesPathFinding
     
     private Vector3 GetColumnSpawnPoint(int columnIndex)
     {
-        var currentCell = _cellManager.GetFrontCellAtActiveColumn2(columnIndex);
+        var currentCell = _cellManager.GetFrontCellAtActiveColumn(columnIndex);
         return _cellManager.GetCellMidPointPositionXZ(currentCell.GridIndexX,currentCell.GridIndexZ);
     }
     

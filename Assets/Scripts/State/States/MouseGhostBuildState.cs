@@ -77,7 +77,6 @@ public class MouseGhostBuildState : MouseClickBaseState
                 _midPosOffset)
             {
                 _ghostObjectReceiver.GameObject.transform.position = _midPosition;
-                //Debug.Log("onur xd " + Vector3.Distance(_midPosition, _mouseClickStateMachine.Utils.GetValidPositionWithLayerMask()));
             }
             else
             {
@@ -88,6 +87,8 @@ public class MouseGhostBuildState : MouseClickBaseState
         {
             CalculateGridPos();
         }
+
+        return;
 
         void CalculateGridPos()
         {
