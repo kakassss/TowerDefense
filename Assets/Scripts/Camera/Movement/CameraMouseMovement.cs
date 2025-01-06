@@ -1,7 +1,7 @@
+using System;
 using UnityEngine;
-using Zenject;
 
-public class CameraMouseMovement : MonoBehaviour
+public class CameraMouseMovement : IUpdate, IDisposable
 {
     private Vector3 _differencePosition;
     private Vector3 _velocity = Vector3.zero;
@@ -9,21 +9,27 @@ public class CameraMouseMovement : MonoBehaviour
     private readonly float _decelerationRate = 5f;
     private readonly float _movementSpeed = 3f;
     
-    private MovementInputReader _movementInputReader;
+    private readonly MovementInputReader _movementInputReader;
+    private readonly UpdateProvider _updateProvider;
+    private readonly Utils _utils;
     
-    [Inject]
-    private void Construct(MovementInputReader movementInputReader)
+    private CameraMouseMovement(MovementInputReader movementInputReader, UpdateProvider updateProvider, Utils utils)
     {
         _movementInputReader = movementInputReader;
+        _updateProvider = updateProvider;
+        _utils = utils;
 
+        _updateProvider.AddListener(this);
     }
     
-    private void Update()
+    public void UpdateBehavior()
     {
-        AA();
+        if(_movementInputReader.IsEnabled() == false) return;
+        Movement();
     }
-
-    private void AA()
+    
+    //Mouse1,mouse2 and mouse3 can control movement
+    private void Movement()
     {
         if (_movementInputReader.CanMouseInput == true)
         {
@@ -33,14 +39,18 @@ public class CameraMouseMovement : MonoBehaviour
             _velocity = new Vector3(-_differencePosition.x * _movementSpeed * Time.deltaTime,
                 -_differencePosition.y * _movementSpeed * Time.deltaTime, 0);
             
-            transform.Translate(_velocity);
+            _utils.GetMainCameraTransform().Translate(_velocity);
         }
         if (_movementInputReader.CanMouseInput == false)
         {
             _velocity = Vector3.Lerp(_velocity, Vector3.zero, _decelerationRate * Time.deltaTime);
             if (_velocity.magnitude > 0.01f)
-                transform.Translate(_velocity);
+                _utils.GetMainCameraTransform().Translate(_velocity);
         }
     }
 
+    public void Dispose()
+    {
+        _updateProvider.RemoveListener(this);
+    }
 }

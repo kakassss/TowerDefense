@@ -25,6 +25,11 @@ public class Utils
             }
         }
     }
+
+    public Transform GetMainCameraTransform()
+    {
+        return _camera.transform;
+    }
     
     private PointerEventData m_PointerData;
     private List<RaycastResult> m_RaycastResults = new List<RaycastResult>();

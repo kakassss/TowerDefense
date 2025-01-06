@@ -1,19 +1,20 @@
+using System;
 using UnityEngine;
-using Zenject;
 
-public class CameraKeyboardMovement : MonoBehaviour, IUpdate // Todo: Monobehavior olmakdan çıkar
+public class CameraKeyboardMovement : IUpdate, IDisposable
 {
     private readonly float _movementSpeed = 10f;
     private GameObject _movementRelativeGo;
 
-    private MovementInputReader _movementInputReader;
-    private UpdateProvider _updateProvider;
+    private readonly MovementInputReader _movementInputReader;
+    private readonly UpdateProvider _updateProvider;
+    private readonly Utils _utils;
 
-    [Inject]
-    private void Construct(MovementInputReader movementInputReader, UpdateProvider updateProvider)
+    private CameraKeyboardMovement(MovementInputReader movementInputReader, UpdateProvider updateProvider, Utils utils)
     {
         _movementInputReader = movementInputReader;
         _updateProvider = updateProvider;
+        _utils = utils;
         
         _movementRelativeGo = movementInputReader.GetMovementRelativeGo;
         
@@ -43,15 +44,10 @@ public class CameraKeyboardMovement : MonoBehaviour, IUpdate // Todo: Monobehavi
 
         Vector3 relativeMovement = (movementForward + movementRight) * _movementSpeed;
 
-        transform.position += relativeMovement * Time.deltaTime;
+        _utils.GetMainCameraTransform().position += relativeMovement * Time.deltaTime;
     }
-
-    private void OnDisable()
-    {
-        _updateProvider.RemoveListener(this);
-    }
-
-    private void OnDestroy()
+    
+    public void Dispose()
     {
         _updateProvider.RemoveListener(this);
     }

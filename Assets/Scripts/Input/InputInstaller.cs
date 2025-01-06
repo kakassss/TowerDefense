@@ -16,6 +16,10 @@ public class InputInstaller : MonoInstaller
         Container.Bind<MovementInputReader>().AsSingle().WithArguments(_movementRelativeGO).NonLazy();
         Container.Bind<IdleInputReader>().AsSingle().NonLazy();
         
+        //Update
+        Container.BindInterfacesTo<CameraMouseMovement>().AsSingle().NonLazy();
+        Container.BindInterfacesTo<CameraKeyboardMovement>().AsSingle().NonLazy();
+        
         //Input Reader Events
         Container.Bind<BuildingInputEvents>().AsSingle().NonLazy();
     }
