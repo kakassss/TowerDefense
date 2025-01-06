@@ -1,15 +1,10 @@
-using System;
 using UnityEngine;
 using Zenject;
 
-public class CameraMovement : MonoBehaviour, IUpdate
+public class CameraKeyboardMovement : MonoBehaviour, IUpdate // Todo: Monobehavior olmakdan çıkar
 {
-    [SerializeField] private float horizontalSpeed;
-    [SerializeField] private float verticalSpeed;
-
-    [SerializeField] private float movementSpeed;
-    
-    [SerializeField] private GameObject movementRelativeGO;
+    private readonly float _movementSpeed = 10f;
+    private GameObject _movementRelativeGo;
 
     private MovementInputReader _movementInputReader;
     private UpdateProvider _updateProvider;
@@ -19,6 +14,8 @@ public class CameraMovement : MonoBehaviour, IUpdate
     {
         _movementInputReader = movementInputReader;
         _updateProvider = updateProvider;
+        
+        _movementRelativeGo = movementInputReader.GetMovementRelativeGo;
         
         _updateProvider.AddListener(this);
     }
@@ -32,8 +29,8 @@ public class CameraMovement : MonoBehaviour, IUpdate
     
     private void Movement()
     {
-        Vector3 forward = movementRelativeGO.transform.forward;
-        Vector3 right = movementRelativeGO.transform.right;
+        Vector3 forward = _movementRelativeGo.transform.forward;
+        Vector3 right = _movementRelativeGo.transform.right;
 
         forward.y = 0;
         right.y = 0;
@@ -44,7 +41,7 @@ public class CameraMovement : MonoBehaviour, IUpdate
         Vector3 movementForward = forward * _movementInputReader.Movement.y;
         Vector3 movementRight = right * _movementInputReader.Movement.x;
 
-        Vector3 relativeMovement = (movementForward + movementRight) * movementSpeed;
+        Vector3 relativeMovement = (movementForward + movementRight) * _movementSpeed;
 
         transform.position += relativeMovement * Time.deltaTime;
     }

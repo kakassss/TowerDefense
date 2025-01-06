@@ -1,7 +1,11 @@
+using UnityEngine;
 using Zenject;
 
 public class InputInstaller : MonoInstaller
 {
+    [Header("Keyboard")]
+    [SerializeField] private GameObject _movementRelativeGO;
+    
     public override void InstallBindings()
     {
         //Main InputSystem initializer
@@ -9,7 +13,7 @@ public class InputInstaller : MonoInstaller
         
         //Readers
         Container.Bind<BuildingInputReader>().AsSingle().NonLazy();
-        Container.Bind<MovementInputReader>().AsSingle().NonLazy();
+        Container.Bind<MovementInputReader>().AsSingle().WithArguments(_movementRelativeGO).NonLazy();
         Container.Bind<IdleInputReader>().AsSingle().NonLazy();
         
         //Input Reader Events

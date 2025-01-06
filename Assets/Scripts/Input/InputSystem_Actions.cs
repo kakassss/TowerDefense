@@ -56,9 +56,18 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             ""id"": ""e01c3a29-8815-4cff-b088-f027b5d109d8"",
             ""actions"": [
                 {
-                    ""name"": ""CameraMovement"",
+                    ""name"": ""CameraMovementKeyboard"",
                     ""type"": ""Value"",
                     ""id"": ""7a83a328-ad25-455e-a6fb-18a3392c8c03"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""CameraMovementMouse"",
+                    ""type"": ""Value"",
+                    ""id"": ""89b32b69-14ab-40d7-a122-ccbb22656641"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -73,7 +82,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""CameraMovement"",
+                    ""action"": ""CameraMovementKeyboard"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -84,7 +93,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""CameraMovement"",
+                    ""action"": ""CameraMovementKeyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -95,7 +104,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""CameraMovement"",
+                    ""action"": ""CameraMovementKeyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -106,7 +115,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""CameraMovement"",
+                    ""action"": ""CameraMovementKeyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -117,9 +126,97 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""CameraMovement"",
+                    ""action"": ""CameraMovementKeyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Arrows"",
+                    ""id"": ""1efd97d5-19e3-4681-9118-db63f30e18ac"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovementKeyboard"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""e27092bb-3177-4d78-acbe-479ee47d6e44"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""CameraMovementKeyboard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""347109b7-5ace-48e6-8ed2-ba6e33908fe6"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""CameraMovementKeyboard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""bc1b6795-3de2-4db7-88bc-9fb9bda1f1d5"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""CameraMovementKeyboard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""b80bc8d6-77ef-4542-b32d-ecd3ad550a2e"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""CameraMovementKeyboard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9362c095-1c91-4ec1-a994-c1c79a41eb14"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""CameraMovementMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a128c5ac-f6d7-47b4-ba9c-19b32d176179"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""CameraMovementMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fdb997ad-b123-4bca-94f2-df6b0886f2f0"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""CameraMovementMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -220,7 +317,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_InputBuild_Building = m_InputBuild.FindAction("Building", throwIfNotFound: true);
         // InputMovementKeyboard
         m_InputMovementKeyboard = asset.FindActionMap("InputMovementKeyboard", throwIfNotFound: true);
-        m_InputMovementKeyboard_CameraMovement = m_InputMovementKeyboard.FindAction("CameraMovement", throwIfNotFound: true);
+        m_InputMovementKeyboard_CameraMovementKeyboard = m_InputMovementKeyboard.FindAction("CameraMovementKeyboard", throwIfNotFound: true);
+        m_InputMovementKeyboard_CameraMovementMouse = m_InputMovementKeyboard.FindAction("CameraMovementMouse", throwIfNotFound: true);
         // InputIdle
         m_InputIdle = asset.FindActionMap("InputIdle", throwIfNotFound: true);
         m_InputIdle_Select = m_InputIdle.FindAction("Select", throwIfNotFound: true);
@@ -338,12 +436,14 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     // InputMovementKeyboard
     private readonly InputActionMap m_InputMovementKeyboard;
     private List<IInputMovementKeyboardActions> m_InputMovementKeyboardActionsCallbackInterfaces = new List<IInputMovementKeyboardActions>();
-    private readonly InputAction m_InputMovementKeyboard_CameraMovement;
+    private readonly InputAction m_InputMovementKeyboard_CameraMovementKeyboard;
+    private readonly InputAction m_InputMovementKeyboard_CameraMovementMouse;
     public struct InputMovementKeyboardActions
     {
         private @InputSystem_Actions m_Wrapper;
         public InputMovementKeyboardActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @CameraMovement => m_Wrapper.m_InputMovementKeyboard_CameraMovement;
+        public InputAction @CameraMovementKeyboard => m_Wrapper.m_InputMovementKeyboard_CameraMovementKeyboard;
+        public InputAction @CameraMovementMouse => m_Wrapper.m_InputMovementKeyboard_CameraMovementMouse;
         public InputActionMap Get() { return m_Wrapper.m_InputMovementKeyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -353,16 +453,22 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_InputMovementKeyboardActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_InputMovementKeyboardActionsCallbackInterfaces.Add(instance);
-            @CameraMovement.started += instance.OnCameraMovement;
-            @CameraMovement.performed += instance.OnCameraMovement;
-            @CameraMovement.canceled += instance.OnCameraMovement;
+            @CameraMovementKeyboard.started += instance.OnCameraMovementKeyboard;
+            @CameraMovementKeyboard.performed += instance.OnCameraMovementKeyboard;
+            @CameraMovementKeyboard.canceled += instance.OnCameraMovementKeyboard;
+            @CameraMovementMouse.started += instance.OnCameraMovementMouse;
+            @CameraMovementMouse.performed += instance.OnCameraMovementMouse;
+            @CameraMovementMouse.canceled += instance.OnCameraMovementMouse;
         }
 
         private void UnregisterCallbacks(IInputMovementKeyboardActions instance)
         {
-            @CameraMovement.started -= instance.OnCameraMovement;
-            @CameraMovement.performed -= instance.OnCameraMovement;
-            @CameraMovement.canceled -= instance.OnCameraMovement;
+            @CameraMovementKeyboard.started -= instance.OnCameraMovementKeyboard;
+            @CameraMovementKeyboard.performed -= instance.OnCameraMovementKeyboard;
+            @CameraMovementKeyboard.canceled -= instance.OnCameraMovementKeyboard;
+            @CameraMovementMouse.started -= instance.OnCameraMovementMouse;
+            @CameraMovementMouse.performed -= instance.OnCameraMovementMouse;
+            @CameraMovementMouse.canceled -= instance.OnCameraMovementMouse;
         }
 
         public void RemoveCallbacks(IInputMovementKeyboardActions instance)
@@ -477,7 +583,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     }
     public interface IInputMovementKeyboardActions
     {
-        void OnCameraMovement(InputAction.CallbackContext context);
+        void OnCameraMovementKeyboard(InputAction.CallbackContext context);
+        void OnCameraMovementMouse(InputAction.CallbackContext context);
     }
     public interface IInputIdleActions
     {

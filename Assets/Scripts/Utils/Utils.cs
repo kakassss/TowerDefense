@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Utils
 {
@@ -11,7 +12,7 @@ public class Utils
         _camera = camera;
         _layerMask = layerMask;
     }
-
+    
     public void PrintListMemberNames<T>(List<T> list)
     {
         foreach (var data in list)
@@ -24,6 +25,19 @@ public class Utils
             }
         }
     }
+    
+    private PointerEventData m_PointerData;
+    private List<RaycastResult> m_RaycastResults = new List<RaycastResult>();
+    
+    public bool IsRaycastHittingUIObject(Vector2 position)
+    {
+        if (m_PointerData == null)
+            m_PointerData = new PointerEventData(EventSystem.current);
+        m_PointerData.position = position;
+        EventSystem.current.RaycastAll(m_PointerData, m_RaycastResults);
+        return m_RaycastResults.Count > 0;
+    }
+
     
     public BaseTower GetValidPositionWithLayerMask(int layerMask)
     {
