@@ -22,6 +22,16 @@ public class SphereTower : BaseTower, IUpdate, IDisposable
         AttackAction();
     }
 
+    private void OnDisable()
+    {
+        _updateProvider.RemoveListener(this);
+    }
+
+    private void OnDestroy()
+    {
+        _updateProvider.RemoveListener(this);
+    }
+    
     public void Dispose()
     {
         _updateProvider.RemoveListener(this);
