@@ -4,7 +4,7 @@ using UnityEngine;
 public class CameraKeyboardMovement : IUpdate, IDisposable
 {
     private readonly float _movementSpeed = 10f;
-    private GameObject _movementRelativeGo;
+    private readonly GameObject _movementRelativeGo;
 
     private readonly MovementInputReader _movementInputReader;
     private readonly UpdateProvider _updateProvider;
@@ -28,6 +28,7 @@ public class CameraKeyboardMovement : IUpdate, IDisposable
         Movement();
     }
     
+    //WASD or Arrows can control movement
     private void Movement()
     {
         Vector3 forward = _movementRelativeGo.transform.forward;

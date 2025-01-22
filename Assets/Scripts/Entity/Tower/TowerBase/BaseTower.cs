@@ -9,22 +9,28 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
     
     public BaseTowerAttackSO AttackStats => _towerAttackSo;
     
-    public ITargetToEnemy AttackType;
-    public IRange RangeType;
+    public IAttackType AttackType;
+    public IRangeType IRangeTypeType;
     
     [SerializeField] protected BaseTowerAttackSO _towerAttackSo;
     [SerializeField] private Transform _towerAimPoint;
     [SerializeField] private Transform _towerAimHead;
     
     private IEnemy _targetEnemy;
-    private QuaternionUtils _quaternionUtils;
+    
     protected TowerAttackTypeHolder _towerAttackTypeHolder;
+    protected TowerRangeTypeHolder _towerRangeTypeHolder;
+    protected UpdateProvider _updateProvider;
+    protected QuaternionUtils _quaternionUtils;
     
     [Inject]
-    protected virtual void Construct(QuaternionUtils quaternionUtils, BaseTowerAttack attack, TowerAttackTypeHolder towerAttackTypeHolder)
+    protected virtual void Construct(QuaternionUtils quaternionUtils, BaseTowerAttack attack, TowerAttackTypeHolder towerAttackTypeHolder
+    , UpdateProvider updateProvider, TowerRangeTypeHolder towerRangeTypeHolder)
     {
         _quaternionUtils = quaternionUtils;
         _towerAttackTypeHolder = towerAttackTypeHolder;
+        _updateProvider = updateProvider;
+        _towerRangeTypeHolder = towerRangeTypeHolder;
         Attack = attack;
         
         SetTowerStats();
@@ -35,15 +41,8 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
     {
         // Default attack type is attack to the closest enemy
         AttackType = _towerAttackTypeHolder.AttackTypes[(int)AttackTypeEnum.AttackClosest];
-        
-        //Health = new BaseHealth(100);
     }
-
-    protected void Update()
-    {
-        AttackAction();
-    }
-
+    
     public void AttackAction()
     {
         if (_targetEnemy == null)
@@ -54,7 +53,7 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
         // tower will always search his target, if cant find it, without this line script throws null ref
         if(_targetEnemy == null) return;
         
-        if (RangeType.InRange(_targetEnemy.Transform,transform,_towerAttackSo) == false)
+        if (IRangeTypeType.InRange(_targetEnemy.Transform,transform,_towerAttackSo) == false)
         {
             _targetEnemy = null;
             return;

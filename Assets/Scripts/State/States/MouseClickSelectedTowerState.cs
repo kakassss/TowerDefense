@@ -31,7 +31,6 @@ public class MouseClickSelectedTowerState : MouseClickBaseState
         _idleInputReader.OnTowerSelected += OnTowerSelected;
         _idleInputReader.Enable();
         
-        //Debug.Log("yokoso minnassan hideo kojima dess");
         // Tower ui elementlerini aç
     }
     

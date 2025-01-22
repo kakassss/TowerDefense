@@ -8,7 +8,7 @@ public class SelectedTowerReceiver
 
 public class TowerAttackTypeSelect : AbstractButtonListener
 {
-    private ITargetToEnemy SelectedAttackType;
+    private IAttackType SelectedAttackType;
 
     [SerializeField] private AttackTypeEnum _attackTypeEnum;
     

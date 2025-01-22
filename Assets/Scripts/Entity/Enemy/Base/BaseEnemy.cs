@@ -41,7 +41,7 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
         {
             DefenceSo = _enemyDefenceSo
         };
-        Attack = new BaseEnemyAttack(_enemyAttackSo);
+        Attack = new BaseEnemyAttack(_enemyAttackSo);// bunu singleton yapabilirsin 
         Health = new BaseHealth(Defence.DefenceSo.Health,Defence.DefenceSo.DefenceType)
         {
             Death = this

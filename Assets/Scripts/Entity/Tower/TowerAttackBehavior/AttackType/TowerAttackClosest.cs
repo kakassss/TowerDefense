@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerAttackClosest : BaseTowerAttack, ITargetToEnemy
+public class TowerAttackClosest : BaseTowerAttack, IAttackType
 {
     public TowerAttackClosest(ProjectilePool projectilePool, ProjectilePoolEvent projectilePoolEvent) : base(projectilePool, projectilePoolEvent)
     {
     }
-    
-    //Old function
+
+    #region OldFunction
+
     public IEnemy FindClosestEnemy(Transform towerPosition,List<IEnemy> enemies)
     {
         if (enemies.Count <= 1)
@@ -28,6 +29,8 @@ public class TowerAttackClosest : BaseTowerAttack, ITargetToEnemy
 
         return closestEnemy ?? (enemies[0]);
     }
+
+    #endregion
     
     public IEnemy TargetAction(Transform transform,BaseTowerAttackSO towerAttackSo)
     {

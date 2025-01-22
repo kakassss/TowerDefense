@@ -2,22 +2,17 @@
 
 public class TowerAttackTypeHolder
 { 
-    public readonly List<ITargetToEnemy> AttackTypes;
-    public readonly List<IRange> RangeTypes;
+    private readonly List<IAttackType> _attackTypes;
+    public List<IAttackType> AttackTypes => _attackTypes;
     
-    private TowerAttackTypeHolder(TowerAttackClosest towerAttackClosest, TowerAttackMostHp towerAttackMostHp,
-        TowerBoxRange towerBoxRange, TowerSphereRange towerSphereRange)
+    private TowerAttackTypeHolder(TowerAttackClosest towerAttackClosest, TowerAttackMostHp towerAttackMostHp
+        ,TowerAttackNoAttack towerAttackNoAttack)
     {
-        AttackTypes = new List<ITargetToEnemy>
+        _attackTypes = new List<IAttackType>
         {
             towerAttackClosest,
-            towerAttackMostHp
-        };
-
-        RangeTypes = new List<IRange>()
-        {
-            towerSphereRange,
-            towerBoxRange
+            towerAttackMostHp,
+            towerAttackNoAttack
         };
     }
 }
@@ -26,10 +21,5 @@ public enum AttackTypeEnum
 {
     AttackClosest = 0,
     AttackMostHp = 1,
-}
-
-public enum RangeTypeEnum
-{
-    Sphere = 0,
-    Box = 1,
+    AttackNo = 2,
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TowerBoxRange : IRange
+public class TowerBoxIRangeType : IRangeType
 {
     public bool InRange(Transform enemyPosition, Transform towerPosition, BaseTowerAttackSO towerAttackSo)
     {

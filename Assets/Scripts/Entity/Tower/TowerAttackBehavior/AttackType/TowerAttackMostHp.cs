@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TowerAttackMostHp : BaseTowerAttack, ITargetToEnemy
+public class TowerAttackMostHp : BaseTowerAttack, IAttackType
 {
     public TowerAttackMostHp(ProjectilePool projectilePool, ProjectilePoolEvent projectilePoolEvent) : base(projectilePool, projectilePoolEvent)
     {

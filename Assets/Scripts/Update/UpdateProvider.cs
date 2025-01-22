@@ -8,7 +8,8 @@ public class UpdateProvider
     {
         for (int i = 0; i < Updates.Count; i++)
         {
-            Updates[i].UpdateBehavior();
+            if(Updates[i] != null)
+                Updates[i].UpdateBehavior();
         }
     }
 

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public interface ITargetToEnemy
+public interface IAttackType
 {
     IEnemy TargetAction(Transform transform,BaseTowerAttackSO towerAttackSo);
 }
