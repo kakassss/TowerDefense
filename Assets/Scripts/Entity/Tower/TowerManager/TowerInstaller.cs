@@ -14,5 +14,6 @@ public class TowerInstaller : MonoInstaller
         Container.Bind<GhostSpawn>().AsSingle().NonLazy();
         //Container.Bind<BaseSpawner>().AsSingle().NonLazy();
         Container.Bind<GridEntitySO>().FromScriptableObject(_gridEntitySo).AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<TowerUpgrade>().AsSingle().NonLazy();
     }
 }

@@ -6,7 +6,7 @@ public class TowerAttackNoAttack : BaseTowerAttack, IAttackType
     {
     }
 
-    public IEnemy TargetAction(Transform transform, BaseTowerAttackSO towerAttackSo)
+    public IEnemy AttackType(Transform transform, BaseTowerAttackSO towerAttackSo)
     {
         return null;
     }

@@ -6,7 +6,7 @@ public class TowerAttackMostHp : BaseTowerAttack, IAttackType
     {
     }
     
-    public IEnemy TargetAction(Transform transform,BaseTowerAttackSO towerAttackSo)
+    public IEnemy AttackType(Transform transform,BaseTowerAttackSO towerAttackSo)
     {
         Collider[] targetableEnemies = Physics.OverlapSphere(transform.position, towerAttackSo.Range,enemyLayerMask);
 
@@ -15,11 +15,11 @@ public class TowerAttackMostHp : BaseTowerAttack, IAttackType
         
         for (int i = 0; i < targetableEnemies.Length; i++)
         {
-            if (mostHpEnemy.Health.GetCurrentHealth < minHp)
+            if (mostHpEnemy.Health.CurrentHealth < minHp)
             {
                 //if (targetEnemies[i].TryGetComponent(out IEnemy enemy))
                 mostHpEnemy = targetableEnemies[i].GetComponent<IEnemy>();
-                minHp = mostHpEnemy.Health.GetCurrentHealth;
+                minHp = mostHpEnemy.Health.CurrentHealth;
             }
         }
         

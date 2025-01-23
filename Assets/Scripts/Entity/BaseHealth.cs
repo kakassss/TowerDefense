@@ -1,22 +1,47 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class BaseHealth : IDamageable
 {
-    public float GetCurrentHealth { get; private set; }
+    public float CurrentHealth { get; private set; }
+    public float MaxHealth { get; private set; }
     
     public IDeath Death;
     public ElementType DefenseType;
+    public int HealthStage = 1;
     
-    public BaseHealth(float currentHealth, ElementType defenseType)
+    //Using multiple health stages
+    public BaseHealth(Dictionary<int,int> healthStages, ElementType defenseType)
     {
-        GetCurrentHealth = currentHealth;
+        MaxHealth = healthStages[HealthStage];
+        CurrentHealth = healthStages[HealthStage];
+        
         DefenseType = defenseType;
+    }
+    
+    //Using one static health
+    public BaseHealth(float maxHealth, ElementType defenseType)
+    {
+        MaxHealth = maxHealth;
+        CurrentHealth = maxHealth;
+        
+        DefenseType = defenseType;
+    }
+    
+    
+    public void IncreaseHealthStage(Dictionary<int,int> healthStages)
+    {
+        HealthStage++;
+        
+        MaxHealth = healthStages[HealthStage];
+        CurrentHealth = healthStages[HealthStage];
     }
     
     public void IncreaseHealth(float value)
     {
-        GetCurrentHealth += value;
+        MaxHealth += value;
+        CurrentHealth += value;
     }
 
     public void Damage(float damageAmount, ElementType damageType)
@@ -26,11 +51,10 @@ public class BaseHealth : IDamageable
             Debug.Log("Defense Activated");
         }
         
-        GetCurrentHealth -= damageAmount;
-        
-        if (GetCurrentHealth > 0) return;
+        CurrentHealth -= damageAmount;
+        if (CurrentHealth > 0) return;
         
         Death.Death();
-        GetCurrentHealth = 0;
+        CurrentHealth = 0;
     }
 }

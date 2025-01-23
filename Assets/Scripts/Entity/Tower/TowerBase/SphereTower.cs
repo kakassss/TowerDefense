@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 public class SphereTower : BaseTower, IUpdate, IDisposable
 {
@@ -13,8 +14,14 @@ public class SphereTower : BaseTower, IUpdate, IDisposable
     protected override void SetTowerStats()
     {
         base.SetTowerStats();
+        
+        HealthStages = new Dictionary<int, int>()
+        {
+            { 1, 100 },
+        };
+        
         IRangeTypeType = _towerRangeTypeHolder.RangeTypes[(int)RangeTypeEnum.SphereRange];
-        Health = new BaseHealth(100,ElementType.Normal);
+        Health = new BaseHealth(HealthStages,ElementType.Normal);
     }
 
     public void UpdateBehavior()

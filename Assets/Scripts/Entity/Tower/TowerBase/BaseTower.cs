@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Zenject;
 
 public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
@@ -6,6 +7,9 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
     public bool CanGizmos;
     public BaseTowerAttack Attack { get; private set;}
     public BaseHealth Health { get; set;}
+    
+    //Health Level and Health Value
+    public Dictionary<int, int> HealthStages;
     
     public BaseTowerAttackSO AttackStats => _towerAttackSo;
     
@@ -47,7 +51,7 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
     {
         if (_targetEnemy == null)
         {
-            _targetEnemy = AttackType.TargetAction(transform,_towerAttackSo);
+            _targetEnemy = AttackType.AttackType(transform,_towerAttackSo);
         }
         
         // tower will always search his target, if cant find it, without this line script throws null ref

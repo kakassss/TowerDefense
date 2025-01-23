@@ -32,7 +32,7 @@ public class TowerAttackClosest : BaseTowerAttack, IAttackType
 
     #endregion
     
-    public IEnemy TargetAction(Transform transform,BaseTowerAttackSO towerAttackSo)
+    public IEnemy AttackType(Transform transform,BaseTowerAttackSO towerAttackSo)
     {
         Collider[] targetableEnemies = Physics.OverlapSphere(transform.position, towerAttackSo.Range,enemyLayerMask);
 

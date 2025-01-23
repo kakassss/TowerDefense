@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -47,7 +46,7 @@ public class TowerAttackTypeUI : MonoBehaviour
     {
         CloseButtons();
         
-        for (int i = 0; i < _towerAttackTypeHolder.AttackTypes.Count; i++)
+        for (int i = 0; i < _towerAttackTypeHolder.AttackTypesUI.Count; i++)
         {
             _attackTypeButtons[i].gameObject.SetActive(true);
         }
