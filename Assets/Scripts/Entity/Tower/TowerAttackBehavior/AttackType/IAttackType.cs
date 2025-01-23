@@ -2,5 +2,5 @@
 
 public interface IAttackType
 {
-    IEnemy TargetAction(Transform transform,BaseTowerAttackSO towerAttackSo);
+    IEnemy AttackType(Transform transform,BaseTowerAttackSO towerAttackSo);
 }
