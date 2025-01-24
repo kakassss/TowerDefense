@@ -21,18 +21,26 @@ public class TowerUpgradeUI : MonoBehaviour
     {
         SetButtonState();
         
+        _selectedTowerReceiver.SelectedTower.Health.OnUpgradeFinish += SetButtonState;
         _upgradeButton.onClick.AddListener(OnClick);
     }
 
     private void OnDisable()
     {
+        _selectedTowerReceiver.SelectedTower.Health.OnUpgradeFinish -= SetButtonState;
+
+        
         _upgradeButton.gameObject.SetActive(false);
         _upgradeButton.onClick.RemoveListener(OnClick);
     }
 
     private void SetButtonState()
     {
-        if(_selectedTowerReceiver.SelectedTower.Health.Upgradeable == false) return;
+        if (_selectedTowerReceiver.SelectedTower.Health.Upgradeable == false)
+        {
+            _upgradeButton.gameObject.SetActive(false);    
+            return;
+        }
         _upgradeButton.gameObject.SetActive(true);
     }
     

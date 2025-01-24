@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -11,6 +12,8 @@ public class BaseHealth : IDamageable
     public ElementType DefenseType;
     public int HealthStage = 1;
     public bool Upgradeable;
+
+    public Action OnUpgradeFinish;
     
     //Using multiple health stages
     public BaseHealth(Dictionary<int,int> healthStages, ElementType defenseType)
@@ -33,6 +36,13 @@ public class BaseHealth : IDamageable
     
     public void IncreaseHealthStage(Dictionary<int,int> healthStages)
     {
+        if (healthStages.Count <= HealthStage)
+        {
+            Upgradeable = false;
+            OnUpgradeFinish?.Invoke();
+            return;
+        }
+        
         HealthStage++;
         
         MaxHealth = healthStages[HealthStage];
