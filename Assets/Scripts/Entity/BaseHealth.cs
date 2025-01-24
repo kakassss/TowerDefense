@@ -10,13 +10,14 @@ public class BaseHealth : IDamageable
     public IDeath Death;
     public ElementType DefenseType;
     public int HealthStage = 1;
+    public bool Upgradeable;
     
     //Using multiple health stages
     public BaseHealth(Dictionary<int,int> healthStages, ElementType defenseType)
     {
         MaxHealth = healthStages[HealthStage];
         CurrentHealth = healthStages[HealthStage];
-        
+        Upgradeable = true;
         DefenseType = defenseType;
     }
     
@@ -25,7 +26,7 @@ public class BaseHealth : IDamageable
     {
         MaxHealth = maxHealth;
         CurrentHealth = maxHealth;
-        
+        Upgradeable = false;
         DefenseType = defenseType;
     }
     

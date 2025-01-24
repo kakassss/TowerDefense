@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
@@ -31,7 +32,7 @@ public class TowerUpgradeUI : MonoBehaviour
 
     private void SetButtonState()
     {
-        if(typeof(TankTower) != typeof(SelectedTowerReceiver)) return;
+        if(_selectedTowerReceiver.SelectedTower.Health.Upgradeable == false) return;
         _upgradeButton.gameObject.SetActive(true);
     }
     
