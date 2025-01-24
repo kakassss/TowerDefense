@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68e055ee556a40ddbde5af7cca4c40bd, type: 3}
+  m_Name: Towers
+  m_EditorClassIdentifier: 
+  BaseObjects:
+  - Name: Tower_Box_1X1
+    X: 1
+    Z: 1
+    Size: {x: 1, y: 0, z: 1}
+    BuildObject: {fileID: 6747389803454220252, guid: b30148763ae11374ababcd4d2e1ab443, type: 3}
+    GhostObject:
+      GhostGO: {fileID: 6747389803454220252, guid: b30148763ae11374ababcd4d2e1ab443, type: 3}
+    BuildType: 0
+    BuildCost: 15
+    AttackPower: 20
+    PowerLevel: 0
+  - Name: Tower_Sphere_1X1
+    X: 1
+    Z: 1
+    Size: {x: 1, y: 0, z: 1}
+    BuildObject: {fileID: 6747389803454220252, guid: 4b27bb93aee8a254c97716033502a776, type: 3}
+    GhostObject:
+      GhostGO: {fileID: 6747389803454220252, guid: 4b27bb93aee8a254c97716033502a776, type: 3}
+    BuildType: 0
+    BuildCost: 20
+    AttackPower: 20
+    PowerLevel: 0
+  - Name: TestTower
+    X: 2
+    Z: 2
+    Size: {x: 2, y: 0, z: 2}
+    BuildObject: {fileID: 1819166031059786881, guid: 76029ed22edbe52448f40992d4af0b0b, type: 3}
+    GhostObject:
+      GhostGO: {fileID: 1819166031059786881, guid: 76029ed22edbe52448f40992d4af0b0b, type: 3}
+    BuildType: 0
+    BuildCost: 0
+    AttackPower: 20
+    PowerLevel: 0
+  - Name: Tower_Tank_1X1
+    X: 1
+    Z: 1
+    Size: {x: 0, y: 0, z: 0}
+    BuildObject: {fileID: 8908091470324018598, guid: 9bde7e36fb16158429ee0216744e9322, type: 3}
+    GhostObject:
+      GhostGO: {fileID: 8908091470324018598, guid: 9bde7e36fb16158429ee0216744e9322, type: 3}
+    BuildType: 0
+    BuildCost: 20
+    AttackPower: 0
+    PowerLevel: 0
