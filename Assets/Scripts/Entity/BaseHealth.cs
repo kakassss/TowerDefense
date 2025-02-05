@@ -13,7 +13,7 @@ public class BaseHealth : IDamageable
     public int HealthStage = 1;
     public bool Upgradeable;
 
-    public Action OnUpgradeFinish;
+    public Action OnHealthUpgradeFinish;
     
     //Using multiple health stages
     public BaseHealth(Dictionary<int,int> healthStages, ElementType defenseType)
@@ -39,7 +39,7 @@ public class BaseHealth : IDamageable
         if (healthStages.Count <= HealthStage)
         {
             Upgradeable = false;
-            OnUpgradeFinish?.Invoke();
+            OnHealthUpgradeFinish?.Invoke();
             return;
         }
         
