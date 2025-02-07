@@ -3,22 +3,55 @@
 public class MovementUtils
 {
     private const float ACCELERATION_TIME = 0.3f;
-    private float currentSpeed;
+    private const int EnemyLayerMask = 1 << 9;
+    private const int TowerLayerMask = 1 << 8;
 
-    public void TranslateForward(Transform transform, float movementSpeed, float direction = 1)
+    private float _currentSpeed;
+    private int _rayCastDistance = 1;
+    
+    public void TranslateForward(Transform transform, float movementSpeed,Rigidbody rigidbody, float direction = 1)
     {
+        if (CanMove(transform.position, -transform.right, _rayCastDistance, TowerLayerMask) == false)
+        {
+            rigidbody.isKinematic = false;
+            rigidbody.linearVelocity = Vector3.zero;
+            return;
+        }
+
+        if (CanMove(transform.position, -transform.right, _rayCastDistance, EnemyLayerMask) == false)
+        {
+            rigidbody.isKinematic = false;
+            rigidbody.linearVelocity = Vector3.zero;
+            return;
+        }
+        
+        rigidbody.isKinematic = true;
+        
+        
         Vector3 moveTowards = -Vector3.right * (movementSpeed * Time.deltaTime * direction);
-       
         transform.position += moveTowards;
+        
+       // Debug.DrawRay(transform.position, transform.forward * _rayCastDistance, Color.yellow);
     }
 
+    private bool CanMove(Vector3 origin, Vector3 direction, float distance,LayerMask mask)
+    {
+        RaycastHit hitInfo;
+        if (Physics.Raycast(origin, direction, out hitInfo, distance, mask))
+        {
+            return false;
+        }
+        
+        return true;
+    }
+    
     public void TranslateForwardSmooth(Transform transform, float movementSpeed, float direction = 1)
     {
         // Smooth acceleration
-        currentSpeed = Mathf.Lerp(currentSpeed, movementSpeed, Time.deltaTime / ACCELERATION_TIME);
+        _currentSpeed = Mathf.Lerp(_currentSpeed, movementSpeed, Time.deltaTime / ACCELERATION_TIME);
         
         // Calculate target position
-        Vector3 targetPosition = transform.position + (-Vector3.right * (currentSpeed * Time.deltaTime * direction));
+        Vector3 targetPosition = transform.position + (-Vector3.right * (_currentSpeed * Time.deltaTime * direction));
         
         // Smooth movement
         transform.position = Vector3.Lerp(

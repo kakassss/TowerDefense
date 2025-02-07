@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementType: 2
   Damage: 25
-  Range: 10
+  Range: 25
   FireRate: 0.1
   RotateSpeed: 10

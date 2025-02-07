@@ -10,10 +10,11 @@ public class EnemyWavesManager : MonoBehaviour
     [InfoBox("Troll -> 0")]
     [InfoBox("Goblin -> 1")]
     
+    private const int EnemyLayerMask = 1 << 9;
+    
     [SerializeField] private List<Transform> _spawnPoints;
     [SerializeField] private List<WaveDataContainer> _totalWaveData;
     [SerializeField] private Vector3 _spawnPointOffset;
-    
     
     private EnemyPool _enemyPool;
     private CellManager _cellManager;
@@ -34,7 +35,6 @@ public class EnemyWavesManager : MonoBehaviour
     private void Start()
     {
         SetFirstActiveCell();
-        
     }
     
     private void Update()
@@ -51,6 +51,26 @@ public class EnemyWavesManager : MonoBehaviour
         _defaultCellGizmos = new DrawCubeGizmos(_cellManager.GetCellMidPointPositionXZ(_defaultOpenCell.GridIndexX, _defaultOpenCell.GridIndexZ));
     }
     
+    private async UniTaskVoid Spawner()
+    {
+        foreach (var stages in _totalWaveData)
+        {
+            foreach (var waves in stages.WaveStages)
+            {
+                foreach (var wave in waves.Waves)
+                {
+                    for (int i = 0; i < wave.Count; i++)
+                    {
+                        var path = _enemyWavesPathFinding.GetCalculatedPowerSizeSpawnPoints(_spawnPointOffset);
+                        var pathOffSet = new Vector3(path.x,path.y, path.z + Random.Range(-1.5f,1.5f));
+                        
+                        _enemyPool.GetObjectFromPool(wave.EnemyID,pathOffSet);
+                        await UniTask.WaitForSeconds(wave.Rate);
+                    }
+                }
+            }
+        }
+    }
     
     private void OnDrawGizmos()
     {
@@ -65,38 +85,4 @@ public class EnemyWavesManager : MonoBehaviour
         //     Gizmos.DrawCube(_enemyWavesPathFinding.SpawnPoints[i],new Vector3(1f,1f,1f));
         // }
     }
-
-    private async UniTaskVoid Spawner()
-    {
-        foreach (var stages in _totalWaveData)
-        {
-            foreach (var waves in stages.WaveStages)
-            {
-                foreach (var wave in waves.Waves)
-                {
-                    for (int i = 0; i < wave.Count; i++)
-                    {
-                        var path = _enemyWavesPathFinding.GetCalculatedPowerSizeSpawnPoints(_spawnPointOffset);
-                        _enemyPool.GetObjectFromPool(wave.EnemyID,path);
-                        await UniTask.WaitForSeconds(wave.Rate);
-                    }
-                }
-            }
-        }
-    }
-
-    // private async UniTaskVoid SpawnWaveAsync()
-    // {
-    //     var waitTime = _waveData[0].Rate;
-    //     
-    //     for (int i = 0; i < _waveData.Count; i++)
-    //     {
-    //         for (int j = 0; j < _waveData[i].Count; j++)
-    //         {
-    //             _enemyPool.GetObjectFromPool(_waveData[i].EnemyID, _spawnPoints[i].position);
-    //             await UniTask.WaitForSeconds(waitTime);
-    //         }
-    //         await UniTask.WaitForSeconds(_waveData[i].Rate);
-    //     }
-    // }
 }

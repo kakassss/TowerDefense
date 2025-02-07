@@ -168,12 +168,11 @@ public class CellPowerManager
             for (int j = 0; j < _cellManager.Height; j++)
             {
                 var cell = _cellManager.Grid[j, column.Index];
-                //Debug.Log("current " + j + " "+ cell.Slot.Power);
                 
-                GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                cube.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
-                cube.transform.position =
-                    _cellManager.GetCellMidPointPositionXZ(cell.Slot.GridIndexX, cell.Slot.GridIndexZ);
+                // GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                // cube.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
+                // cube.transform.position =
+                // _cellManager.GetCellMidPointPositionXZ(cell.Slot.GridIndexX, cell.Slot.GridIndexZ);
                 
                 _tempPower += cell.Slot.Power;
                 _totalPower += cell.Slot.Power;

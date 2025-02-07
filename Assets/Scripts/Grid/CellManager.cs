@@ -61,23 +61,23 @@ public class CellManager
                 {
                     Slot = new Cell(i,j,false, ElementType.Normal)
                 };
-                    
-                var text =  _instantiator.InstantiatePrefab(gridPrefab, GetWorldPosition(i, j), Quaternion.identity, parent);
-                text.transform.position += new Vector3(cellSize/2, 0.15f, cellSize/2);
-                text.GetComponentInChildren<TextMeshProUGUI>().text = i + "," + j;
-                if (randomer == 0)
-                {
-                    randomer = 1;
-                    text.GetComponentInChildren<Image>().color = Color.blue;
-                    continue;
-                }
-                
-                if (randomer == 1)
-                {
-                    text.GetComponentInChildren<Image>().color = Color.green;
-                    randomer = 0;
-                    continue;
-                }
+                //     
+                // var text =  _instantiator.InstantiatePrefab(gridPrefab, GetWorldPosition(i, j), Quaternion.identity, parent);
+                // text.transform.position += new Vector3(cellSize/2, 0.15f, cellSize/2);
+                // text.GetComponentInChildren<TextMeshProUGUI>().text = i + "," + j;
+                // if (randomer == 0)
+                // {
+                //     randomer = 1;
+                //     text.GetComponentInChildren<Image>().color = Color.blue;
+                //     continue;
+                // }
+                //
+                // if (randomer == 1)
+                // {
+                //     text.GetComponentInChildren<Image>().color = Color.green;
+                //     randomer = 0;
+                //     continue;
+                // }
             }
         }
         

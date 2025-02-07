@@ -23,6 +23,7 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
     [SerializeField] protected EnemyDefenceSO _enemyDefenceSo;
     [SerializeField] protected EnemyAttackSO _enemyAttackSo;
     [SerializeField] protected BaseEnemyDataSO _baseEnemyDataSo;
+    [SerializeField] private Rigidbody _rigidbody;
     
     private EnemyPoolEvent _enemyPoolEvent;
     private MovementUtils _movementUtils;
@@ -55,7 +56,7 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
 
     private void Movement()
     {
-        _movementUtils.TranslateForward(Transform,_baseEnemyDataSo.MovementSpeed);
+        _movementUtils.TranslateForward(Transform,_baseEnemyDataSo.MovementSpeed,_rigidbody);
     }
     
     private void OnDisable()
