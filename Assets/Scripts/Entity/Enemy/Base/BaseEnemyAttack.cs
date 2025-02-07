@@ -8,7 +8,7 @@ public class BaseEnemyAttack : IEnemyAttack
     private float _fireRateTemp;
     private float _fireRate;
     private Transform _targetPosition;
-    private BaseHealth _targetHealth;
+    private BaseTowerHealth _targetTowerHealth;
 
     public BaseEnemyAttack(EnemyAttackSO attackSo)
     {
@@ -21,7 +21,7 @@ public class BaseEnemyAttack : IEnemyAttack
     {
         if(InRange(_targetPosition) == false) return;
         
-        AttackRate(_targetHealth.Damage,AttackSO);
+        AttackRate(_targetTowerHealth.Damage,AttackSO);
     }
 
     private bool InRange(Transform targetPosition)

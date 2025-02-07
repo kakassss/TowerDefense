@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [System.Serializable]
-public class BaseHealth : IDamageable
+public class BaseTowerHealth : IDamageable
 {
     public float CurrentHealth { get; private set; }
     public float MaxHealth { get; private set; }
@@ -16,7 +17,7 @@ public class BaseHealth : IDamageable
     public Action OnHealthUpgradeFinish;
     
     //Using multiple health stages
-    public BaseHealth(Dictionary<int,int> healthStages, ElementType defenseType)
+    public BaseTowerHealth(Dictionary<int,int> healthStages, ElementType defenseType)
     {
         MaxHealth = healthStages[HealthStage];
         CurrentHealth = healthStages[HealthStage];
@@ -25,14 +26,13 @@ public class BaseHealth : IDamageable
     }
     
     //Using one static health
-    public BaseHealth(float maxHealth, ElementType defenseType)
+    public BaseTowerHealth(float maxHealth, ElementType defenseType)
     {
         MaxHealth = maxHealth;
         CurrentHealth = maxHealth;
         Upgradeable = false;
         DefenseType = defenseType;
     }
-    
     
     public void IncreaseHealthStage(Dictionary<int,int> healthStages)
     {

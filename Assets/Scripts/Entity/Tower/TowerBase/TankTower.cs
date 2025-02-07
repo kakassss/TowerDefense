@@ -19,6 +19,6 @@ public class TankTower : BaseTower
         
         AttackType = _towerAttackTypeHolder.AttackTypes[(int)AttackTypeEnum.AttackNo];
         IRangeTypeType = _towerRangeTypeHolder.RangeTypes[(int)RangeTypeEnum.NoRange];
-        Health = new BaseHealth(HealthStages,ElementType.Normal);
+        TowerHealth = new BaseTowerHealth(HealthStages,ElementType.Normal);
     }
 }

@@ -14,7 +14,7 @@ public struct EnemyID
 
 public abstract class BaseEnemy : MonoBehaviour,IEnemy
 {
-    public BaseHealth Health { get; private set;}
+    public BaseEnemyHealth Health { get; private set; }
     public BaseEnemyDefence Defence { get; private set; }
     public BaseEnemyAttack Attack { get; private set;}
     public EnemyID EnemyID { get; protected set; }
@@ -42,7 +42,7 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
             DefenceSo = _enemyDefenceSo
         };
         Attack = new BaseEnemyAttack(_enemyAttackSo);// bunu singleton yapabilirsin 
-        Health = new BaseHealth(Defence.DefenceSo.Health,Defence.DefenceSo.DefenceType)
+        Health = new BaseEnemyHealth(Defence.DefenceSo.Health,Defence.DefenceSo.DefenceType)
         {
             Death = this
         };

@@ -6,7 +6,7 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
 {
     public bool CanGizmos;
     public BaseTowerAttack Attack { get; private set;}
-    public BaseHealth Health { get; set;}
+    public BaseTowerHealth TowerHealth { get; set;}
     
     //Health Level and Health Value
     public Dictionary<int, int> HealthStages;

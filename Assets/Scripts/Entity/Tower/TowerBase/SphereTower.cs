@@ -21,7 +21,7 @@ public class SphereTower : BaseTower, IUpdate, IDisposable
         };
         
         IRangeTypeType = _towerRangeTypeHolder.RangeTypes[(int)RangeTypeEnum.SphereRange];
-        Health = new BaseHealth(HealthStages,ElementType.Normal);
+        TowerHealth = new BaseTowerHealth(HealthStages,ElementType.Normal);
     }
 
     public void UpdateBehavior()

@@ -58,14 +58,14 @@ public class TowerAttackTypeUI : MonoBehaviour
         
         _attackDamageText.text = AttackDamage + " " + _selectedTowerReceiver.SelectedTower.AttackStats.Damage;
         _elementTypeText.text = ElementType + " " + _selectedTowerReceiver.SelectedTower.AttackStats.ElementType;
-        _healthText.text = Health + " " + _selectedTowerReceiver.SelectedTower.Health.CurrentHealth
-                           + "/"+ _selectedTowerReceiver.SelectedTower.Health.MaxHealth;;
+        _healthText.text = Health + " " + _selectedTowerReceiver.SelectedTower.TowerHealth.CurrentHealth
+                           + "/"+ _selectedTowerReceiver.SelectedTower.TowerHealth.MaxHealth;;
     }
 
     private void SetHealth()
     {
-        _healthText.text = Health + " " + _selectedTowerReceiver.SelectedTower.Health.CurrentHealth 
-                           + "/"+ _selectedTowerReceiver.SelectedTower.Health.MaxHealth;
+        _healthText.text = Health + " " + _selectedTowerReceiver.SelectedTower.TowerHealth.CurrentHealth 
+                           + "/"+ _selectedTowerReceiver.SelectedTower.TowerHealth.MaxHealth;
     }
     
     private void SetButtons()

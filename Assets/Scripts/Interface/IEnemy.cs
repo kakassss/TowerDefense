@@ -2,7 +2,7 @@
 
 public interface IEnemy : IDeath
 {
-    BaseHealth Health { get; }
+    BaseEnemyHealth Health { get; }
     BaseEnemyDefence Defence { get;}
     BaseEnemyAttack Attack { get; }
     public EnemyID EnemyID { get; }
@@ -16,7 +16,7 @@ public interface IEnemyBase
 public interface ITower
 {
     BaseTowerAttack Attack { get; }
-    BaseHealth Health { get; }
+    BaseTowerHealth TowerHealth { get; }
 }
 
 public interface ITowerAttacker
