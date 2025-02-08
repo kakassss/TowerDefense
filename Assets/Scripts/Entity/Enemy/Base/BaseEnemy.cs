@@ -29,20 +29,26 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
     private MovementUtils _movementUtils;
     
     [Inject]
-    protected virtual void Construct(EnemyPoolEvent enemyPoolEvent, MovementUtils movementUtils)
+    protected virtual void Construct(EnemyPoolEvent enemyPoolEvent, MovementUtils movementUtils, BaseEnemyAttack attack
+    ,BaseEnemyDefence defence)
     {
         _enemyPoolEvent = enemyPoolEvent;
         _movementUtils = movementUtils;
+        Attack = attack;
+        Defence = defence;
+        
         SetEnemyStats();
     }
 
     protected virtual void SetEnemyStats()
     {
-        Defence = new BaseEnemyDefence
-        {
-            DefenceSo = _enemyDefenceSo
-        };
-        Attack = new BaseEnemyAttack(_enemyAttackSo);// bunu singleton yapabilirsin 
+        // Defence = new BaseEnemyDefence
+        // {
+        //     DefenceSo = _enemyDefenceSo
+        // };
+        Defence.SetDefenceSO(_enemyDefenceSo);
+        Attack.SetAttackSO(_enemyAttackSo);
+        //Attack = new BaseEnemyAttack(_enemyAttackSo);// bunu singleton yapabilirsin 
         Health = new BaseEnemyHealth(Defence.DefenceSo.Health,Defence.DefenceSo.DefenceType)
         {
             Death = this

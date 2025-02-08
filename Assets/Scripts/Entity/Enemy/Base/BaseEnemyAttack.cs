@@ -9,14 +9,13 @@ public class BaseEnemyAttack : IEnemyAttack
     private float _fireRate;
     private Transform _targetPosition;
     private BaseTowerHealth _targetTowerHealth;
-
-    public BaseEnemyAttack(EnemyAttackSO attackSo)
+    
+    public void SetAttackSO(EnemyAttackSO attackSo)
     {
         AttackSO = attackSo;
         _fireRate = AttackSO.FireRate;
     }
     
-
     public void AttackAction()
     {
         if(InRange(_targetPosition) == false) return;

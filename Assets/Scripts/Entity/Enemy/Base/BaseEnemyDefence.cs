@@ -3,6 +3,11 @@
 public class BaseEnemyDefence : IEnemyDefence
 {
     public EnemyDefenceSO DefenceSo;
+
+    public void SetDefenceSO(EnemyDefenceSO defenceSO)
+    {
+        DefenceSo = defenceSO;
+    }
     
     public bool DefenceAction(int defenceValue,ElementType elementType)
     {
