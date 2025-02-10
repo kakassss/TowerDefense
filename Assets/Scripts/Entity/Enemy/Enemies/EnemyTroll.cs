@@ -2,9 +2,9 @@
 public class EnemyTroll : BaseEnemy
 {
     protected override void Construct(EnemyPoolEvent enemyPoolEvent,MovementUtils movementUtils
-        , BaseEnemyAttack attack, BaseEnemyDefence defence)
+        , BaseEnemyAttack attack, BaseEnemyDefence defence, BaseEnemyAnimator animator)
     {
-        base.Construct(enemyPoolEvent, movementUtils, attack, defence);
+        base.Construct(enemyPoolEvent, movementUtils, attack, defence, animator);
         EnemyID = new EnemyID(0);
     }
     

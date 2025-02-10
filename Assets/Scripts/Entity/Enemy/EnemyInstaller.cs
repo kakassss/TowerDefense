@@ -6,5 +6,6 @@ public class EnemyInstaller : MonoInstaller
     {
         Container.Bind<BaseEnemyAttack>().AsSingle().NonLazy();
         Container.Bind<BaseEnemyDefence>().AsSingle().NonLazy();
+        Container.Bind<BaseEnemyAnimator>().AsSingle().NonLazy();
     }
 }

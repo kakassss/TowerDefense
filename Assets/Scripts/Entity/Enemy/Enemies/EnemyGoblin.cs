@@ -2,9 +2,9 @@
 public class EnemyGoblin : BaseEnemy
 {
     protected override void Construct(EnemyPoolEvent enemyPoolEvent, MovementUtils movementUtils
-        , BaseEnemyAttack enemyAttack, BaseEnemyDefence defence)
+        , BaseEnemyAttack enemyAttack, BaseEnemyDefence defence, BaseEnemyAnimator animator)
     {
-        base.Construct(enemyPoolEvent,movementUtils, enemyAttack, defence);
+        base.Construct(enemyPoolEvent,movementUtils, enemyAttack, defence, animator);
         EnemyID = new EnemyID(1);
     }
 

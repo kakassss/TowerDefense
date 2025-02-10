@@ -18,24 +18,29 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
     public BaseEnemyDefence Defence { get; private set; }
     public BaseEnemyAttack Attack { get; private set;}
     public EnemyID EnemyID { get; protected set; }
+    
+    public BaseEnemyAnimator Animator { get; private set; }
     public Transform Transform => transform;
 
+    [Header("References")]
     [SerializeField] protected EnemyDefenceSO _enemyDefenceSo;
     [SerializeField] protected EnemyAttackSO _enemyAttackSo;
     [SerializeField] protected BaseEnemyDataSO _baseEnemyDataSo;
     [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private Animator _animator;
     
     private EnemyPoolEvent _enemyPoolEvent;
     private MovementUtils _movementUtils;
     
     [Inject]
     protected virtual void Construct(EnemyPoolEvent enemyPoolEvent, MovementUtils movementUtils, BaseEnemyAttack attack
-    ,BaseEnemyDefence defence)
+    ,BaseEnemyDefence defence, BaseEnemyAnimator animator)
     {
         _enemyPoolEvent = enemyPoolEvent;
         _movementUtils = movementUtils;
         Attack = attack;
         Defence = defence;
+        Animator = animator;
         
         SetEnemyStats();
     }
@@ -48,7 +53,8 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
         // };
         Defence.SetDefenceSO(_enemyDefenceSo);
         Attack.SetAttackSO(_enemyAttackSo);
-        //Attack = new BaseEnemyAttack(_enemyAttackSo);// bunu singleton yapabilirsin 
+        Animator.SetAnimator(_animator);
+        
         Health = new BaseEnemyHealth(Defence.DefenceSo.Health,Defence.DefenceSo.DefenceType)
         {
             Death = this
@@ -63,6 +69,7 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
     private void Movement()
     {
         _movementUtils.TranslateForward(Transform,_baseEnemyDataSo.MovementSpeed,_rigidbody);
+        Animator.SetWalking();
     }
     
     private void OnDisable()
