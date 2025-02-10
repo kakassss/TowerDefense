@@ -22,6 +22,7 @@ public class BaseEnemyAnimator
     }
 
     //Public Methods
-    public void SetWalking() => _animator.CrossFade("Enemy_Move001", _walkTransitionTime);
-    public void SetAttacking() => _animator.CrossFade("Enemy_Attack001", _attackTransitionTime);
+    
+    public void SetWalking() => _animator.CrossFade(Enemy_Move001, 0);
+    public void SetAttacking() => _animator.CrossFade(Enemy_Attack001, 0);
 }
