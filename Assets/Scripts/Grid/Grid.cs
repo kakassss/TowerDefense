@@ -1,11 +1,8 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class Grid<T>
 {
     public T Slot;
-    public float CellSize;
-    public Vector3 OriginPosition;
 }
 
 public class Cell

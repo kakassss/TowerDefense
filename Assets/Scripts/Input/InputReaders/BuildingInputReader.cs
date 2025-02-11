@@ -22,7 +22,7 @@ public class BuildingInputReader : InputSystem_Actions.IInputBuildActions, IDisp
         if (!context.performed) return;
         if (EventSystem.current.IsPointerOverGameObject()) return;
         if(_ghostObjectReceiver.GhostObjectValid == false) return;
-            
+        
         _buildingInputEvents.SpawnInputAction();
     }
 

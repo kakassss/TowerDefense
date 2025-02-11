@@ -13,7 +13,7 @@ public class GridData
 public class GridGizmosController : MonoBehaviour
 {
     [SerializeField] private GameObject gridPrefab;
-    [SerializeField] private GridData _gridData;
+    [SerializeField] private GridSOData _gridData;
 
     [InfoBox("You can use after changing gizmos object transform position")]
     [Button("Calculate Grid Gizmos", ButtonSizes.Medium, ButtonStyle.Box)]
@@ -26,13 +26,15 @@ public class GridGizmosController : MonoBehaviour
     {
         //if(Application.isPlaying == false) return;
         
+        if(_gridData == null) return;
+        
         Gizmos.color = Color.red;
         //_gridData.GridOriginPosition.x = -(_gridData.GridSize * _gridData.CellSize) / 2 + transform.position.x;
         //_gridData.GridOriginPosition.y = 0.1f;
         //_gridData.GridOriginPosition.z = -(_gridData.GridSize * _gridData.CellSize) / 2 + transform.position.z;
-        for (int i = 0; i < _gridData.GridSize; i++)
+        for (int i = 0; i < _gridData.Width; i++)
         {
-            for (int j = 0; j < _gridData.GridSize; j++)
+            for (int j = 0; j < _gridData.Height; j++)
             {
                 Gizmos.DrawCube(
                     GetWorldPosition(j, i) + new Vector3(0,0.2f,0), new Vector3(0.5f,0.5f,0.5f));
@@ -42,9 +44,9 @@ public class GridGizmosController : MonoBehaviour
             }
         }
         
-        for (int i = 0; i < _gridData.GridSize; i++)
+        for (int i = 0; i < _gridData.Width; i++)
         {
-            for (int j = 0; j < _gridData.GridSize; j++)
+            for (int j = 0; j < _gridData.Height; j++)
             {
                 Gizmos.DrawLine(
                     GetWorldPosition(j, i) + new Vector3(0,0.2f,0),
@@ -57,17 +59,17 @@ public class GridGizmosController : MonoBehaviour
         }
         
         Gizmos.DrawLine(
-            GetWorldPosition(0, _gridData.GridSize),
-            GetWorldPosition(_gridData.GridSize, _gridData.GridSize));
+            GetWorldPosition(0, _gridData.Height),
+            GetWorldPosition(_gridData.Width, _gridData.Height));
         
         Gizmos.DrawLine(
-            GetWorldPosition(_gridData.GridSize,0),
-            GetWorldPosition(_gridData.GridSize, _gridData.GridSize));
+            GetWorldPosition(_gridData.Width,0),
+            GetWorldPosition(_gridData.Width, _gridData.Height));
     }
     
     private Vector3 GetWorldPosition(int x, int z)
     {
-        return new Vector3(x, 0, z) * _gridData.CellSize + _gridData.GridOriginPosition;
+        return new Vector3(x, 0, z) * _gridData.CellSize + _gridData.OriginPosition;
     }
 
 }

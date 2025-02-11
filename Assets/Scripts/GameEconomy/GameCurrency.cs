@@ -5,7 +5,7 @@ public class GameCurrency
     public Action OnCurrencyChanged;
     public int Coins { get; private set; }
     
-    public GameCurrency(int startingCoins = 100)
+    public GameCurrency(int startingCoins = 10000)
     {
         Coins = startingCoins;
     }

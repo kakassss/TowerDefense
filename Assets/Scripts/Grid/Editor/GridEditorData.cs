@@ -9,23 +9,24 @@ public class GridEditorData : Editor
     {
         gridData = (GridSOData)target;
 
-        if (gridData.isOccupied == null || gridData.isOccupied.GetLength(0) != gridData.width || gridData.isOccupied.GetLength(1) != gridData.height)
+        if (gridData.isOccupied == null || gridData.isOccupied.GetLength(0) != gridData.Width || gridData.isOccupied.GetLength(1) != gridData.Height)
         {
             gridData.InitializeGrid();
         }
     }
 
-        public override void OnInspectorGUI()
+    public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Grid Occupancy", EditorStyles.boldLabel);
 
-        for (int y = 0; y < gridData.height; y++)
+        
+        for (int y = 0; y < gridData.Height; y++)
         {
             EditorGUILayout.BeginHorizontal();
-            for (int x = 0; x < gridData.width; x++)
+            for (int x = 0; x < gridData.Width; x++)
             {
                 if (gridData.isOccupied != null)
                 {

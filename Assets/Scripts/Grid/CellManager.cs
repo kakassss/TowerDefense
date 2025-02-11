@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using TMPro;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using Zenject;
 using Random = UnityEngine.Random;
 
 public struct Column
@@ -28,6 +24,7 @@ public class CellManager
     private int _height;
     private float _cellSize;
     private Vector3 _originPosition;
+    private GridSOData _gridSOData;
     #endregion
     
     private Utils _utils;
@@ -41,17 +38,17 @@ public class CellManager
     public Vector3 OriginPosition => _originPosition;
     #endregion
     
-    private IInstantiator _instantiator;
     private int randomer;
     #region Constructer
-    public CellManager(int width, int height,float cellSize, Vector3 originPosition, GameObject gridPrefab, IInstantiator instantiator, Transform parent)
+    public CellManager(GridSOData gridSOData)
     {
-        _grid = new Grid<Cell>[width, height];
-        _width = width;
-        _height = height;
-        _cellSize = cellSize;
-        _originPosition = originPosition;
-        _instantiator = instantiator;
+        _gridSOData = gridSOData;
+        
+        _grid = new Grid<Cell>[_gridSOData.Width, _gridSOData.Height];
+        _width = _gridSOData.Width;
+        _height = _gridSOData.Height;
+        _cellSize = _gridSOData.CellSize;
+        _originPosition = _gridSOData.OriginPosition;
         
         for (int i = 0; i < _grid.GetLength(0); i++)
         {
@@ -59,25 +56,8 @@ public class CellManager
             {
                 _grid[i, j] = new Grid<Cell>
                 {
-                    Slot = new Cell(i,j,false, ElementType.Normal)
+                    Slot = new Cell(i,j, _gridSOData.GetCells[j * _width + i], ElementType.Normal)
                 };
-                //     
-                // var text =  _instantiator.InstantiatePrefab(gridPrefab, GetWorldPosition(i, j), Quaternion.identity, parent);
-                // text.transform.position += new Vector3(cellSize/2, 0.15f, cellSize/2);
-                // text.GetComponentInChildren<TextMeshProUGUI>().text = i + "," + j;
-                // if (randomer == 0)
-                // {
-                //     randomer = 1;
-                //     text.GetComponentInChildren<Image>().color = Color.blue;
-                //     continue;
-                // }
-                //
-                // if (randomer == 1)
-                // {
-                //     text.GetComponentInChildren<Image>().color = Color.green;
-                //     randomer = 0;
-                //     continue;
-                // }
             }
         }
         
@@ -93,46 +73,18 @@ public class CellManager
         //     Debug.Log(_grid[0,i].Slot.Name);
         // }
     }
-    // public CellManager(int width, int height,float cellSize, Vector3 originPosition,Utils utils)
-    // {
-    //     _grid = new Grid<Cell>[width, height];
-    //     _width = width;
-    //     _height = height;
-    //     _cellSize = cellSize;
-    //     _originPosition = originPosition;
-    //     
-    //     _utils = utils;
-    //     
-    //     for (int i = 0; i < _grid.GetLength(0); i++)
-    //     {
-    //         for (int j = 0; j < _grid.GetLength(1); j++)
-    //         {
-    //             _grid[i, j] = new Grid<Cell>
-    //             {
-    //                 Slot = new Cell(i,j,false, ElementType.Normal)
-    //             };
-    //         }
-    //     }
-    //     
-    //     // for (int i = 0; i < _grid.GetLength(0); i++)
-    //     // {
-    //     //     for (int j = 0; j < _grid.GetLength(1); j++)
-    //     //     {
-    //     //         Debug.Log(_grid[i,j].Slot  + " Current grid column " + _grid[i,j].Slot.Column);
-    //     //     }
-    //     // }
-    // }
+
     #endregion
     
     public Vector3 GetWorldPosition(int x, int z)
     {
-        return new Vector3(x, 0, z) * CellSize + _originPosition;
+        return new Vector3(x, 0, z) * _cellSize + _originPosition;
     }
     
     public void GetXZ(Vector3 worldPos, out int x, out int z)
     {
-        x = Mathf.FloorToInt((worldPos -_originPosition).x/ _cellSize);
-        z = Mathf.FloorToInt((worldPos- _originPosition).z/ _cellSize);
+        x = Mathf.FloorToInt((worldPos - _originPosition).x / _cellSize);
+        z = Mathf.FloorToInt((worldPos - _originPosition).z / _cellSize);
     }
     
     public (int X,int Z) GetXZ(Vector3 worldPos)
@@ -195,7 +147,7 @@ public class CellManager
     public Grid<Cell> GetCellAtIndex(Vector3 worldPos)
     {
         GetXZ(worldPos,out var x, out var z);
-        if ( x >= 0 && z >= 0 && x < _width && z < _height)
+        if ( x >= 0 && z >= 0 && x < Width && z < Height)
         {
             return _grid[x, z];
         }

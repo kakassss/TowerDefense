@@ -3,15 +3,12 @@ using Zenject;
 
 public class GridInstaller : MonoInstaller
 {
-    [SerializeField] private int width;
-    [SerializeField] private int height;
-    [SerializeField] private float cellSize;
-    [SerializeField] private Vector3 originPos;
-    [SerializeField] private GameObject gridText;
+    [SerializeField] private GridSOData gridData;
     
     public override void InstallBindings()
     {
-        Container.Bind<CellManager>().AsSingle().WithArguments(width,height,cellSize,originPos,gridText,transform).NonLazy();
+        Container.Bind<GridSOData>().FromScriptableObject(gridData).AsSingle().NonLazy();
+        Container.Bind<CellManager>().AsSingle().WithArguments(gridData).NonLazy();
         Container.Bind<CellPowerManager>().AsSingle().NonLazy();
     }
 }

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 760a8803895cda9458eeb06fd7e2e0c4, type: 3}
   m_Name: GridSOData
   m_EditorClassIdentifier: 
-  width: 5
-  height: 5
-  serializedOccupied: 01000000000100000000000000000001000000000000000000
+  Width: 8
+  Height: 8
+  CellSize: 4
+  OriginPosition: {x: -20, y: 0, z: -15.7}
+  serializedOccupied: 01010101010101010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

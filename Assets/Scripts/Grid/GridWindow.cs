@@ -20,13 +20,13 @@ public class GridWindow : EditorWindow
         if (gridData.isOccupied == null)
         {
             Debug.LogError("gridData.isOccupied is NULL! Initializing...");
-            gridData.isOccupied = new bool[gridData.width, gridData.height]; 
+            gridData.isOccupied = new bool[gridData.Width, gridData.Height]; 
         }
         
-        for (int y = 0; y < gridData.height; y++)
+        for (int y = 0; y < gridData.Height; y++)
         {
             EditorGUILayout.BeginHorizontal();
-            for (int x = 0; x < gridData.width; x++)
+            for (int x = 0; x < gridData.Width; x++)
             {
                 gridData.isOccupied[x, y] = EditorGUILayout.Toggle(gridData.isOccupied[x, y]);
             }
