@@ -21,7 +21,6 @@ public class GridEditorData : Editor
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Grid Occupancy", EditorStyles.boldLabel);
-
         
         for (int y = 0; y < gridData.Height; y++)
         {
@@ -30,6 +29,7 @@ public class GridEditorData : Editor
             {
                 if (gridData.isOccupied != null)
                 {
+                    EditorGUILayout.FloatField(x * gridData.Width + y, GUILayout.Width(20)); // Grid index
                     gridData.isOccupied[x, y] = EditorGUILayout.Toggle(gridData.isOccupied[x, y], GUILayout.Width(20));
                 }
             }
