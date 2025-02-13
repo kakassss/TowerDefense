@@ -8,6 +8,7 @@ public class BaseEnemyAnimator
     //Animations
     private static readonly int Enemy_Move001 = Animator.StringToHash("Enemy_Move001");
     private static readonly int Enemy_Attack001 = Animator.StringToHash("Enemy_Attack001");
+    private static readonly int Enemy_Idle001 = Animator.StringToHash("Enemy_Idle001");
     
     //Transition Times
     private float _attackTransitionTime;
@@ -25,4 +26,5 @@ public class BaseEnemyAnimator
     
     public void SetWalking() => _animator.CrossFade(Enemy_Move001, 0);
     public void SetAttacking() => _animator.CrossFade(Enemy_Attack001, 0);
+    public void SetIdle() => _animator.CrossFade(Enemy_Idle001, 0.1f);
 }

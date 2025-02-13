@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
-public class BaseEnemyAttack : IEnemyAttack
+public class BaseEnemyAttack
 {
     public EnemyAttackSO AttackSO;
 
@@ -16,26 +15,15 @@ public class BaseEnemyAttack : IEnemyAttack
         _fireRate = AttackSO.FireRate;
     }
     
-    public void AttackAction()
-    {
-        if(InRange(_targetPosition) == false) return;
-        
-        AttackRate(_targetTowerHealth.Damage,AttackSO);
-    }
-
-    private bool InRange(Transform targetPosition)
-    {
-        return targetPosition.position.magnitude <= AttackSO.Range;
-    }
-
-    private void AttackRate(UnityAction<float,ElementType> attackAction,EnemyAttackSO attackSo)
+    public void AttackRate(EnemyAttackSO attackSo, BaseEnemyAnimator animator)
     {
         _fireRateTemp += Time.deltaTime;
 
         if (_fireRateTemp > _fireRate)
         {
             _fireRate += Time.deltaTime;
-            attackAction?.Invoke(attackSo.AttackPower,attackSo.AttackElement);
+            
+            animator.SetAttacking();
         }
     }
 }

@@ -10,7 +10,7 @@ public class Cell
     public int GridIndexX; // Using for building system, getting grid at this index
     public int GridIndexZ; // Using for building system, getting grid at this index
     public bool IsFull;
-    
+    public bool IsEntityActive;
     
     public string Name; // Only for testing 
     public float Power;

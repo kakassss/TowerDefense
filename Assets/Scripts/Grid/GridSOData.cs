@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "GridSOData", menuName = "Grid/GridSOData")]
 public class GridSOData : ScriptableObject

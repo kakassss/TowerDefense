@@ -9,32 +9,40 @@ public class MovementUtils
     private float _currentSpeed;
     private int _rayCastDistance = 1;
     
-    public void TranslateForward(Transform transform, float movementSpeed,Rigidbody rigidbody, float direction = 1)
+    public bool CanMove = false;
+    
+    public bool TranslateForward(Transform transform, float movementSpeed,Rigidbody rigidbody,BaseEnemyAnimator animator, float direction = 1)
     {
-        if (CanMove(transform.position, -transform.right, _rayCastDistance, TowerLayerMask) == false)
+        if (IsTargetValid(transform.position, -transform.right, _rayCastDistance, TowerLayerMask) == false)
         {
             rigidbody.isKinematic = false;
             rigidbody.linearVelocity = Vector3.zero;
-            return;
+            
+            CanMove = false;
+            return false;
         }
 
-        if (CanMove(transform.position, -transform.right, _rayCastDistance, EnemyLayerMask) == false)
+        if (IsTargetValid(transform.position, -transform.right, _rayCastDistance, EnemyLayerMask) == false)
         {
             rigidbody.isKinematic = false;
             rigidbody.linearVelocity = Vector3.zero;
-            return;
+            
+            CanMove = false;
+            return false;
         }
         
-        rigidbody.isKinematic = true;
+        animator.SetWalking();
         
+        rigidbody.isKinematic = true;
+        CanMove = true;
         
         Vector3 moveTowards = -Vector3.right * (movementSpeed * Time.deltaTime * direction);
         transform.position += moveTowards;
-        
+        return true;
        // Debug.DrawRay(transform.position, transform.forward * _rayCastDistance, Color.yellow);
     }
 
-    private bool CanMove(Vector3 origin, Vector3 direction, float distance,LayerMask mask)
+    public bool IsTargetValid(Vector3 origin, Vector3 direction, float distance,LayerMask mask)
     {
         RaycastHit hitInfo;
         if (Physics.Raycast(origin, direction, out hitInfo, distance, mask))

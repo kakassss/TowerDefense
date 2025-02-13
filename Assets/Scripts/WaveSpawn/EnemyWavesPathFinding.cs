@@ -119,7 +119,7 @@ public class EnemyWavesPathFinding
             return CalculatedSpawnPoint = GetColumnSpawnPoint(_allColumnsPowerSize[0].Index) + spawnPointOffset;
         }
         
-        CalculatedSpawnPoint = CalculateSpawnPoint2(_columnsPowerSizeSorted, spawnPointOffset);
+        CalculatedSpawnPoint = CalculateSpawnPoint(_columnsPowerSizeSorted, spawnPointOffset);
         
         if (CalculatedSpawnPoint == Vector3.zero)
         {
@@ -129,7 +129,7 @@ public class EnemyWavesPathFinding
         return CalculatedSpawnPoint;
     }
 
-    private Vector3 CalculateSpawnPoint2(List<Column> columnList, Vector3 spawnPointOffset)
+    private Vector3 CalculateSpawnPoint(List<Column> columnList, Vector3 spawnPointOffset)
     {
         //Profiler.BeginSample("SpawnPoint");
         var random = Random.Range(0, 100);

@@ -1,14 +1,5 @@
-﻿using System;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
-
-[Serializable]
-public class GridData
-{
-    public int GridSize;
-    public int CellSize;
-    public Vector3 GridOriginPosition;
-}
 
 public class GridGizmosController : MonoBehaviour
 {
@@ -49,7 +40,7 @@ public class GridGizmosController : MonoBehaviour
             for (int j = 0; j < _gridData.Height; j++)
             {
                 Gizmos.DrawLine(
-                    GetWorldPosition(j, i) + new Vector3(0,0.2f,0),
+                    GetWorldPosition(j, i) + new Vector3(0,0.2f,0), 
                     GetWorldPosition(j + 1, i) + new Vector3(0,0.2f,0));
         
                 Gizmos.DrawLine(
@@ -69,7 +60,7 @@ public class GridGizmosController : MonoBehaviour
     
     private Vector3 GetWorldPosition(int x, int z)
     {
-        return new Vector3(x, 0, z) * _gridData.CellSize + _gridData.OriginPosition;
+        return (new Vector3(x, 0, z) * _gridData.CellSize + _gridData.OriginPosition);
     }
 
 }

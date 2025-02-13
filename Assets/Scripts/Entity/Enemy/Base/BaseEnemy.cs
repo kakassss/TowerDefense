@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -31,18 +32,36 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
     
     private EnemyPoolEvent _enemyPoolEvent;
     private MovementUtils _movementUtils;
-    
+    private CellManager _cellManager;
+    protected UpdateProvider _updateProvider;
+
+    private ITower _targetTower;
+    private const int TowerLayerMask = 1 << 8;
+    private int _rayCastDistance = 1;
     [Inject]
     protected virtual void Construct(EnemyPoolEvent enemyPoolEvent, MovementUtils movementUtils, BaseEnemyAttack attack
-    ,BaseEnemyDefence defence, BaseEnemyAnimator animator)
+    ,BaseEnemyDefence defence, BaseEnemyAnimator animator, UpdateProvider updateProvider, CellManager cellManager)
     {
         _enemyPoolEvent = enemyPoolEvent;
         _movementUtils = movementUtils;
+        _updateProvider = updateProvider;
+        _cellManager = cellManager;
+        
         Attack = attack;
         Defence = defence;
         Animator = animator;
         
         SetEnemyStats();
+    }
+
+    private void OnEnable()
+    {
+        LookAtGridCenter();
+    }
+
+    private void OnDisable()
+    {
+        _enemyPoolEvent.FireDeactivated(this,EnemyID);
     }
 
     protected virtual void SetEnemyStats()
@@ -61,22 +80,29 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
         };
     }
 
-    protected virtual void Update()
+    private void LookAtGridCenter()
     {
-        Movement();
-    }
-
-    private void Movement()
-    {
-        _movementUtils.TranslateForward(Transform,_baseEnemyDataSo.MovementSpeed,_rigidbody);
-        Animator.SetWalking();
+        transform.LookAt(_cellManager.GetMidCellPosition());
     }
     
-    private void OnDisable()
+    protected void StateBehavior()
     {
-        _enemyPoolEvent.FireDeactivated(this,EnemyID);
+        if(gameObject.activeInHierarchy == false) return;
+        
+        if (_movementUtils.TranslateForward(Transform,_baseEnemyDataSo.MovementSpeed,_rigidbody,Animator) == true)
+        {
+            return;
+        }
+        
+        if (_movementUtils.IsTargetValid(transform.position, -transform.right, _rayCastDistance, TowerLayerMask) == false)
+        {
+            Attack.AttackRate(_enemyAttackSo,Animator);
+            return;
+        }
+        
+        Animator.SetIdle();
     }
-
+    
     public void Death()
     {
         Transform.gameObject.SetActive(false);

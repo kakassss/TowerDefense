@@ -1,16 +1,18 @@
 ﻿
-public class EnemyGoblin : BaseEnemy
+public class EnemyGoblin : BaseEnemy, IUpdate
 {
-    protected override void Construct(EnemyPoolEvent enemyPoolEvent, MovementUtils movementUtils
-        , BaseEnemyAttack enemyAttack, BaseEnemyDefence defence, BaseEnemyAnimator animator)
+    protected override void Construct(EnemyPoolEvent enemyPoolEvent, MovementUtils movementUtils,
+        BaseEnemyAttack enemyAttack, BaseEnemyDefence defence, BaseEnemyAnimator animator,
+        UpdateProvider updateProvider, CellManager cellManager)
     {
-        base.Construct(enemyPoolEvent,movementUtils, enemyAttack, defence, animator);
+        base.Construct(enemyPoolEvent,movementUtils, enemyAttack, defence, animator, updateProvider,cellManager);
         EnemyID = new EnemyID(1);
-    }
-
-    protected override void SetEnemyStats()
-    {
-        base.SetEnemyStats();
+        
+        _updateProvider.AddListener(this);
     }
     
+    public void UpdateBehavior()
+    {
+        StateBehavior();
+    }
 }

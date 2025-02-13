@@ -32,10 +32,10 @@ public class CellManager
 
     #region Properties
     public Grid<Cell>[,] Grid => _grid;
-    public int Width => _width;
-    public int Height => _height;
-    public float CellSize => _cellSize;
-    public Vector3 OriginPosition => _originPosition;
+    public int Width => _width; // 8
+    public int Height => _height; // 8
+    public float CellSize => _cellSize; // 4
+    public Vector3 OriginPosition => _originPosition; // -20, 0, -15.7
     #endregion
     
     private int randomer;
@@ -98,8 +98,9 @@ public class CellManager
         var cell = GetCellAtIndex(worldPos);
         if (cell == null) return true;
         
-        return cell.Slot.IsFull;
+        return cell.Slot.IsEntityActive || cell.Slot.IsFull;
     }
+    
     public List<Column> GetActiveColumnsStruct()
     {
         _activeColumns.Clear();
@@ -110,7 +111,7 @@ public class CellManager
             // Then check each row in that column (i)
             for (int i = 0; i < _grid.GetLength(0); i++)
             {
-                if (_grid[i, j].Slot.IsFull)
+                if (_grid[i, j].Slot.IsEntityActive)
                 {
                     _activeColumns.Add(new Column(j, 0));
                     break; // Exit inner loop once we find a full cell
@@ -172,6 +173,12 @@ public class CellManager
         var cellPos = GetWorldPosition(x, z);
         return cellPos + new Vector3(CellSize / 2, 0, CellSize / 2);
     }
+
+    public Vector3 GetMidCellPosition()
+    {
+        var midGrid = _grid[_width / 2, _height / 2];
+        return GetWorldPosition(midGrid.Slot.GridIndexX, midGrid.Slot.GridIndexZ);
+    }
     
     #endregion
     
@@ -188,12 +195,14 @@ public class CellManager
     public void SetCellFull(Grid<Cell> cell, BaseTower baseTower)
     {
         cell.Slot.IsFull = true;
+        cell.Slot.IsEntityActive = true;
         cell.Slot.Entity = baseTower;
     }
 
     public void SetCellEmptyWithDestroy(Grid<Cell> cell)
     {
         cell.Slot.IsFull = false;
+        cell.Slot.IsEntityActive = false;
         cell.Slot.Entity = null;
     }
 
@@ -201,6 +210,7 @@ public class CellManager
     {
         var cell = GetCellAtIndex(worldPos);
         cell.Slot.IsFull = false;
+        cell.Slot.IsEntityActive = false;
         cell.Slot.Entity = null;
     }
 

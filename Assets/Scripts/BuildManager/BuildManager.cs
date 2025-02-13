@@ -39,7 +39,7 @@ public class BuildManager
                 if ( x + i >= 0 && z + j >= 0 && x + i < _cellManager.Width && z + j < _cellManager.Height)
                 {
                     var buildCell = _cellManager.Grid[x + i, z + j].Slot;
-                    if(buildCell.IsFull == true) return;
+                    if(buildCell.IsEntityActive == true || buildCell.IsFull == true) return;
                     
                     BuildCells buildableCells = new BuildCells(buildCell);
                     buildCells.Add(buildableCells);
@@ -64,6 +64,7 @@ public class BuildManager
         
         foreach (var cell in buildCells)
         {
+            cell.Cell.IsEntityActive = true;
             cell.Cell.IsFull = true;
             cell.Cell.Power = induvialCellPower;
         }
@@ -78,6 +79,7 @@ public class BuildManager
     {
         foreach (var cell in buildCells)
         {
+            cell.Cell.IsEntityActive = true;
             cell.Cell.IsFull = true;
             var tower = _instantiator.InstantiatePrefab(_buildObjectReceiver.CurrentGridEntitySO.BuildObject);
             tower.transform.position = cell.SpawnPosition * _cellManager.CellSize + _cellManager.OriginPosition + 
