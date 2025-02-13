@@ -14,4 +14,18 @@ public class EnemyTroll : BaseEnemy, IUpdate
     {
         StateBehavior();
     }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        
+        _updateProvider.AddListener(this);
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        
+        _updateProvider.RemoveListener(this);
+    }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class BoxTower : BaseTower, IUpdate, IDisposable
 {
     protected override void Construct(QuaternionUtils quaternionUtils, BaseTowerAttack attack, TowerAttackTypeHolder towerAttackTypeHolder,
-        UpdateProvider updateProvider, TowerRangeTypeHolder towerRangeTypeHolder)
+        UpdateProvider updateProvider, TowerRangeTypeHolder towerRangeTypeHolder  )
     {
         base.Construct(quaternionUtils, attack, towerAttackTypeHolder, updateProvider, towerRangeTypeHolder);
         

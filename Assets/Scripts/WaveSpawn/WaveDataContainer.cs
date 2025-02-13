@@ -8,12 +8,12 @@ public class WaveDataContainer : ScriptableObject
     public List<WaveData> WaveStages;
 }
 
-
 [Serializable]
 public class WaveData
 {
     public List<Wave> Waves;
 }
+
 [Serializable]
 public class Wave
 {

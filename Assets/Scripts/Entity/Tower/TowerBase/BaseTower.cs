@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -35,9 +36,20 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
         _towerAttackTypeHolder = towerAttackTypeHolder;
         _updateProvider = updateProvider;
         _towerRangeTypeHolder = towerRangeTypeHolder;
+        
         Attack = attack;
         
         SetTowerStats();
+    }
+
+    private void OnEnable()
+    {
+        SetInitRotation();
+    }
+
+    private void SetInitRotation()
+    {
+        //transform.LookAt();
     }
 
     // Using for once, kind of start

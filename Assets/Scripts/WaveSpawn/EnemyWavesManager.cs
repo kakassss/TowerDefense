@@ -10,26 +10,25 @@ public class EnemyWavesManager : MonoBehaviour
     [InfoBox("Troll -> 0")]
     [InfoBox("Goblin -> 1")]
     
-    private const int EnemyLayerMask = 1 << 9;
-    
-    [SerializeField] private List<Transform> _spawnPoints;
     [SerializeField] private List<WaveDataContainer> _totalWaveData;
-    [SerializeField] private Vector3 _spawnPointOffset;
     
     private EnemyPool _enemyPool;
     private CellManager _cellManager;
     private EnemyWavesPathFinding _enemyWavesPathFinding;
+    private GridSOData _gridSOData;
     
     //First Init cell references
     private Cell _defaultOpenCell;
     [SerializeField] private DrawCubeGizmos _defaultCellGizmos;
     
     [Inject]
-    private void Construct(EnemyPool enemyPool, CellManager cellManager,EnemyWavesPathFinding enemyWavesPathFinding)
+    private void Construct(EnemyPool enemyPool, CellManager cellManager,EnemyWavesPathFinding enemyWavesPathFinding
+    ,GridSOData gridSOData)
     {
         _enemyPool = enemyPool;
         _cellManager = cellManager;
         _enemyWavesPathFinding = enemyWavesPathFinding;
+        _gridSOData = gridSOData;
     }
     
     private void Start()
@@ -61,7 +60,7 @@ public class EnemyWavesManager : MonoBehaviour
                 {
                     for (int i = 0; i < wave.Count; i++)
                     {
-                        var path = _enemyWavesPathFinding.GetCalculatedPowerSizeSpawnPoints(_spawnPointOffset);
+                        var path = _enemyWavesPathFinding.GetCalculatedPowerSizeSpawnPoints(_gridSOData.EnemySpawnPointOffset);
                         var pathOffSet = new Vector3(path.x,path.y, path.z + Random.Range(-1.5f,1.5f));
                         
                         _enemyPool.GetObjectFromPool(wave.EnemyID,pathOffSet);
@@ -77,12 +76,8 @@ public class EnemyWavesManager : MonoBehaviour
         if(_defaultCellGizmos.CanDrawGizmos) _defaultCellGizmos.DrawGizmos(Color.yellow); // default open cell gizmos
         if(_enemyWavesPathFinding == null) return;
         if(_enemyWavesPathFinding.CalculatedSpawnPoint == Vector3.zero) return;
+        
         Gizmos.color = Color.green;
         Gizmos.DrawCube(_enemyWavesPathFinding.CalculatedSpawnPoint,Vector3.one);
-        
-        // for (int i = 0; i < _enemyWavesPathFinding?.SpawnPoints.Count; i++)
-        // {
-        //     Gizmos.DrawCube(_enemyWavesPathFinding.SpawnPoints[i],new Vector3(1f,1f,1f));
-        // }
     }
 }

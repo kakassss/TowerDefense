@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class QuaternionUtils
 {
@@ -13,5 +14,23 @@ public class QuaternionUtils
         Quaternion targetRotation = Quaternion.LookRotation(target.position - transform.position);
         transform.localRotation = Quaternion.Slerp(transform.localRotation, 
             targetRotation, Time.deltaTime * rotateSpeed);
+    }
+
+
+    public Quaternion SetRotation(Transform transform, List<Transform> targetPositions)
+    {
+        var targetRotation = Quaternion.LookRotation(targetPositions[0].position - transform.position);
+        
+        Vector3 distance = transform.position - targetPositions[0].position;
+        
+        for (int i = 0; i < targetPositions.Count; i++)
+        {
+            if (distance.magnitude < (transform.position - targetPositions[i].position).magnitude)
+            {
+                targetRotation = Quaternion.LookRotation(targetPositions[i].position - transform.position);
+            }
+        }
+
+        return targetRotation;
     }
 }

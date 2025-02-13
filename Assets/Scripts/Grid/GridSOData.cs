@@ -8,6 +8,7 @@ public class GridSOData : ScriptableObject
     public int Height;
     public float CellSize;
     public Vector3 OriginPosition;
+    public Vector3 EnemySpawnPointOffset;
     
     [SerializeField] private List<bool> serializedOccupied = new List<bool>();
 

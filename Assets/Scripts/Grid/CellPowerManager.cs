@@ -37,8 +37,6 @@ public class CellPowerManager
         return _tempPower;
     }
     
-   
-
     #region OldPowerSizeFunc
     //private Dictionary<int, float> _columnPowerRate = new Dictionary<int, float>();
     //private Dictionary<int, float> _powerSizeDic = new Dictionary<int, float>();

@@ -54,12 +54,12 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
         SetEnemyStats();
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         LookAtGridCenter();
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         _enemyPoolEvent.FireDeactivated(this,EnemyID);
     }
