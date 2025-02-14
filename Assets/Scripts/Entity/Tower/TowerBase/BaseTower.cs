@@ -27,15 +27,19 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
     protected TowerRangeTypeHolder _towerRangeTypeHolder;
     protected UpdateProvider _updateProvider;
     protected QuaternionUtils _quaternionUtils;
+    private GridSOData _gridSOData;
+    
+    private List<Vector3> _towerAimPoints = new List<Vector3>();
     
     [Inject]
     protected virtual void Construct(QuaternionUtils quaternionUtils, BaseTowerAttack attack, TowerAttackTypeHolder towerAttackTypeHolder
-    , UpdateProvider updateProvider, TowerRangeTypeHolder towerRangeTypeHolder)
+    , UpdateProvider updateProvider, TowerRangeTypeHolder towerRangeTypeHolder, GridSOData gridSOData)
     {
         _quaternionUtils = quaternionUtils;
         _towerAttackTypeHolder = towerAttackTypeHolder;
         _updateProvider = updateProvider;
         _towerRangeTypeHolder = towerRangeTypeHolder;
+        _gridSOData = gridSOData;
         
         Attack = attack;
         
@@ -46,10 +50,15 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
     {
         SetInitRotation();
     }
-
+    
     private void SetInitRotation()
     {
-        //transform.LookAt();
+        _towerAimPoints.Clear();
+        _towerAimPoints.Add(_gridSOData.EnemySpawnPointOffset);
+
+        var targetToRotate = _quaternionUtils.SetRotation(transform, _towerAimPoints);
+        
+        transform.LookAt(targetToRotate);
     }
 
     // Using for once, kind of start

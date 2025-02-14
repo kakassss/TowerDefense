@@ -17,17 +17,19 @@ public class QuaternionUtils
     }
 
 
-    public Quaternion SetRotation(Transform transform, List<Transform> targetPositions)
+    public Vector3 SetRotation(Transform transform, List<Vector3> targetPositions)
     {
-        var targetRotation = Quaternion.LookRotation(targetPositions[0].position - transform.position);
+        var targetRotation = (targetPositions[0] - transform.position);
+
+        if (targetPositions.Count == 0) return targetRotation;
         
-        Vector3 distance = transform.position - targetPositions[0].position;
         
+        Vector3 distance = transform.position - targetPositions[0];
         for (int i = 0; i < targetPositions.Count; i++)
         {
-            if (distance.magnitude < (transform.position - targetPositions[i].position).magnitude)
+            if (distance.magnitude < (transform.position - targetPositions[i]).magnitude)
             {
-                targetRotation = Quaternion.LookRotation(targetPositions[i].position - transform.position);
+                targetRotation = (targetPositions[i] - transform.position);
             }
         }
 
