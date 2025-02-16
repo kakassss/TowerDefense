@@ -12,7 +12,7 @@ public class EnemyTroll : BaseEnemy, IUpdate
     
     public void UpdateBehavior()
     {
-        StateBehavior();
+        StateMachine();
     }
 
     protected override void OnEnable()

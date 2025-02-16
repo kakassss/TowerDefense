@@ -52,12 +52,16 @@ Material:
     m_Ints: []
     m_Floats:
     - _Float: 0
+    - _Hardness: 0
+    - _MaskRadius: 0
     - _QueueControl: 1
     - _QueueOffset: 0
-    - _Thickness: 0.03
+    - _Radius: 0.18
+    - _Thickness: 0.116
+    - _TimerSpeed: 2
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DefaultScale: {r: 5, g: 5, b: 0, a: 0}
+    - _Color: {r: 0, g: 0, b: 0, a: 0.14901961}
+    - _DefaultScale: {r: 5.08, g: 5, b: 0, a: 0}
     - _MousePosition: {r: -7.008789, g: 49.233826, b: 0, a: 0}
     - _OffSet: {r: 0, g: 0, b: 0, a: 0}
     - _Size: {r: 0.5, g: 0.5, b: 0, a: 0}

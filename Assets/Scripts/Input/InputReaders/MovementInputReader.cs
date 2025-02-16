@@ -28,7 +28,6 @@ public class MovementInputReader : InputSystem_Actions.IInputMovementKeyboardAct
 
     public void OnCameraMovementMouse(InputAction.CallbackContext context)
     {
-        //Movement = context.ReadValue<Vector2>();
         if (context.started)
         {
             MouseInput = Input.mousePosition;

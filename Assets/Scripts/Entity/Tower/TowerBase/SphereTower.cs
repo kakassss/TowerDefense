@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 
-public class SphereTower : BaseTower, IUpdate, IDisposable
+public class SphereTower : BaseTower, IUpdate
 {
     protected override void Construct(QuaternionUtils quaternionUtils, BaseTowerAttack attack, TowerAttackTypeHolder towerAttackTypeHolder,
         UpdateProvider updateProvider, TowerRangeTypeHolder towerRangeTypeHolder, GridSOData gridSoData)
@@ -30,16 +29,6 @@ public class SphereTower : BaseTower, IUpdate, IDisposable
     }
 
     private void OnDisable()
-    {
-        _updateProvider.RemoveListener(this);
-    }
-
-    private void OnDestroy()
-    {
-        _updateProvider.RemoveListener(this);
-    }
-    
-    public void Dispose()
     {
         _updateProvider.RemoveListener(this);
     }

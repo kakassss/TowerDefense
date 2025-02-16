@@ -1,6 +1,6 @@
 using UnityEngine;
 
-//GEÇİCİ OLARAK VAR İLERİDE POPUP SİSTEMİ TARZI Bİ ŞEY LAZIM 
+//onlf for testing
 public class SetStateUIGameobject : MonoBehaviour
 {
     [SerializeField] private GameObject _uiGoTarget; 

@@ -23,8 +23,6 @@ public class GhostObjectReceiver
         GridIndexX = 0;
         GridIndexZ = 0;
         
-        //GameObject.transform.position = Vector3.zero;
-
         Object.Destroy(GameObject);
         GameObject = null;
     }

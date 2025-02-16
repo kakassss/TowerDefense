@@ -15,18 +15,15 @@ public class BaseObject
     
     public int X;
     public int Z;
-
-    public Vector3 Size;
     
     public GameObject BuildObject;
     public GhostObject GhostObject;
-    public BuildType BuildType;
     
     public int BuildCost;
     [HideInInspector] public float PowerSize => X * Z;
     [Header("Power")] 
     public float AttackPower;
-    public int PowerLevel; // buna bir şey düşünmedin daha
+    
     public bool CanBuild(int buildSlotCount)
     {
         if (X == 1 && Z == 1 && buildSlotCount == 1)
@@ -38,11 +35,6 @@ public class BaseObject
     }
 }
 
-public enum BuildType
-{
-    Single,
-    Multiple
-}
 
 [Serializable]
 public class GhostObject

@@ -84,7 +84,5 @@ public class TowerAttackTypeUI : MonoBehaviour
         {
             _attackTypeButtons[i].gameObject.SetActive(false);
         }
-        
     }
-
 }

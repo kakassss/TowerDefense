@@ -1,28 +1,15 @@
-﻿using Sirenix.OdinInspector;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GridGizmosController : MonoBehaviour
 {
-    [SerializeField] private GameObject gridPrefab;
     [SerializeField] private GridSOData _gridData;
 
-    [InfoBox("You can use after changing gizmos object transform position")]
-    [Button("Calculate Grid Gizmos", ButtonSizes.Medium, ButtonStyle.Box)]
-    private void OnValidate()
-    {
-
-    }
-    
     private void OnDrawGizmos()
     {
-        //if(Application.isPlaying == false) return;
-        
         if(_gridData == null) return;
         
         Gizmos.color = Color.red;
-        //_gridData.GridOriginPosition.x = -(_gridData.GridSize * _gridData.CellSize) / 2 + transform.position.x;
-        //_gridData.GridOriginPosition.y = 0.1f;
-        //_gridData.GridOriginPosition.z = -(_gridData.GridSize * _gridData.CellSize) / 2 + transform.position.z;
+        
         for (int i = 0; i < _gridData.Width; i++)
         {
             for (int j = 0; j < _gridData.Height; j++)

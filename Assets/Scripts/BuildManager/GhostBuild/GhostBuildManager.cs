@@ -28,7 +28,7 @@ public class GhostBuildManager
     {
         if (_ghostObjectReceiver.GameObject != null)
         {
-            //TODO: Buraya basit bir poolObject yap
+            //TODO: could be basic object pooling
             Object.Destroy(_ghostObjectReceiver.GameObject);
         }
         

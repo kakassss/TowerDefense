@@ -25,6 +25,7 @@ public class CellManager
     private float _cellSize;
     private Vector3 _originPosition;
     private GridSOData _gridSOData;
+    
     #endregion
     
     private Utils _utils;

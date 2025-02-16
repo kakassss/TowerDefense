@@ -38,6 +38,7 @@ public class EnemyWavesManager : MonoBehaviour
     
     private void Update()
     {
+        //Test button
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Spawner().Forget();

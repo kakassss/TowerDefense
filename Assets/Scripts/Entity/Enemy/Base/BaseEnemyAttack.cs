@@ -22,7 +22,7 @@ public class BaseEnemyAttack
         if (_fireRateTemp > _fireRate)
         {
             _fireRate += Time.deltaTime;
-            
+            //use attackSo variables to attack
             animator.SetAttacking();
         }
     }

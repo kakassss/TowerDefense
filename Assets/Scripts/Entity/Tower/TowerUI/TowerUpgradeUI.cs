@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
@@ -28,7 +27,6 @@ public class TowerUpgradeUI : MonoBehaviour
     private void OnDisable()
     {
         _selectedTowerReceiver.SelectedTower.TowerHealth.OnHealthUpgradeFinish -= SetButtonState;
-
         
         _upgradeButton.gameObject.SetActive(false);
         _upgradeButton.onClick.RemoveListener(OnClick);

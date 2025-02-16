@@ -38,6 +38,7 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
     private ITower _targetTower;
     private const int TowerLayerMask = 1 << 8;
     private int _rayCastDistance = 1;
+    
     [Inject]
     protected virtual void Construct(EnemyPoolEvent enemyPoolEvent, MovementUtils movementUtils, BaseEnemyAttack attack
     ,BaseEnemyDefence defence, BaseEnemyAnimator animator, UpdateProvider updateProvider, CellManager cellManager)
@@ -66,10 +67,6 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
 
     protected virtual void SetEnemyStats()
     {
-        // Defence = new BaseEnemyDefence
-        // {
-        //     DefenceSo = _enemyDefenceSo
-        // };
         Defence.SetDefenceSO(_enemyDefenceSo);
         Attack.SetAttackSO(_enemyAttackSo);
         Animator.SetAnimator(_animator);
@@ -85,7 +82,7 @@ public abstract class BaseEnemy : MonoBehaviour,IEnemy
         transform.LookAt(_cellManager.GetMidCellPosition());
     }
     
-    protected void StateBehavior()
+    protected void StateMachine()
     {
         if(gameObject.activeInHierarchy == false) return;
         

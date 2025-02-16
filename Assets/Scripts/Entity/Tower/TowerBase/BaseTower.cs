@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using Zenject;
 
@@ -20,6 +20,7 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
     [SerializeField] protected BaseTowerAttackSO _towerAttackSo;
     [SerializeField] private Transform _towerAimPoint;
     [SerializeField] private Transform _towerAimHead;
+    [SerializeField] private Transform _towerBody;
     
     private IEnemy _targetEnemy;
     
@@ -56,12 +57,11 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
         _towerAimPoints.Clear();
         _towerAimPoints.Add(_gridSOData.EnemySpawnPointOffset);
 
-        var targetToRotate = _quaternionUtils.SetRotation(transform, _towerAimPoints);
+        var targetToRotate = _quaternionUtils.SetRotation(_towerBody, _towerAimPoints);
         
-        transform.LookAt(targetToRotate);
+        _towerBody.transform.LookAt(targetToRotate);
     }
 
-    // Using for once, kind of start
     protected virtual void SetTowerStats()
     {
         // Default attack type is attack to the closest enemy
@@ -95,12 +95,11 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
         if(CanGizmos == false) return;
         
         Gizmos.color = Color.magenta;
-        
         Gizmos.DrawWireSphere(transform.position, _towerAttackSo.Range);
         
         
-        Gizmos.color = Color.red;
         if(_targetEnemy == null) return;
+        Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position,_targetEnemy.Transform.position);
     }
 }

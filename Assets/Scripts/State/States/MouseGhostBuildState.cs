@@ -32,9 +32,7 @@ public class MouseGhostBuildState : MouseClickBaseState
     {
         _mouseClickStateEvents.OnTowerBuildRelease += OnTowerBuildRelease;
         _buildingInputReader.Enable();
-        //Debug.Log("dettü strangingü fayv years anniversary");
-        //UI elementlerini açabilirsin
-        //_mouseClickStateMachine.transform.position = _mouseClickStateMachine.Utils.GetValidPositionWithLayerMask();
+        
     }
     
     public override void OnUpdate(float deltaTime)
@@ -48,7 +46,6 @@ public class MouseGhostBuildState : MouseClickBaseState
         _buildingInputReader.Disable();
 
         _ghostObjectReceiver.ResetGhostObject();
-        //UI elementlerini kapatabilirsin
     }
 
     private void BuildAction()
@@ -65,8 +62,6 @@ public class MouseGhostBuildState : MouseClickBaseState
         
         _ghostObjectReceiver.GameObject.transform.position = _mouseClickStateMachine.transform.position;
         _ghostObjectReceiver.OnGhostMaterialRedFire();
-        //_cellManager.GetXZ(_utils.GetValidPositionWithLayerMask(),out var X, out var Z);
-        //_cellManager.GetWorldPosition(X, Z);
     }
     
     private void CalculateGridPos()
@@ -159,10 +154,7 @@ public class MouseGhostBuildState : MouseClickBaseState
             _ghostObjectReceiver.GameObject.transform.position = _midPosition;
             
         }
-        
-        
         //Set Ghost object position, if there is non full cells
-        
     }
     
     // get current cells position and calculate ghost position just for one cells
@@ -191,7 +183,6 @@ public class MouseGhostBuildState : MouseClickBaseState
             averageX += new Vector3(pos.x,0,0);
             averageZ += new Vector3(0, 0, pos.z);
         }
-        //_ghostObjectReceiver.GameObject.transform.position = new Vector3(averageX.x / cellsPosition.Count, 0, averageZ.z / cellsPosition.Count);
         _midPosition = new Vector3(averageX.x / cellsPosition.Count, 0, averageZ.z / cellsPosition.Count);
     }
     
@@ -199,5 +190,4 @@ public class MouseGhostBuildState : MouseClickBaseState
     {
         _mouseClickStateMachine.SwitchState(_mouseClickStateMachine.MouseClickSelectedTowerState);
     }
-    
 }

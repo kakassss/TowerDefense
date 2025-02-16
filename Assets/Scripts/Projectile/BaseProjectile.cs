@@ -24,7 +24,6 @@ public class BaseProjectile : MonoBehaviour
         _projectilePoolEvent = projectilePoolEvent;
 
         _projectilePoolEvent.OnProjectileEnable += GetProjectileData;
-        //_projectilePoolEvent.AddProjectileEnable(GetProjectileData);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -77,7 +76,6 @@ public class BaseProjectile : MonoBehaviour
     private void OnDisable()
     {
         _projectilePoolEvent.OnProjectileDeactivated?.Invoke(this);
-        //_projectilePoolEvent.FireDeactivated(this);
         
         _enemyPosition = Vector3.zero;
         _rigidbody.angularVelocity = Vector3.zero;
@@ -90,6 +88,5 @@ public class BaseProjectile : MonoBehaviour
     private void OnDestroy()
     {
         _projectilePoolEvent.OnProjectileEnable -= GetProjectileData;
-        //_projectilePoolEvent.RemoveProjectileEnable(GetProjectileData);
     }
 }

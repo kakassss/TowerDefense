@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-//Adressable sistemi kur
-//hem popup hem assetler için kurabiliriz
+//Adressable system could be use
+//unfinished test version
 public class PopupManager
 {
     private readonly IInstantiator _instantiator;

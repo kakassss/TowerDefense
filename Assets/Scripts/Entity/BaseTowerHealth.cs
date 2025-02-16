@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[System.Serializable]
+[Serializable]
 public class BaseTowerHealth : IDamageable
 {
     public float CurrentHealth { get; private set; }

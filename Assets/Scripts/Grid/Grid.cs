@@ -14,7 +14,7 @@ public class Cell
     
     public string Name; // Only for testing 
     public float Power;
-    public BaseTower Entity; // Gameobject tutmak için yapmıstın şimdilik boş duruyor
+    public BaseTower Entity; // Currently no feature
     public ElementType DefaultCellPower;// Currently no feature
     public List<ElementType> CellPowerEnumList;// Currently no feature
     

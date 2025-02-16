@@ -54,7 +54,6 @@ public class BuildManager
             return;
         
         InstantiateSingleCell(buildCells).Forget();
-        //InstantiateMultipleCells(buildCells);    
     }
 
     private async UniTaskVoid InstantiateSingleCell(List<BuildCells> buildCells)

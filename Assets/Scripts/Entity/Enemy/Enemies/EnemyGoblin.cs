@@ -13,7 +13,7 @@ public class EnemyGoblin : BaseEnemy, IUpdate
     
     public void UpdateBehavior()
     {
-        StateBehavior();
+        StateMachine();
     }
     
     protected override void OnEnable()

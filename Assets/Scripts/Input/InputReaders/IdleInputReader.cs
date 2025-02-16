@@ -13,7 +13,6 @@ public class IdleInputReader : InputSystem_Actions.IInputIdleActions, IDisposabl
         _inputSystem = inputSystem;
         
         _inputSystem.InputSystemActions.InputIdle.SetCallbacks(this);
-        //_inputSystem.InputSystemActions.InputIdle.Enable();
     }
     
     public void OnSelect(InputAction.CallbackContext context)

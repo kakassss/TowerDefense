@@ -19,7 +19,7 @@ public class GridWindow : EditorWindow
         
         if (gridData.isOccupied == null)
         {
-            Debug.LogError("gridData.isOccupied is NULL! Initializing...");
+            Debug.LogError("gridData.isOccupied is null");
             gridData.isOccupied = new bool[gridData.Width, gridData.Height]; 
         }
         

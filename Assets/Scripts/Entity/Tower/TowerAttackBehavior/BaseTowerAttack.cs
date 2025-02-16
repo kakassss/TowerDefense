@@ -14,7 +14,7 @@ public class BaseTowerAttack
         _projectilePoolEvent = projectilePoolEvent;
     }
 
-    public void AttackRate(IEnemy enemy, Transform towerAimPoint,BaseTowerAttackSO towerAttackSo)
+    public void AttackRate(IEnemy enemy, Transform towerAimPoint, BaseTowerAttackSO towerAttackSo)
     {
         _fireRateTemp += Time.deltaTime;
         
