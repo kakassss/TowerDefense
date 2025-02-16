@@ -58,8 +58,7 @@ public abstract class BaseTower : MonoBehaviour, ITower, ITowerAttacker
         _towerAimPoints.Add(_gridSOData.EnemySpawnPointOffset);
 
         var targetToRotate = _quaternionUtils.SetRotation(_towerBody, _towerAimPoints);
-        
-        _towerBody.transform.LookAt(targetToRotate);
+        _towerAimHead.localRotation = Quaternion.LookRotation(targetToRotate);
     }
 
     protected virtual void SetTowerStats()
